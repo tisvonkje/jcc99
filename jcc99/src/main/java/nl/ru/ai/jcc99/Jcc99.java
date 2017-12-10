@@ -14,7 +14,7 @@ public class Jcc99
 
   private void compile() throws IOException
   {
-    ClassFile classFile=new ClassFile("target/classes","nl.ru.al.jc99.App");
+    ClassFile classFile=new ClassFile("target/classes","nl.ru.ai.jcc99.App");
     
   }
 

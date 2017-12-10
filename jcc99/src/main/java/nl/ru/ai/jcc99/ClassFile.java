@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.constants.DoubleConstant;
+import nl.ru.ai.jcc99.constants.LongConstant;
+
 public class ClassFile
 {
   /*
@@ -35,7 +39,10 @@ public class ClassFile
   private short minor;
   private short major;
   private short constantPoolCount;
-  private ClassConstant[] constants;
+  /*
+   * constants, note that some slots may be unused (null)
+   */
+  private Constant[] constants;
   /*
    * Constructor
    */
@@ -57,10 +64,18 @@ public class ClassFile
       throw new RuntimeException("Invalid class file version");
     constantPoolCount=buffer.getShort();
     System.out.printf("constant pool count=%d\n",constantPoolCount);
-    constants=new ClassConstant[constantPoolCount];
+    constants=new Constant[constantPoolCount];
     for(int i=1;i<constantPoolCount;i++)
     {
-      constants[i]=new ClassConstant(buffer);
+      constants[i]=Constant.create(buffer);
+      System.out.printf("%d: %s\n",i,constants[i]);
+      /*
+       * We have to skip a constant slot for Long and Double constants
+       * From JVM spec: In retrospect, making 8-byte constants take two constant pool entries was a poor choice.
+       * I agree, but who ever thought it was a good idea? UTF8 slots have fixed length so why?
+       */
+      if(constants[i] instanceof LongConstant || constants[i] instanceof DoubleConstant)
+        i++;
     }
   }
 
