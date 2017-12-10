@@ -13,8 +13,17 @@ import nl.ru.ai.jcc99.constants.LongConstant;
 
 public class ClassFile
 {
+  private static final short ACC_PUBLIC=0x0001;
+  private static final short ACC_FINAL=0x0010;
+  private static final short ACC_SUPER=0x0020;
+  private static final short ACC_INTERFACE=0x0200;
+  private static final short ACC_ABSTRACT=0x0400;
+  private static final short ACC_SYNTHETIC=0x1000;
+  private static final short ACC_ANNOTATION=0x2000;
+  private static final short ACC_ENUM=0x4000;
   /*
    * https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html
+   * javap -c App.class 
    * ClassFile 
    * {
    *   u4             magic;
@@ -43,6 +52,7 @@ public class ClassFile
    * constants, note that some slots may be unused (null)
    */
   private Constant[] constants;
+  private short accessFlags;
   /*
    * Constructor
    */
@@ -77,6 +87,24 @@ public class ClassFile
       if(constants[i] instanceof LongConstant || constants[i] instanceof DoubleConstant)
         i++;
     }
+    accessFlags=buffer.getShort();
+    System.out.printf("access flags:");
+    if((accessFlags&ACC_PUBLIC)!=0)
+      System.out.printf(" ACC_PUBLIC");
+    if((accessFlags&ACC_FINAL)!=0)
+      System.out.printf(" ACC_FINAL");
+    if((accessFlags&ACC_SUPER)!=0)
+      System.out.printf(" ACC_SUPER");
+    if((accessFlags&ACC_INTERFACE)!=0)
+      System.out.printf(" ACC_INTERFACE");
+    if((accessFlags&ACC_ABSTRACT)!=0)
+      System.out.printf(" ACC_ABSTRACT");
+    if((accessFlags&ACC_SYNTHETIC)!=0)
+      System.out.printf(" ACC_SYNTHETIC");
+    if((accessFlags&ACC_ANNOTATION)!=0)
+      System.out.printf(" ACC_ANNOTATION");
+    if((accessFlags&ACC_ENUM)!=0)
+      System.out.printf(" ACC_ENUM");
   }
 
 }
