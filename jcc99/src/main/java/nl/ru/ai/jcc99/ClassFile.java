@@ -54,6 +54,7 @@ public class ClassFile
   private short accessFlags;
   private short thisClass;
   private short superClass;
+  private Attribute[] attributes;
   /*
    * Constructor
    */
@@ -145,6 +146,32 @@ public class ClassFile
       fields[i]=new Field(constants,buffer);
       System.out.printf("%d: %s\n",i,fields[i]);
     }
+    /*
+     * Get methods
+     */
+    System.out.println("Methods:");
+    short methodCount=buffer.getShort();
+    Method [] methods=new Method[methodCount];
+    for(int i=0;i<methodCount;i++)
+    {
+      methods[i]=new Method(constants,buffer);
+      System.out.printf("%d: %s\n",i,methods[i]);
+    }
+    /*
+     * Get attributes
+     */
+    System.out.println("Attributes:");
+    short attributeCount=buffer.getShort();
+    attributes=new Attribute[attributeCount];
+    for(int i=0;i<attributeCount;i++)
+    {
+      attributes[i]=new Attribute(constants,buffer);
+      System.out.printf("%d: %s\n",i,attributes[i]);
+    }
+    /*
+     * Check for end of file
+     */
+    if(buffer.hasRemaining())
+      throw new RuntimeException("Trailing bytes in classfile");
   }
-
 }

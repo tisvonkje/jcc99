@@ -4,15 +4,15 @@ import java.nio.ByteBuffer;
 
 import nl.ru.ai.jcc99.constants.Constant;
 
-public class Field
+public class Method
 {
+  private Constant[] constants;
   private short accessFlags;
   private short nameIndex;
   private short descriptorIndex;
   private Attribute[] attributes;
-  private Constant[] constants;
 
-  public Field(Constant [] constants, ByteBuffer buffer)
+  public Method(Constant[] constants, ByteBuffer buffer)
   {
     this.constants=constants;
     accessFlags=buffer.getShort();
