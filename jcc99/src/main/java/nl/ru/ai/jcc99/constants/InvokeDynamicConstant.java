@@ -14,6 +14,12 @@ public class InvokeDynamicConstant extends Constant
   
   public String toString()
   {
-    return String.format("InvokeDynamic #%d #%d",bootstrapMethodAttrIndex,nameAndTypeIndex);
+    return String.format("InvokeDynamic #%d #%d // %s",bootstrapMethodAttrIndex,nameAndTypeIndex,toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return String.format("%s %s",constants[bootstrapMethodAttrIndex].toShortString(),constants[nameAndTypeIndex].toShortString());
   }
 }

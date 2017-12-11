@@ -14,7 +14,13 @@ public class InterfaceMethodrefConstant extends Constant
   
   public String toString()
   {
-    return String.format("InterfaceMethodref #%d.#%d",classIndex,nameAndTypeIndex);
+    return String.format("InterfaceMethodref #%d.#%d // %s",classIndex,nameAndTypeIndex,toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return String.format("%s.%s",constants[classIndex].toShortString(),constants[nameAndTypeIndex].toShortString());
   }
 
 }

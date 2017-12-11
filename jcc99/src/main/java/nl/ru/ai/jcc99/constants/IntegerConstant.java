@@ -12,7 +12,13 @@ public class IntegerConstant extends Constant
   
   public String toString()
   {
-    return String.format("Integer '%d'",value);
+    return String.format("Integer %s",toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return String.format("%d",value);
   }
 
 }

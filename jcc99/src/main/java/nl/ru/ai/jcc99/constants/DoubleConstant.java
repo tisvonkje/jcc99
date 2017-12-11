@@ -12,7 +12,12 @@ public class DoubleConstant extends Constant
   
   public String toString()
   {
-    return String.format("Double '%f'",value);
+    return String.format("Double %s\n",toShortString());
+  }
+  
+  public String toShortString()
+  {
+    return String.format("%f",value);
   }
 
 }

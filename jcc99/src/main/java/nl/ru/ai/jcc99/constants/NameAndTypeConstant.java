@@ -14,7 +14,13 @@ public class NameAndTypeConstant extends Constant
   
   public String toString()
   {
-    return String.format("NameAndType #%d:#%d",nameIndex,descriptorIndex);
+    return String.format("NameAndType #%d:#%d // %s",nameIndex,descriptorIndex,toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return String.format("%s:%s",constants[nameIndex].toShortString(),constants[descriptorIndex].toShortString());
   }
 
 }

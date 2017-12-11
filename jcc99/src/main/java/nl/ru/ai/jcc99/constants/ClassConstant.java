@@ -12,7 +12,12 @@ public class ClassConstant extends Constant
   
   public String toString()
   {
-    return String.format("Class #%d",nameIndex);
+    return String.format("Class #%d // %s",nameIndex,toShortString());
+  }
+  
+  public String toShortString()
+  {
+    return constants[nameIndex].toShortString();
   }
 
 }

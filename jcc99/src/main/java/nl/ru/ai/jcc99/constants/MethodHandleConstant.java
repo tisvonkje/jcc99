@@ -14,7 +14,13 @@ public class MethodHandleConstant extends Constant
   
   public String toString()
   {
-    return String.format("MethodHandle #%d #%d",referenceKind,referenceIndex);
+    return String.format("MethodHandle #%d #%d // %s",referenceKind,referenceIndex,toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return String.format("%d %s",referenceKind,constants[referenceIndex].toShortString());
   }
 
 }

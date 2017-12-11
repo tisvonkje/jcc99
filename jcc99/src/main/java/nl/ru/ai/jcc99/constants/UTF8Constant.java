@@ -12,7 +12,13 @@ public class UTF8Constant extends Constant
   
   public String toString()
   {
-    return String.format("UTF8 '%s'",new String(bytes));
+    return String.format("UTF8 %s",new String(bytes));
+  }
+
+  @Override
+  String toShortString()
+  {
+    return new String(bytes);
   }
 
 }

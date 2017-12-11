@@ -14,7 +14,13 @@ public class FieldrefConstant extends Constant
   
   public String toString()
   {
-    return String.format("Fieldref #%d:#%d",classIndex,nameAndTypeIndex);
+    return String.format("Fieldref #%d:#%d // %s",classIndex,nameAndTypeIndex,toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return String.format("%s:%s",constants[classIndex].toShortString(),constants[nameAndTypeIndex].toShortString());
   }
 
 }

@@ -12,7 +12,13 @@ public class MethodTypeConstant extends Constant
   
   public String toString()
   {
-    return String.format("MethodType #%d",descriptorIndex);
+    return String.format("MethodType #%d // %s",descriptorIndex,toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return constants[descriptorIndex].toShortString();
   }
 
 }

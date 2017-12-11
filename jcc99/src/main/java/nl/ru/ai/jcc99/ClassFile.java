@@ -78,7 +78,6 @@ public class ClassFile
     for(int i=1;i<constantPoolCount;i++)
     {
       constants[i]=Constant.create(constants,buffer);
-      System.out.printf("%d: %s\n",i,constants[i]);
       /*
        * We have to skip a constant slot for Long and Double constants
        * From JVM spec: In retrospect, making 8-byte constants take two constant pool entries was a poor choice.
@@ -87,6 +86,9 @@ public class ClassFile
       if(constants[i] instanceof LongConstant || constants[i] instanceof DoubleConstant)
         i++;
     }
+    for(int i=0;i<constants.length;i++)
+      if(constants[i]!=null)
+        System.out.printf("%d: %s\n",i,constants[i]);
     accessFlags=buffer.getShort();
     System.out.printf("access flags:");
     if((accessFlags&ACC_PUBLIC)!=0)

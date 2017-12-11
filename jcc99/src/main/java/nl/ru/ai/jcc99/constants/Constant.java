@@ -2,7 +2,7 @@ package nl.ru.ai.jcc99.constants;
 
 import java.nio.ByteBuffer;
 
-public class Constant
+public abstract class Constant
 {
   private static final byte CONSTANT_CLASS=7;
   private static final byte CONSTANT_FIELDREF=9;
@@ -20,6 +20,8 @@ public class Constant
   private static final byte CONSTANT_INVOKE_DYNAMIC=18;
   
   protected Constant [] constants;
+  
+  abstract String toShortString();
 
   public Constant(Constant[] constants)
   {
@@ -66,5 +68,6 @@ public class Constant
         throw new RuntimeException(String.format("invalid tag '%d' in constant info",tag));
     }
   }
+
 
 }

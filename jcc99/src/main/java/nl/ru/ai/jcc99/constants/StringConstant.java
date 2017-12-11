@@ -12,7 +12,13 @@ public class StringConstant extends Constant
   
   public String toString()
   {
-    return String.format("String #%d",stringIndex);
+    return String.format("String #%d // %s",stringIndex,toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return constants[stringIndex].toShortString();
   }
 
 }

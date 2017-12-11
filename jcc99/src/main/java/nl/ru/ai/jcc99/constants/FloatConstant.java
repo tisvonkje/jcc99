@@ -12,7 +12,13 @@ public class FloatConstant extends Constant
   
   public String toString()
   {
-    return String.format("Float '%f'",value);
+    return String.format("Float %s",toShortString());
+  }
+
+  @Override
+  String toShortString()
+  {
+    return String.format("%f",value);
   }
 
 }
