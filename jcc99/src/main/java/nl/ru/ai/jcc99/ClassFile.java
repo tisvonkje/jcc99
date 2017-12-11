@@ -47,12 +47,13 @@ public class ClassFile
   private int magic;
   private short minor;
   private short major;
-  private short constantPoolCount;
   /*
    * constants, note that some slots may be unused (null)
    */
   private Constant[] constants;
   private short accessFlags;
+  private short thisClass;
+  private short superClass;
   /*
    * Constructor
    */
@@ -72,7 +73,7 @@ public class ClassFile
     System.out.printf("major=%d, minor=%d\n",major,minor);
     if(major!=49 || minor!=0)
       throw new RuntimeException("Invalid class file version");
-    constantPoolCount=buffer.getShort();
+    short constantPoolCount=buffer.getShort();
     System.out.printf("constant pool count=%d\n",constantPoolCount);
     constants=new Constant[constantPoolCount];
     for(int i=1;i<constantPoolCount;i++)
@@ -89,6 +90,9 @@ public class ClassFile
     for(int i=0;i<constants.length;i++)
       if(constants[i]!=null)
         System.out.printf("%d: %s\n",i,constants[i]);
+    /*
+     * Get access flags
+     */
     accessFlags=buffer.getShort();
     System.out.printf("access flags:");
     if((accessFlags&ACC_PUBLIC)!=0)
@@ -107,6 +111,40 @@ public class ClassFile
       System.out.printf(" ACC_ANNOTATION");
     if((accessFlags&ACC_ENUM)!=0)
       System.out.printf(" ACC_ENUM");
+    System.out.println();
+    /*
+     * Get (this) class
+     */
+    thisClass=buffer.getShort();
+    System.out.printf("this class: %s\n",constants[thisClass].toShortString());
+    /*
+     * Get super class
+     */
+    superClass=buffer.getShort();
+    System.out.printf("superclass: %s\n",constants[superClass].toShortString());
+    /*
+     * Get interfaces
+     */
+    short interfaceCount=buffer.getShort();
+    short [] interfaces=new short[interfaceCount];
+    System.out.print("Interfaces: ");
+    for(int i=0;i<interfaceCount;i++)
+    {
+      interfaces[i]=buffer.getShort();
+      System.out.printf("%s ",constants[interfaces[i]].toShortString());
+    }
+    System.out.println();
+    /*
+     * Get fields
+     */
+    System.out.println("Fields:");
+    short fieldCount=buffer.getShort();
+    Field [] fields=new Field[fieldCount];
+    for(int i=0;i<fieldCount;i++)
+    {
+      fields[i]=new Field(constants,buffer);
+      System.out.printf("%d: %s\n",i,fields[i]);
+    }
   }
 
 }

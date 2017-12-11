@@ -18,7 +18,7 @@ public class FieldrefConstant extends Constant
   }
 
   @Override
-  String toShortString()
+  public String toShortString()
   {
     return String.format("%s:%s",constants[classIndex].toShortString(),constants[nameAndTypeIndex].toShortString());
   }

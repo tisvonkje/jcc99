@@ -18,7 +18,7 @@ public class InvokeDynamicConstant extends Constant
   }
 
   @Override
-  String toShortString()
+  public String toShortString()
   {
     return String.format("%s %s",constants[bootstrapMethodAttrIndex].toShortString(),constants[nameAndTypeIndex].toShortString());
   }

@@ -16,7 +16,7 @@ public class IntegerConstant extends Constant
   }
 
   @Override
-  String toShortString()
+  public String toShortString()
   {
     return String.format("%d",value);
   }

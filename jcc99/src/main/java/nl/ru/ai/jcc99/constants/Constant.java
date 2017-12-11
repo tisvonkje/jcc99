@@ -21,7 +21,7 @@ public abstract class Constant
   
   protected Constant [] constants;
   
-  abstract String toShortString();
+  public abstract String toShortString();
 
   public Constant(Constant[] constants)
   {

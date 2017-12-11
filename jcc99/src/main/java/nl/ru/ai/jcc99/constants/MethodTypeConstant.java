@@ -16,7 +16,7 @@ public class MethodTypeConstant extends Constant
   }
 
   @Override
-  String toShortString()
+  public String toShortString()
   {
     return constants[descriptorIndex].toShortString();
   }

@@ -18,7 +18,7 @@ public class MethodHandleConstant extends Constant
   }
 
   @Override
-  String toShortString()
+  public String toShortString()
   {
     return String.format("%d %s",referenceKind,constants[referenceIndex].toShortString());
   }

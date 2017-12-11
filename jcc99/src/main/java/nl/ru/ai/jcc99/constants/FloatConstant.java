@@ -16,7 +16,7 @@ public class FloatConstant extends Constant
   }
 
   @Override
-  String toShortString()
+  public String toShortString()
   {
     return String.format("%f",value);
   }

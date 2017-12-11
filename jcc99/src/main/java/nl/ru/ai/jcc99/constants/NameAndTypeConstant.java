@@ -18,7 +18,7 @@ public class NameAndTypeConstant extends Constant
   }
 
   @Override
-  String toShortString()
+  public String toShortString()
   {
     return String.format("%s:%s",constants[nameIndex].toShortString(),constants[descriptorIndex].toShortString());
   }

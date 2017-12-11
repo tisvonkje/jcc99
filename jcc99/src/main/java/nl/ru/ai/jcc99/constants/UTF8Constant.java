@@ -16,7 +16,7 @@ public class UTF8Constant extends Constant
   }
 
   @Override
-  String toShortString()
+  public String toShortString()
   {
     return new String(bytes);
   }
