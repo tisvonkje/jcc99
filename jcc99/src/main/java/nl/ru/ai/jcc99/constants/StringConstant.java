@@ -4,8 +4,9 @@ public class StringConstant extends Constant
 {
   private short stringIndex;
 
-  public StringConstant(short stringIndex)
+  public StringConstant(Constant[] constants, short stringIndex)
   {
+    super(constants);
     this.stringIndex=stringIndex;
   }
   

@@ -18,43 +18,50 @@ public class Constant
   private static final byte CONSTANT_METHOD_HANDLE=15;
   private static final byte CONSTANT_METHOD_TYPE=16;
   private static final byte CONSTANT_INVOKE_DYNAMIC=18;
+  
+  protected Constant [] constants;
 
-  public static Constant create(ByteBuffer buffer)
+  public Constant(Constant[] constants)
+  {
+    this.constants=constants;
+  }
+
+  public static Constant create(Constant [] constants, ByteBuffer buffer)
   {
     byte tag=buffer.get();
     switch(tag)
     {
       case CONSTANT_CLASS:
-        return new ClassConstant(buffer.getShort());
+        return new ClassConstant(constants,buffer.getShort());
       case CONSTANT_FIELDREF:
-        return new FieldrefConstant(buffer.getShort(),buffer.getShort());
+        return new FieldrefConstant(constants,buffer.getShort(),buffer.getShort());
       case CONSTANT_METHODREF:
-        return new MethodrefConstant(buffer.getShort(),buffer.getShort()); 
+        return new MethodrefConstant(constants,buffer.getShort(),buffer.getShort()); 
       case CONSTANT_INTERFACE_METHODREF:
-        return new InterfaceMethodrefConstant(buffer.getShort(),buffer.getShort());
+        return new InterfaceMethodrefConstant(constants,buffer.getShort(),buffer.getShort());
       case CONSTANT_STRING:
-        return new StringConstant(buffer.getShort());
+        return new StringConstant(constants,buffer.getShort());
       case CONSTANT_INTEGER:
-        return new IntegerConstant(buffer.getInt());
+        return new IntegerConstant(constants,buffer.getInt());
       case CONSTANT_FLOAT:
-        return new FloatConstant(buffer.getFloat());
+        return new FloatConstant(constants,buffer.getFloat());
       case CONSTANT_LONG:
-        return new LongConstant(buffer.getLong());
+        return new LongConstant(constants,buffer.getLong());
       case CONSTANT_DOUBLE:
-        return new DoubleConstant(buffer.getDouble());
+        return new DoubleConstant(constants,buffer.getDouble());
       case CONSTANT_NAME_AND_TYPE:
-        return new NameAndTypeConstant(buffer.getShort(),buffer.getShort());
+        return new NameAndTypeConstant(constants,buffer.getShort(),buffer.getShort());
       case CONTANT_UTF8:
         short length=buffer.getShort();
         byte [] bytes=new byte[length];
         buffer.get(bytes);
-        return new UTF8Constant(bytes);
+        return new UTF8Constant(constants,bytes);
       case CONSTANT_METHOD_HANDLE:
-        return new MethodHandleConstant(buffer.get(),buffer.getShort());
+        return new MethodHandleConstant(constants,buffer.get(),buffer.getShort());
       case CONSTANT_METHOD_TYPE:
-        return new MethodTypeConstant(buffer.getShort());
+        return new MethodTypeConstant(constants,buffer.getShort());
       case CONSTANT_INVOKE_DYNAMIC:
-        return new InvokeDynamicConstant(buffer.getShort(),buffer.getShort());
+        return new InvokeDynamicConstant(constants,buffer.getShort(),buffer.getShort());
       default:
         throw new RuntimeException(String.format("invalid tag '%d' in constant info",tag));
     }

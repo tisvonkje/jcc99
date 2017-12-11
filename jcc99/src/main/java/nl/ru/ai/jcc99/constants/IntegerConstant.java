@@ -4,8 +4,9 @@ public class IntegerConstant extends Constant
 {
   private int value;
 
-  public IntegerConstant(int value)
+  public IntegerConstant(Constant[] constants, int value)
   {
+    super(constants);
     this.value=value;
   }
   

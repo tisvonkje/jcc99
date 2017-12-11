@@ -4,8 +4,9 @@ public class DoubleConstant extends Constant
 {
   private double value;
 
-  public DoubleConstant(double value)
+  public DoubleConstant(Constant[] constants, double value)
   {
+    super(constants);
     this.value=value;
   }
   

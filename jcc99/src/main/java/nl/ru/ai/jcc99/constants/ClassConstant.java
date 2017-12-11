@@ -4,8 +4,9 @@ public class ClassConstant extends Constant
 {
   private short nameIndex;
 
-  public ClassConstant(short nameIndex)
+  public ClassConstant(Constant[] constants, short nameIndex)
   {
+    super(constants);
     this.nameIndex=nameIndex;
   }
   

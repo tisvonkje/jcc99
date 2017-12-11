@@ -5,8 +5,9 @@ public class NameAndTypeConstant extends Constant
   private short nameIndex;
   private short descriptorIndex;
 
-  public NameAndTypeConstant(short nameIndex, short descriptorIndex)
+  public NameAndTypeConstant(Constant[] constants, short nameIndex, short descriptorIndex)
   {
+    super(constants);
     this.nameIndex=nameIndex;
     this.descriptorIndex=descriptorIndex;
   }

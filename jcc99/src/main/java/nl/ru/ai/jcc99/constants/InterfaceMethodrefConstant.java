@@ -5,8 +5,9 @@ public class InterfaceMethodrefConstant extends Constant
   private short classIndex;
   private short nameAndTypeIndex;
 
-  public InterfaceMethodrefConstant(short classIndex, short nameAndTypeIndex)
+  public InterfaceMethodrefConstant(Constant[] constants, short classIndex, short nameAndTypeIndex)
   {
+    super(constants);
     this.classIndex=classIndex;
     this.nameAndTypeIndex=nameAndTypeIndex;
   }

@@ -4,8 +4,9 @@ public class MethodTypeConstant extends Constant
 {
   private short descriptorIndex;
 
-  public MethodTypeConstant(short descriptorIndex)
+  public MethodTypeConstant(Constant[] constants, short descriptorIndex)
   {
+    super(constants);
     this.descriptorIndex=descriptorIndex;
   }
   

@@ -5,8 +5,9 @@ public class InvokeDynamicConstant extends Constant
   private short bootstrapMethodAttrIndex;
   private short nameAndTypeIndex;
 
-  public InvokeDynamicConstant(short bootstrapMethodAttrIndex, short nameAndTypeIndex)
+  public InvokeDynamicConstant(Constant[] constants, short bootstrapMethodAttrIndex, short nameAndTypeIndex)
   {
+    super(constants);
     this.bootstrapMethodAttrIndex=bootstrapMethodAttrIndex;
     this.nameAndTypeIndex=nameAndTypeIndex;
   }

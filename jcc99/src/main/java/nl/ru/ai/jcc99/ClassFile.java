@@ -77,7 +77,7 @@ public class ClassFile
     constants=new Constant[constantPoolCount];
     for(int i=1;i<constantPoolCount;i++)
     {
-      constants[i]=Constant.create(buffer);
+      constants[i]=Constant.create(constants,buffer);
       System.out.printf("%d: %s\n",i,constants[i]);
       /*
        * We have to skip a constant slot for Long and Double constants

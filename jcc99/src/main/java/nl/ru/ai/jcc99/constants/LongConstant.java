@@ -4,8 +4,9 @@ public class LongConstant extends Constant
 {
   private long value;
 
-  public LongConstant(long value)
+  public LongConstant(Constant[] constants, long value)
   {
+    super(constants);
     this.value=value;
   }
   

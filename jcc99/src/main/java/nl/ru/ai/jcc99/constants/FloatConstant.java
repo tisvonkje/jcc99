@@ -4,8 +4,9 @@ public class FloatConstant extends Constant
 {
   private float value;
 
-  public FloatConstant(float value)
+  public FloatConstant(Constant[] constants, float value)
   {
+    super(constants);
     this.value=value;
   }
   
