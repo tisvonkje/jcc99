@@ -24,6 +24,8 @@ public abstract class Attribute
     String attributeName=constants[attributeNameIndex].toShortString();
     if("Code".equals(attributeName))
       return new CodeAtrribute(constants,sub);
+    if("SourceFile".equals(attributeName))
+      return new SourceFileAttribute(constants,sub);
     else
       return new CustomAttribute(constants,attributeName,sub);
   }
