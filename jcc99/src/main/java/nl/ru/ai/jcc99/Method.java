@@ -2,6 +2,7 @@ package nl.ru.ai.jcc99;
 
 import java.nio.ByteBuffer;
 
+import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class Method
@@ -21,7 +22,7 @@ public class Method
     short attributeCount=buffer.getShort();
     attributes=new Attribute[attributeCount];
     for(int i=0;i<attributeCount;i++)
-      attributes[i]=new Attribute(constants,buffer);
+      attributes[i]=Attribute.create(constants,buffer);
   }
   
   public String toString()

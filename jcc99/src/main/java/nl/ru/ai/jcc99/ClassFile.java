@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.constants.Constant;
 import nl.ru.ai.jcc99.constants.DoubleConstant;
 import nl.ru.ai.jcc99.constants.LongConstant;
@@ -165,7 +166,7 @@ public class ClassFile
     attributes=new Attribute[attributeCount];
     for(int i=0;i<attributeCount;i++)
     {
-      attributes[i]=new Attribute(constants,buffer);
+      attributes[i]=Attribute.create(constants,buffer);
       System.out.printf("%d: %s\n",i,attributes[i]);
     }
     /*

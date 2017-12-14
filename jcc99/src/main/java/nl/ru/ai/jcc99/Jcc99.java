@@ -3,6 +3,10 @@ package nl.ru.ai.jcc99;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Java class compiler
+ * @author sparky
+ */
 public class Jcc99
 {
 
