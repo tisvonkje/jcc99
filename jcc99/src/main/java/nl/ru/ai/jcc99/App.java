@@ -6,8 +6,16 @@ import java.io.Serializable;
  * Hello world!
  *
  */
-public class App implements Serializable, Comparable
+public class App extends Object implements Serializable, Comparable
 {
+  private int a;
+  private int b;
+
+  public App()
+  {
+    a=3;
+    b=4;
+  }
     /**
    * 
    */
