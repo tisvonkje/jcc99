@@ -175,4 +175,19 @@ public class ClassFile
     if(buffer.hasRemaining())
       throw new RuntimeException("Trailing bytes in classfile");
   }
+  
+  /**
+   * Try to load class from the classPath
+   * @param className
+   * @param classPath
+   * @return classFile, null if not found
+   */
+  public static ClassFile loadClass(String className,String [] classPath)
+  {
+    for(String classPathEntry:classPath)
+    {
+      HERE
+    }
+    return null;
+  }
 }

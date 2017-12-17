@@ -17,13 +17,20 @@ import org.apache.commons.cli.ParseException;
 public class Jcc99
 {
 
+  private CommandLine commandLine;
+
+  public Jcc99(CommandLine commandLine)
+  {
+    this.commandLine=commandLine;
+  }
+
   public static void main(String[] args) throws IOException
   {
     /*
     * Set options
     */
     Options options=new Options();
-    options.addOption("-classpath",true,"specify classpath (seperated by ;)");
+    options.addOption("classpath",true,"specify classpath (jars/dirs by ;)");
     options.addOption("h",false,"print this message");
     /*
     * Parse commandline
@@ -39,7 +46,7 @@ public class Jcc99
       if(commandLine.hasOption('h'))
       {
         HelpFormatter formatter=new HelpFormatter();
-        formatter.printHelp("jcc99 Class.class",options,true);
+        formatter.printHelp("jcc99 MainClass",options,true);
         System.exit(1);
       }
       /*
@@ -48,18 +55,18 @@ public class Jcc99
       int numberOfFiles=commandLine.getArgs().length;
       if(numberOfFiles==0)
       {
-        System.out.println("Error: no input file specified");
+        System.out.println("Error: no class specified");
         System.exit(1);
       }
       if(numberOfFiles!=1)
       {
-        System.out.println("Error: more than one input file specified");
+        System.out.println("Error: more than one class specified");
         System.exit(1);
       }
       /*
        * Create and run assembler
        */
-      Jcc99 compiler=new Jcc99();
+      Jcc99 compiler=new Jcc99(commandLine);
       compiler.compile(commandLine.getArgs()[0]);
     }
     catch(ParseException e)
@@ -68,10 +75,17 @@ public class Jcc99
     }
   }
 
-  private void compile(String classFileName) throws IOException
+  private void compile(String className) throws IOException
   {
-    ClassFile classFile=new ClassFile("target/classes","nl.ru.ai.jcc99.App");
-
+    /*
+     * Get charpath
+     */
+    String [] charPath=commandLine.getOptionValue("charpath",".").split(";");
+    ClassFile classFile=ClassFile.loadClass(className,charPath);
+    if(classFile==null)
+    {
+      System.err.printf("Error, cannot find class '%s'\n",className);
+      System.exit(1);
+    }
   }
-
 }
