@@ -1,13 +1,7 @@
 package nl.ru.ai.jcc99;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.util.zip.ZipInputStream;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.constants.Constant;
@@ -27,25 +21,6 @@ public class ClassFile
   /*
    * https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html
    * javap -c App.class 
-   * ClassFile 
-   * {
-   *   u4             magic;
-   *   u2             minor_version;
-   *   u2             major_version;
-   *   u2             constant_pool_count;
-   *   cp_info        constant_pool[constant_pool_count-1];
-   *   u2             access_flags;
-   *   u2             this_class;
-   *   u2             super_class;
-   *   u2             interfaces_count;
-   *   u2             interfaces[interfaces_count];
-   *   u2             fields_count;
-   *   field_info     fields[fields_count];
-   *   u2             methods_count;
-   *   method_info    methods[methods_count];
-   *   u2             attributes_count;
-   *   attribute_info attributes[attributes_count];
-   * }
    */
   private int magic;
   private short minor;
@@ -61,17 +36,14 @@ public class ClassFile
   /*
    * Constructor
    */
-  public ClassFile(ByteBuffer buffer) throws IOException
+  public ClassFile(ByteBuffer buffer) throws IOException, ClassLoaderException
   {
     magic=buffer.getInt();
-    System.out.printf("%04x\n",magic);
     minor=buffer.getShort();
     major=buffer.getShort();
-    System.out.printf("major=%d, minor=%d\n",major,minor);
     if(major!=49 || minor!=0)
-      throw new RuntimeException("Invalid class file version");
+      throw new ClassLoaderException(String.format("Invalid class file version, expected 49,0, got %d,%d",major,minor));
     short constantPoolCount=buffer.getShort();
-    System.out.printf("constant pool count=%d\n",constantPoolCount);
     constants=new Constant[constantPoolCount];
     for(int i=1;i<constantPoolCount;i++)
     {
@@ -84,92 +56,56 @@ public class ClassFile
       if(constants[i] instanceof LongConstant || constants[i] instanceof DoubleConstant)
         i++;
     }
-    for(int i=0;i<constants.length;i++)
-      if(constants[i]!=null)
-        System.out.printf("%d: %s\n",i,constants[i]);
     /*
      * Get access flags
      */
     accessFlags=buffer.getShort();
-    System.out.printf("access flags:");
-    if((accessFlags&ACC_PUBLIC)!=0)
-      System.out.printf(" ACC_PUBLIC");
-    if((accessFlags&ACC_FINAL)!=0)
-      System.out.printf(" ACC_FINAL");
-    if((accessFlags&ACC_SUPER)!=0)
-      System.out.printf(" ACC_SUPER");
-    if((accessFlags&ACC_INTERFACE)!=0)
-      System.out.printf(" ACC_INTERFACE");
-    if((accessFlags&ACC_ABSTRACT)!=0)
-      System.out.printf(" ACC_ABSTRACT");
-    if((accessFlags&ACC_SYNTHETIC)!=0)
-      System.out.printf(" ACC_SYNTHETIC");
-    if((accessFlags&ACC_ANNOTATION)!=0)
-      System.out.printf(" ACC_ANNOTATION");
-    if((accessFlags&ACC_ENUM)!=0)
-      System.out.printf(" ACC_ENUM");
-    System.out.println();
     /*
      * Get (this) class
      */
     thisClass=buffer.getShort();
-    System.out.printf("this class: %s\n",constants[thisClass].toShortString());
     /*
      * Get super class
      */
     superClass=buffer.getShort();
-    System.out.printf("superclass: %s\n",constants[superClass].toShortString());
     /*
      * Get interfaces
      */
     short interfaceCount=buffer.getShort();
     short [] interfaces=new short[interfaceCount];
-    System.out.print("Interfaces: ");
     for(int i=0;i<interfaceCount;i++)
-    {
       interfaces[i]=buffer.getShort();
-      System.out.printf("%s ",constants[interfaces[i]].toShortString());
-    }
-    System.out.println();
     /*
      * Get fields
      */
-    System.out.println("Fields:");
     short fieldCount=buffer.getShort();
     Field [] fields=new Field[fieldCount];
     for(int i=0;i<fieldCount;i++)
-    {
       fields[i]=new Field(constants,buffer);
-      System.out.printf("%d: %s\n",i,fields[i]);
-    }
     /*
      * Get methods
      */
-    System.out.println("Methods:");
     short methodCount=buffer.getShort();
     Method [] methods=new Method[methodCount];
     for(int i=0;i<methodCount;i++)
-    {
       methods[i]=new Method(constants,buffer);
-      System.out.printf("%d: %s\n",i,methods[i]);
-    }
     /*
      * Get attributes
      */
-    System.out.println("Attributes:");
     short attributeCount=buffer.getShort();
     attributes=new Attribute[attributeCount];
     for(int i=0;i<attributeCount;i++)
-    {
       attributes[i]=Attribute.create(constants,buffer);
-      System.out.printf("%d: %s\n",i,attributes[i]);
-    }
     /*
      * Check for end of file
      */
     if(buffer.hasRemaining())
       throw new RuntimeException("Trailing bytes in classfile");
   }
+  /**
+   * Return name of class (in path notation, for example com/mysql/fabric/ServerRole)
+   * @return name of class
+   */
   public String getName()
   {
     return constants[thisClass].toShortString();

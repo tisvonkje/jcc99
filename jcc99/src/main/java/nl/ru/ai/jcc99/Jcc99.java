@@ -84,6 +84,12 @@ public class Jcc99
     /*
      * Load classes
      */
-    ClassLoader classLoder=new ClassLoader(charPath);
+    ClassLoader classLoader=new ClassLoader(charPath);
+    ClassFile mainClass=classLoader.getClass(className.replace('.','/'));
+    if(mainClass==null)
+    {
+      System.err.printf("Error: cannot find class '%s'\n",className);
+      System.exit(1);
+    }
   }
 }
