@@ -177,6 +177,30 @@ public class ClassFile
   }
   
   /**
+   * Collect all classes from the classPath
+   * @param classPath
+   */
+  public static void collectClasses(String classPath)
+  {
+    for(String classPathEntry:classPath)
+    {
+      if(classPathEntry.toLowerCase().endsWith(".jar"))
+      {
+        /*
+         * A jar file, we have to look inside
+         */
+        
+      } else
+      {
+        /*
+         * Assume it is a folder look for the class on the filesystem
+         */
+        
+      }
+    }
+  }
+  
+  /**
    * Try to load class from the classPath
    * @param className
    * @param classPath
@@ -184,10 +208,7 @@ public class ClassFile
    */
   public static ClassFile loadClass(String className,String [] classPath)
   {
-    for(String classPathEntry:classPath)
-    {
-      HERE
-    }
+    
     return null;
   }
 }
