@@ -10,14 +10,19 @@ import nl.ru.ai.jcc99.constants.LongConstant;
 
 public class ClassFile
 {
-  private static final short ACC_PUBLIC=0x0001;
-  private static final short ACC_FINAL=0x0010;
-  private static final short ACC_SUPER=0x0020;
-  private static final short ACC_INTERFACE=0x0200;
-  private static final short ACC_ABSTRACT=0x0400;
-  private static final short ACC_SYNTHETIC=0x1000;
-  private static final short ACC_ANNOTATION=0x2000;
-  private static final short ACC_ENUM=0x4000;
+  public static final short ACC_PUBLIC=0x0001;
+  public static final short ACC_PRIVATE=0x0002;
+  public static final short ACC_PROTECTED=0x0004;
+  public static final short ACC_STATIC=0x0008;
+  public static final short ACC_VOLATILE=0x0040;
+  public static final short ACC_TRANSIENT=0x0080;
+  public static final short ACC_FINAL=0x0010;
+  public static final short ACC_SUPER=0x0020;
+  public static final short ACC_INTERFACE=0x0200;
+  public static final short ACC_ABSTRACT=0x0400;
+  public static final short ACC_SYNTHETIC=0x1000;
+  public static final short ACC_ANNOTATION=0x2000;
+  public static final short ACC_ENUM=0x4000;
   /*
    * https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html
    * javap -c App.class 
@@ -33,6 +38,9 @@ public class ClassFile
   private short thisClass;
   private short superClass;
   private Attribute[] attributes;
+  private short[] interfaces;
+  private Field[] fields;
+  private Method[] methods;
   /*
    * Constructor
    */
@@ -72,21 +80,21 @@ public class ClassFile
      * Get interfaces
      */
     short interfaceCount=buffer.getShort();
-    short [] interfaces=new short[interfaceCount];
+    interfaces=new short[interfaceCount];
     for(int i=0;i<interfaceCount;i++)
       interfaces[i]=buffer.getShort();
     /*
      * Get fields
      */
     short fieldCount=buffer.getShort();
-    Field [] fields=new Field[fieldCount];
+    fields=new Field[fieldCount];
     for(int i=0;i<fieldCount;i++)
       fields[i]=new Field(constants,buffer);
     /*
      * Get methods
      */
     short methodCount=buffer.getShort();
-    Method [] methods=new Method[methodCount];
+    methods=new Method[methodCount];
     for(int i=0;i<methodCount;i++)
       methods[i]=new Method(constants,buffer);
     /*
@@ -109,5 +117,23 @@ public class ClassFile
   public String getName()
   {
     return constants[thisClass].toShortString();
+  }
+  
+  public String toString()
+  {
+    StringBuffer buffer=new StringBuffer();
+    for(Method method:methods)
+    {
+      buffer.append(method.toString());
+      buffer.append('\n');
+    }
+    return new String(buffer);
+  }
+  public Method getMethod(int accessFlags, String name, String descriptor)
+  {
+    for(Method method:methods)
+      if(method.getAccessFlags()==accessFlags && method.getName().equals(name) && method.getDescriptor().equals(descriptor))
+        return method;
+    return null;
   }
 }

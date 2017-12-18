@@ -91,5 +91,14 @@ public class Jcc99
       System.err.printf("Error: cannot find class '%s'\n",className);
       System.exit(1);
     }
+    /*
+     * Get static main method
+     */
+    Method mainMethod=mainClass.getMethod(ClassFile.ACC_PUBLIC|ClassFile.ACC_STATIC,"main","([Ljava/lang/String;)V");
+    if(mainMethod==null)
+    {
+      System.err.printf("Error: cannot find main method in class '%s'\n",className);
+      System.exit(1);
+    }
   }
 }

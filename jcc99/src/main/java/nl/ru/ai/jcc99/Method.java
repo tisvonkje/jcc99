@@ -36,4 +36,19 @@ public class Method
     return String.format("flags=%04x, name=%s, descriptor=%s attributes=%s",accessFlags,constants[nameIndex].toShortString(),constants[descriptorIndex].toShortString(),new String(attr));
   }
 
+  public short getAccessFlags()
+  {
+    return accessFlags;
+  }
+
+  public String getDescriptor()
+  {
+    return constants[descriptorIndex].toShortString();
+  }
+
+  public String getName()
+  {
+    return constants[nameIndex].toShortString();
+  }
+
 }
