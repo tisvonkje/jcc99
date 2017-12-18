@@ -1,11 +1,13 @@
 package nl.ru.ai.jcc99;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.zip.ZipInputStream;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.constants.Constant;
@@ -59,15 +61,8 @@ public class ClassFile
   /*
    * Constructor
    */
-  public ClassFile(String folderName, String classFileName) throws IOException
+  public ClassFile(ByteBuffer buffer) throws IOException
   {
-    File folder=new File(folderName);
-    File file=new File(folderName,classFileName.replace(".","/")+".class");
-    FileInputStream inputStream=new FileInputStream(file);
-    FileChannel channel=inputStream.getChannel();
-    ByteBuffer buffer=ByteBuffer.allocate((int)file.length());
-    channel.read(buffer);
-    buffer.flip();
     magic=buffer.getInt();
     System.out.printf("%04x\n",magic);
     minor=buffer.getShort();
@@ -175,40 +170,8 @@ public class ClassFile
     if(buffer.hasRemaining())
       throw new RuntimeException("Trailing bytes in classfile");
   }
-  
-  /**
-   * Collect all classes from the classPath
-   * @param classPath
-   */
-  public static void collectClasses(String classPath)
+  public String getName()
   {
-    for(String classPathEntry:classPath)
-    {
-      if(classPathEntry.toLowerCase().endsWith(".jar"))
-      {
-        /*
-         * A jar file, we have to look inside
-         */
-        
-      } else
-      {
-        /*
-         * Assume it is a folder look for the class on the filesystem
-         */
-        
-      }
-    }
-  }
-  
-  /**
-   * Try to load class from the classPath
-   * @param className
-   * @param classPath
-   * @return classFile, null if not found
-   */
-  public static ClassFile loadClass(String className,String [] classPath)
-  {
-    
-    return null;
+    return constants[thisClass].toShortString();
   }
 }

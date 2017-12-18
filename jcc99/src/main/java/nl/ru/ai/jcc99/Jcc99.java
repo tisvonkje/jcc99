@@ -80,12 +80,10 @@ public class Jcc99
     /*
      * Get charpath
      */
-    String [] charPath=commandLine.getOptionValue("charpath",".").split(";");
-    ClassFile classFile=ClassFile.loadClass(className,charPath);
-    if(classFile==null)
-    {
-      System.err.printf("Error, cannot find class '%s'\n",className);
-      System.exit(1);
-    }
+    String [] charPath=commandLine.getOptionValue("classpath",".").split(";");
+    /*
+     * Load classes
+     */
+    ClassLoader classLoder=new ClassLoader(charPath);
   }
 }
