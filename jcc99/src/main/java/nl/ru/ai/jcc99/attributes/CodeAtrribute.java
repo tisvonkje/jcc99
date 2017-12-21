@@ -1,17 +1,19 @@
 package nl.ru.ai.jcc99.attributes;
 
 import java.nio.ByteBuffer;
+import java.util.List;
 
 import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.instructions.Instruction;
 
 public class CodeAtrribute extends Attribute
 {
   private short maxStack;
   private short maxLocals;
   private int codeLength;
-  private byte[] code;
   private ExceptionEntry[] exceptions;
   private Attribute[] attributes;
+  private List<Instruction> instructions;
 
   public CodeAtrribute(Constant[] constants, ByteBuffer buffer)
   {
@@ -19,8 +21,9 @@ public class CodeAtrribute extends Attribute
     maxStack=buffer.getShort();
     maxLocals=buffer.getShort();
     codeLength=buffer.getInt();
-    code=new byte[codeLength];
+    byte [] code=new byte[codeLength];
     buffer.get(code);
+    instructions=Instruction.create(constants,ByteBuffer.wrap(code));
     short exceptionTableLength=buffer.getShort();
     exceptions=new ExceptionEntry[exceptionTableLength];
     for(int i=0;i<exceptionTableLength;i++)
@@ -35,10 +38,7 @@ public class CodeAtrribute extends Attribute
   
   public String toString()
   {
-    StringBuffer buffer=new StringBuffer();
-    for(int i=0;i<code.length;i++)
-      buffer.append(String.format("%02x",code[i]));
-    return String.format("Code(maxStack=%d, maxLocals=%d, code=%s)",maxStack,maxLocals,new String(buffer));
+    return String.format("Code(maxStack=%d, maxLocals=%d, code=%s)",maxStack,maxLocals,instructions);
   }
 
 }

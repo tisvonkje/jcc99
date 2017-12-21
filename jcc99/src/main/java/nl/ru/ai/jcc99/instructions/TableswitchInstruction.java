@@ -1,0 +1,39 @@
+package nl.ru.ai.jcc99.instructions;
+
+import java.nio.ByteBuffer;
+
+import nl.ru.ai.jcc99.constants.Constant;
+
+public class TableswitchInstruction extends Instruction
+{
+  private int defaultValue;
+  private int lowValue;
+  private int highValue;
+  private int[] offsets;
+
+  public TableswitchInstruction(Constant[] constants, ByteBuffer buffer)
+  {
+    super(constants);
+    /*
+     * This instruction is tricky there can be some padding here, depending on the position of the bytecode
+     */
+    switch(buffer.position()%4)
+    {
+      case 1:
+        buffer.get();
+      case 2:
+        buffer.get();
+      case 3:
+        buffer.get();
+      case 0:
+        break;
+    }
+    defaultValue=buffer.getInt();
+    lowValue=buffer.getInt();
+    highValue=buffer.getInt();
+    offsets=new int[highValue-lowValue+1];
+    for(int i=0;i<offsets.length;i++)
+      offsets[i]=buffer.getInt();
+  }
+
+}
