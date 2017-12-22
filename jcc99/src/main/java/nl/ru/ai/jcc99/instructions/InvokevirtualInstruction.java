@@ -11,5 +11,10 @@ public class InvokevirtualInstruction extends Instruction
     super(constants);
     this.methodIndex=methodIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("invokevirtual %d (%s),%d,%d",methodIndex,constants[methodIndex].toShortString());
+  }
 
 }

@@ -11,5 +11,10 @@ public class NewarrayInstruction extends Instruction
     super(constants);
     this.type=type;
   }
+  
+  public String toString()
+  {
+    return String.format("newarray %d",type);
+  }
 
 }

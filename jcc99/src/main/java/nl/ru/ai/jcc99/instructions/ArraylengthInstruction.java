@@ -9,5 +9,9 @@ public class ArraylengthInstruction extends Instruction
   {
     super(constants);
   }
-
+  
+  public String toString()
+  {
+    return "arraylength";
+  }
 }

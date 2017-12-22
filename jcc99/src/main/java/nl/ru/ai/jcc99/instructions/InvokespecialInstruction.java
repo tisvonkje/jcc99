@@ -11,5 +11,10 @@ public class InvokespecialInstruction extends Instruction
     super(constants);
     this.methodIndex=methodIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("invokespecial %d (%s),%d,%d",methodIndex,constants[methodIndex].toShortString());
+  }
 
 }

@@ -13,5 +13,10 @@ public class IfInstruction extends Instruction
     this.condition=condition;
     this.offset=offset;
   }
+  
+  public String toString()
+  {
+    return "if"+condition.toString().toLowerCase()+" "+offset;
+  }
 
 }

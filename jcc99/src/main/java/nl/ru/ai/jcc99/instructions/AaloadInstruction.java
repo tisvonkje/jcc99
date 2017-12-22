@@ -9,5 +9,10 @@ public class AaloadInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "aaload";
+  }
 
 }

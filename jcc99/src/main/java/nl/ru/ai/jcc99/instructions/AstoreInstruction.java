@@ -4,12 +4,16 @@ import nl.ru.ai.jcc99.constants.Constant;
 
 public class AstoreInstruction extends Instruction
 {
-  private int value;
+  private int local;
 
-  public AstoreInstruction(Constant[] constants, int value)
+  public AstoreInstruction(Constant[] constants, int local)
   {
     super(constants);
-    this.value=value;
+    this.local=local;
   }
-
+  
+  public String toString()
+  {
+    return String.format("astore %d",local);
+  }
 }

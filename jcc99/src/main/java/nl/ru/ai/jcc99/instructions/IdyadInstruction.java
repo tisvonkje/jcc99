@@ -11,5 +11,10 @@ public class IdyadInstruction extends Instruction
     super(constants);
     this.operator=operator;
   }
+  
+  public String toString()
+  {
+    return "l"+operator.toString().toLowerCase();
+  }
 
 }

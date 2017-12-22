@@ -10,4 +10,8 @@ public class AthrowInstruction extends Instruction
     super(constants);
   }
 
+  public String toString()
+  {
+    return "athrow";
+  }
 }

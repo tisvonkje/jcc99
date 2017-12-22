@@ -9,5 +9,10 @@ public class BaloadInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "baload";
+  }
 
 }

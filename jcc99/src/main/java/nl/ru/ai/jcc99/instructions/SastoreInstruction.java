@@ -9,4 +9,9 @@ public class SastoreInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "sastore";
+  }
 }

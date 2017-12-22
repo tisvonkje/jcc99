@@ -11,5 +11,10 @@ public class CheckcastInstruction extends Instruction
     super(constants);
     this.classIndex=classIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("checkcast %d (%s)",classIndex,constants[classIndex].toShortString());
+  }
 
 }

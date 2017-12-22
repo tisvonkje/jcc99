@@ -12,4 +12,8 @@ public class LdcWInstruction extends Instruction
     this.index=index;
   }
 
+  public String toString()
+  {
+    return String.format("ldc_w %d (%s)",index,constants[index].toShortString());
+  }
 }

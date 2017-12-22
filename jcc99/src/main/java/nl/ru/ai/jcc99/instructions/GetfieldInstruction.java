@@ -11,5 +11,10 @@ public class GetfieldInstruction extends Instruction
     super(constants);
     this.fieldIndex=fieldIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("getfield %d (%s)",fieldIndex,constants[fieldIndex].toShortString());
+  }
 
 }

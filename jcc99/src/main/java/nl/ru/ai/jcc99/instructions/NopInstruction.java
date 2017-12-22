@@ -9,5 +9,10 @@ public class NopInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "nop";
+  }
 
 }

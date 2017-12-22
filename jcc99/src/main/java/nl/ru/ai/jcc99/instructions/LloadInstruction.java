@@ -11,5 +11,10 @@ public class LloadInstruction extends Instruction
     super(constants);
     this.local=local;
   }
+  
+  public String toString()
+  {
+    return String.format("lload %d",local);
+  }
 
 }

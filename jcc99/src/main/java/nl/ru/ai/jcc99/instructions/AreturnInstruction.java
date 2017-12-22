@@ -10,4 +10,8 @@ public class AreturnInstruction extends Instruction
     super(constants);
   }
 
+  public String toString()
+  {
+    return "areturn";
+  }
 }

@@ -13,5 +13,10 @@ public class IfIcmpInstruction extends Instruction
     this.condition=condition;
     this.offset=offset;
   }
+  
+  public String toString()
+  {
+    return "if_icmp"+condition.toString().toLowerCase()+" "+offset;
+  }
 
 }

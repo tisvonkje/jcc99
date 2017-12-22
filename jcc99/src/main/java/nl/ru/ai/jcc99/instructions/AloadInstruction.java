@@ -12,4 +12,9 @@ public class AloadInstruction extends Instruction
     this.local=local;
   }
 
+  public String toString()
+  {
+    return String.format("aload %d",local);
+  }
+
 }

@@ -11,5 +11,10 @@ public class PutfieldInstruction extends Instruction
     super(constants);
     this.fieldIndex=fieldIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("putfield %d (%s)",fieldIndex,constants[fieldIndex].toShortString());
+  }
 
 }

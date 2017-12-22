@@ -9,5 +9,10 @@ public class AconstNullInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "aconst_null";
+  }
 
 }

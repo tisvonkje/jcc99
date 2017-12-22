@@ -14,4 +14,8 @@ public class IincInstruction extends Instruction
     this.value=value;
   }
 
+  public String toString()
+  {
+    return String.format("iinc %d,%d",local,value);
+  }
 }

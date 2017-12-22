@@ -9,5 +9,10 @@ public class IastoreInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "iastore";
+  }
 
 }

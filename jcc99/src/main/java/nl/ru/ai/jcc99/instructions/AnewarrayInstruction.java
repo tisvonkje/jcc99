@@ -11,5 +11,10 @@ public class AnewarrayInstruction extends Instruction
     super(constants);
     this.componentTypeIndex=componentTypeIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("anewarray %d (%s)",componentTypeIndex,constants[componentTypeIndex].toShortString());
+  }
 
 }

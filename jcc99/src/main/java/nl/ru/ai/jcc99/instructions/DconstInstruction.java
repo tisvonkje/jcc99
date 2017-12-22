@@ -11,5 +11,10 @@ public class DconstInstruction extends Instruction
     super(constants);
     this.value=value;
   }
+  
+  public String toString()
+  {
+    return String.format("dconst %f",value);
+  }
 
 }

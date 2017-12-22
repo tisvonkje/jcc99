@@ -9,5 +9,10 @@ public class PopInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "pop";
+  }
 
 }

@@ -11,5 +11,10 @@ public class PutstaticInstruction extends Instruction
     super(constants);
     this.fieldIndex=fieldIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("putstatic %d (%s)",fieldIndex,constants[fieldIndex].toShortString());
+  }
 
 }

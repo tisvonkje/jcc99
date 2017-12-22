@@ -9,5 +9,10 @@ public class DupInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "dup";
+  }
 
 }

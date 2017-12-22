@@ -9,5 +9,10 @@ public class IaloadInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "iaload";
+  }
 
 }

@@ -11,5 +11,10 @@ public class NewInstruction extends Instruction
     super(constants);
     this.classIndex=classIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("new %d (%s)",classIndex,constants[classIndex].toShortString());
+  }
 
 }

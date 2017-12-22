@@ -11,5 +11,10 @@ public class Ldc2WInstruction extends Instruction
     super(constants);
     this.index=index;
   }
+  
+  public String toString()
+  {
+    return String.format("ldc2_w %d (%s)",index,constants[index].toShortString());
+  }
 
 }

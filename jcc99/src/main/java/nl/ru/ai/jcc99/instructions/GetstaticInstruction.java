@@ -11,5 +11,10 @@ public class GetstaticInstruction extends Instruction
     super(constants);
     this.fieldIndex=fieldIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("getstatic %d (%s)",fieldIndex,constants[fieldIndex].toShortString());
+  }
 
 }

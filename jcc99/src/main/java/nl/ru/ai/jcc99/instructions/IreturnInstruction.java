@@ -9,5 +9,10 @@ public class IreturnInstruction extends Instruction
   {
     super(constants);
   }
+  
+  public String toString()
+  {
+    return "ireturn";
+  }
 
 }

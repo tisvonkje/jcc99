@@ -11,5 +11,10 @@ public class SipushInstruction extends Instruction
     super(constants);
     this.value=value;
   }
+  
+  public String toString()
+  {
+    return String.format("sipush %d",value);
+  }
 
 }

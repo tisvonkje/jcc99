@@ -11,5 +11,10 @@ public class InstanceofInstruction extends Instruction
     super(constants);
     this.classIndex=classIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("instanceof %d (%s)",classIndex,constants[classIndex].toShortString());
+  }
 
 }

@@ -11,5 +11,10 @@ public class InvokestaticInstruction extends Instruction
     super(constants);
     this.methodIndex=methodIndex;
   }
+  
+  public String toString()
+  {
+    return String.format("invokestatic %d (%s),%d,%d",methodIndex,constants[methodIndex].toShortString());
+  }
 
 }
