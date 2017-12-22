@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.ru.ai.jcc99.PrimitiveType;
 import nl.ru.ai.jcc99.constants.Constant;
 /**
  * https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings
@@ -74,6 +75,10 @@ public abstract class Instruction
         case 0x15:
           instruction=new IloadInstruction(constants,buffer.get()&0xff);
           break;
+        case 0x16: //TODO MISSING
+        case 0x17: //TODO MISSING
+        case 0x18: //TODO MISSING
+          break;
         case 0x19:
           instruction=new AloadInstruction(constants,buffer.get()&0xff);
           break;
@@ -139,6 +144,8 @@ public abstract class Instruction
           break;
         case 0x38:
           instruction=new FstoreInstruction(constants,buffer.get()&0xff);
+          break;
+        case 0x39: //TODO MISSING
           break;
         case 0x3a:
           instruction=new AstoreInstruction(constants,buffer.get()&0xff);
@@ -220,6 +227,8 @@ public abstract class Instruction
           break;
         case 0x5e:
           instruction=new Dup2X2Instruction(constants);
+          break;
+        case 0x5f: // TODO MISSING
           break;
         case 0x60:
           instruction=new IdyadInstruction(constants,Operator.ADD);
@@ -374,6 +383,8 @@ public abstract class Instruction
         case 0x92:
           instruction=new ConvertInstruction(constants,Conversion.I2C);
           break;
+        case 0x93: //TODO MISSING
+          break;
         case 0x94:
           instruction=new LcmpInstruction(constants);
           break;
@@ -493,7 +504,7 @@ public abstract class Instruction
           instruction=new NewInstruction(constants,buffer.getShort()&0xffff);
           break;
         case 0xbc:
-          instruction=new NewarrayInstruction(constants,buffer.get());
+          instruction=new NewarrayInstruction(constants,PrimitiveType.values()[buffer.get()]);
           break;
         case 0xbd:
           instruction=new AnewarrayInstruction(constants,buffer.getShort()&0xffff);

@@ -1,12 +1,13 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.PrimitiveType;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class NewarrayInstruction extends Instruction
 {
-  private byte type;
+  private PrimitiveType type;
 
-  public NewarrayInstruction(Constant[] constants, byte type)
+  public NewarrayInstruction(Constant[] constants, PrimitiveType type)
   {
     super(constants);
     this.type=type;
@@ -14,7 +15,7 @@ public class NewarrayInstruction extends Instruction
   
   public String toString()
   {
-    return String.format("newarray %d",type);
+    return String.format("newarray %s",type.toString());
   }
 
 }
