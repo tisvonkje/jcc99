@@ -5,7 +5,7 @@ import nl.ru.ai.jcc99.constants.Constant;
 
 public class LoadInstruction extends Instruction
 {
-  private Type type;
+  private Type type; // Allowed: INT, LONG, FLOAT, DOUBLE, REF
   private int local;
 
   public LoadInstruction(Constant[] constants, Type type, int local)

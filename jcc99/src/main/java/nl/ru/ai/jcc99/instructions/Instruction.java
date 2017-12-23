@@ -118,28 +118,28 @@ public abstract class Instruction
           instruction=new LoadInstruction(constants,Type.REF,b-0x2a);
           break;
         case 0x2e:
-          instruction=new IaloadInstruction(constants);
+          instruction=new AloadInstruction(constants,Type.INT);
           break;
         case 0x2f:
-          instruction=new LaloadInstruction(constants);
+          instruction=new AloadInstruction(constants,Type.LONG);
           break;
         case 0x30:
-          instruction=new FaloadInstruction(constants);
+          instruction=new AloadInstruction(constants,Type.FLOAT);
           break;
         case 0x31:
-          instruction=new DaloadInstruction(constants);
+          instruction=new AloadInstruction(constants,Type.DOUBLE);
           break;
         case 0x32:
-          instruction=new AaloadInstruction(constants);
+          instruction=new AloadInstruction(constants,Type.REF);
           break;
         case 0x33:
-          instruction=new BaloadInstruction(constants);
+          instruction=new AloadInstruction(constants,Type.BOOLEAN);
           break;
         case 0x34:
-          instruction=new CaloadInstruction(constants);
+          instruction=new AloadInstruction(constants,Type.CHAR);
           break;
         case 0x35:
-          instruction=new SaloadInstruction(constants);
+          instruction=new AloadInstruction(constants,Type.SHORT);
           break;
         case 0x36:
           instruction=new StoreInstruction(constants,Type.INT,buffer.get()&0xff);
@@ -187,28 +187,28 @@ public abstract class Instruction
           instruction=new StoreInstruction(constants,Type.REF,b-0x4b);
           break;
         case 0x4f:
-          instruction=new IastoreInstruction(constants);
+          instruction=new AstoreInstruction(constants,Type.INT);
           break;
         case 0x50:
-          instruction=new LastoreInstruction(constants);
+          instruction=new AstoreInstruction(constants,Type.LONG);
           break;
         case 0x51:
-          instruction=new FastoreInstruction(constants);
+          instruction=new AstoreInstruction(constants,Type.FLOAT);
           break;
         case 0x52:
-          instruction=new DastoreInstruction(constants);
+          instruction=new AstoreInstruction(constants,Type.DOUBLE);
           break;
         case 0x53:
-          instruction=new AastoreInstruction(constants);
+          instruction=new AstoreInstruction(constants,Type.REF);
           break;
         case 0x54:
-          instruction=new BastoreInstruction(constants);
+          instruction=new AstoreInstruction(constants,Type.BOOLEAN);
           break;
         case 0x55:
-          instruction=new CastoreInstruction(constants);
+          instruction=new AstoreInstruction(constants,Type.CHAR);
           break;
         case 0x56:
-          instruction=new SastoreInstruction(constants);
+          instruction=new AstoreInstruction(constants,Type.SHORT);
           break;
         case 0x57:
           instruction=new PopInstruction(constants);

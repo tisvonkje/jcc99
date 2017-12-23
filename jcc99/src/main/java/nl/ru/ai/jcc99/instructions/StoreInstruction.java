@@ -5,7 +5,7 @@ import nl.ru.ai.jcc99.constants.Constant;
 
 public class StoreInstruction extends Instruction
 {
-  private Type type;
+  private Type type; // Allowed: INT, LONG, FLOAT, DOUBLE, REF
   private int local;
 
   public StoreInstruction(Constant[] constants, Type type, int local)
