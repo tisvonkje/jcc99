@@ -3,19 +3,21 @@ package nl.ru.ai.jcc99.instructions;
 import nl.ru.ai.jcc99.Type;
 import nl.ru.ai.jcc99.constants.Constant;
 
-public class NewarrayInstruction extends Instruction
+public class LoadInstruction extends Instruction
 {
   private Type type;
+  private int local;
 
-  public NewarrayInstruction(Constant[] constants, Type type)
+  public LoadInstruction(Constant[] constants, Type type, int local)
   {
     super(constants);
     this.type=type;
+    this.local=local;
   }
   
   public String toString()
   {
-    return String.format("newarray %s",type.toString());
+    return String.format("%sload %d",type.toString(),local);
   }
 
 }

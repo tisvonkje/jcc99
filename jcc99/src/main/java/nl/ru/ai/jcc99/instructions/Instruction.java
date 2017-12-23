@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.ru.ai.jcc99.PrimitiveType;
+import nl.ru.ai.jcc99.Type;
 import nl.ru.ai.jcc99.constants.Constant;
 /**
  * https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings
@@ -73,44 +73,49 @@ public abstract class Instruction
           instruction=new Ldc2WInstruction(constants,buffer.getShort()&0xffff);
           break;
         case 0x15:
-          instruction=new IloadInstruction(constants,buffer.get()&0xff);
+          instruction=new LoadInstruction(constants,Type.INT,buffer.get()&0xff);
           break;
-        case 0x16: //TODO MISSING
-        case 0x17: //TODO MISSING
-        case 0x18: //TODO MISSING
+        case 0x16:
+          instruction=new LoadInstruction(constants,Type.LONG,buffer.get()&0xff);
+          break;
+        case 0x17:
+          instruction=new LoadInstruction(constants,Type.FLOAT,buffer.get()&0xff);
+          break;
+        case 0x18:
+          instruction=new LoadInstruction(constants,Type.DOUBLE,buffer.get()&0xff);
           break;
         case 0x19:
-          instruction=new AloadInstruction(constants,buffer.get()&0xff);
+          instruction=new LoadInstruction(constants,Type.REF,buffer.get()&0xff);
           break;
         case 0x1a:
         case 0x1b:
         case 0x1c:
         case 0x1d:
-          instruction=new IloadInstruction(constants,b-0x1a);
+          instruction=new LoadInstruction(constants,Type.INT,b-0x1a);
           break;
         case 0x1e:
         case 0x1f:
         case 0x20:
         case 0x21:
-          instruction=new LloadInstruction(constants,b-0x1e);
+          instruction=new LoadInstruction(constants,Type.LONG,b-0x1e);
           break;
         case 0x22:
         case 0x23:
         case 0x24:
         case 0x25:
-          instruction=new FloadInstruction(constants,b-0x24);
+          instruction=new LoadInstruction(constants,Type.FLOAT,b-0x24);
           break;
         case 0x26:
         case 0x27:
         case 0x28:
         case 0x29:
-          instruction=new DloadInstruction(constants,b-0x26);
+          instruction=new LoadInstruction(constants,Type.DOUBLE,b-0x26);
           break;
         case 0x2a:
         case 0x2b:
         case 0x2c:
         case 0x2d:
-          instruction=new AloadInstruction(constants,b-0x2a);
+          instruction=new LoadInstruction(constants,Type.REF,b-0x2a);
           break;
         case 0x2e:
           instruction=new IaloadInstruction(constants);
@@ -145,7 +150,8 @@ public abstract class Instruction
         case 0x38:
           instruction=new FstoreInstruction(constants,buffer.get()&0xff);
           break;
-        case 0x39: //TODO MISSING
+        case 0x39: 
+          instruction=new DstoreInstruction(constants,buffer.get()&0xff);
           break;
         case 0x3a:
           instruction=new AstoreInstruction(constants,buffer.get()&0xff);
@@ -383,7 +389,8 @@ public abstract class Instruction
         case 0x92:
           instruction=new ConvertInstruction(constants,Conversion.I2C);
           break;
-        case 0x93: //TODO MISSING
+        case 0x93:
+          instruction=new ConvertInstruction(constants,Conversion.I2S);
           break;
         case 0x94:
           instruction=new LcmpInstruction(constants);
@@ -504,7 +511,7 @@ public abstract class Instruction
           instruction=new NewInstruction(constants,buffer.getShort()&0xffff);
           break;
         case 0xbc:
-          instruction=new NewarrayInstruction(constants,PrimitiveType.values()[buffer.get()]);
+          instruction=new NewarrayInstruction(constants,Type.values()[buffer.get()]);
           break;
         case 0xbd:
           instruction=new AnewarrayInstruction(constants,buffer.getShort()&0xffff);
