@@ -150,7 +150,7 @@ public abstract class Instruction
         case 0x38:
           instruction=new FstoreInstruction(constants,buffer.get()&0xff);
           break;
-        case 0x39: 
+        case 0x39:
           instruction=new DstoreInstruction(constants,buffer.get()&0xff);
           break;
         case 0x3a:
@@ -528,11 +528,34 @@ public abstract class Instruction
         case 0xc1:
           instruction=new InstanceofInstruction(constants,buffer.getShort()&0xffff);
           break;
-        case 0xc2: //TODO monitorenter
+        case 0xc2:
+          instruction=new MonitorEnterInstruction(constants);
           break;
-        case 0xc3: //TODO monitorexit
+        case 0xc3:
+          instruction=new MonitorExitInstructions(constants);
           break;
-        case 0xc4: //TODO wide
+        case 0xc4:
+          int subCode=buffer.get();
+          switch(subCode)
+          {
+            case 0x15:
+              instruction=new LoadInstruction(constants,Type.INT,buffer.getShort()&0xffff);
+              break;
+            case 0x16:
+              instruction=new LoadInstruction(constants,Type.LONG,buffer.getShort()&0xffff);
+              break;
+            case 0x17:
+              instruction=new LoadInstruction(constants,Type.FLOAT,buffer.getShort()&0xffff);
+              break;
+            case 0x18:
+              instruction=new LoadInstruction(constants,Type.DOUBLE,buffer.getShort()&0xffff);
+              break;
+            case 0x19:
+              instruction=new LoadInstruction(constants,Type.REF,buffer.getShort()&0xffff);
+              break;
+            default:
+              throw new RuntimeException(String.format("invalid wide sub opcode '%02x'",subCode));
+          }
           break;
         case 0xc5: //TODO multianewarray
           break;
