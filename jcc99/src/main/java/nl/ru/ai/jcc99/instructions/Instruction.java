@@ -142,49 +142,49 @@ public abstract class Instruction
           instruction=new SaloadInstruction(constants);
           break;
         case 0x36:
-          instruction=new IstoreInstruction(constants,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,Type.INT,buffer.get()&0xff);
           break;
         case 0x37:
-          instruction=new LstoreInstruction(constants,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,Type.LONG,buffer.get()&0xff);
           break;
         case 0x38:
-          instruction=new FstoreInstruction(constants,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,Type.FLOAT,buffer.get()&0xff);
           break;
         case 0x39:
-          instruction=new DstoreInstruction(constants,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,Type.DOUBLE,buffer.get()&0xff);
           break;
         case 0x3a:
-          instruction=new AstoreInstruction(constants,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,Type.REF,buffer.get()&0xff);
           break;
         case 0x3b:
         case 0x3c:
         case 0x3d:
         case 0x3e:
-          instruction=new IstoreInstruction(constants,b-0x3b);
+          instruction=new StoreInstruction(constants,Type.INT,b-0x3b);
           break;
         case 0x3f:
         case 0x40:
         case 0x41:
         case 0x42:
-          instruction=new LstoreInstruction(constants,b-0x3f);
+          instruction=new StoreInstruction(constants,Type.LONG,b-0x3f);
           break;
         case 0x43:
         case 0x44:
         case 0x45:
         case 0x46:
-          instruction=new FstoreInstruction(constants,b-0x43);
+          instruction=new StoreInstruction(constants,Type.FLOAT,b-0x43);
           break;
         case 0x47:
         case 0x48:
         case 0x49:
         case 0x4a:
-          instruction=new DstoreInstruction(constants,b-0x47);
+          instruction=new StoreInstruction(constants,Type.DOUBLE,b-0x47);
           break;
         case 0x4b:
         case 0x4c:
         case 0x4d:
         case 0x4e:
-          instruction=new AstoreInstruction(constants,b-0x4b);
+          instruction=new StoreInstruction(constants,Type.REF,b-0x4b);
           break;
         case 0x4f:
           instruction=new IastoreInstruction(constants);
@@ -234,7 +234,8 @@ public abstract class Instruction
         case 0x5e:
           instruction=new Dup2X2Instruction(constants);
           break;
-        case 0x5f: // TODO MISSING
+        case 0x5f:
+          instruction=new SwapInstruction(constants);
           break;
         case 0x60:
           instruction=new IdyadInstruction(constants,Operator.ADD);
@@ -455,12 +456,14 @@ public abstract class Instruction
         case 0xa8:
           instruction=new JsrInstruction(constants,buffer.getShort());
           break;
-        case 0xa9: //TODO ret
+        case 0xa9:
+          instruction=new RetInstruction(constants,buffer.get()&0xff);
           break;
         case 0xaa:
           instruction=new TableswitchInstruction(constants,buffer);
           break;
-        case 0xab: //TODO lookupswitch
+        case 0xab:
+          instruction=new Lookupswitch(constants,buffer);
           break;
         case 0xac:
           instruction=new IreturnInstruction(constants);
@@ -553,11 +556,33 @@ public abstract class Instruction
             case 0x19:
               instruction=new LoadInstruction(constants,Type.REF,buffer.getShort()&0xffff);
               break;
+            case 0x36:
+              instruction=new StoreInstruction(constants,Type.INT,buffer.getShort()&0xffff);
+              break;
+            case 0x37:
+              instruction=new StoreInstruction(constants,Type.LONG,buffer.getShort()&0xffff);
+              break;
+            case 0x38:
+              instruction=new StoreInstruction(constants,Type.FLOAT,buffer.getShort()&0xffff);
+              break;
+            case 0x39:
+              instruction=new StoreInstruction(constants,Type.DOUBLE,buffer.getShort()&0xffff);
+              break;
+            case 0x3a:
+              instruction=new StoreInstruction(constants,Type.REF,buffer.getShort()&0xffff);
+              break;
+            case 0x84:
+              instruction=new IincInstruction(constants,buffer.getShort()&0xffff,buffer.getShort());
+              break;
+            case 0xa9:
+              instruction=new RetInstruction(constants,buffer.getShort()&0xffff);
+              break;
             default:
               throw new RuntimeException(String.format("invalid wide sub opcode '%02x'",subCode));
           }
           break;
-        case 0xc5: //TODO multianewarray
+        case 0xc5:
+          instruction=new Multianewarray(constants,buffer.getShort(),buffer.get()&0xff);
           break;
         case 0xc6:
           instruction=new IfInstruction(constants,Condition.NULL,buffer.getShort());

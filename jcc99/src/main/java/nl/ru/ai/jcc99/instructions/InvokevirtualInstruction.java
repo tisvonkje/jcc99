@@ -14,7 +14,7 @@ public class InvokevirtualInstruction extends Instruction
   
   public String toString()
   {
-    return String.format("invokevirtual %d (%s),%d,%d",methodIndex,constants[methodIndex].toShortString());
+    return String.format("invokevirtual %d (%s)",methodIndex,constants[methodIndex].toShortString());
   }
 
 }

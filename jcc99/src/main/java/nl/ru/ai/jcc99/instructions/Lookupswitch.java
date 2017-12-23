@@ -4,14 +4,12 @@ import java.nio.ByteBuffer;
 
 import nl.ru.ai.jcc99.constants.Constant;
 
-public class TableswitchInstruction extends Instruction
+public class Lookupswitch extends Instruction
 {
   private int defaultValue;
-  private int lowValue;
-  private int highValue;
-  private int[] offsets;
+  private Pair[] pairs;
 
-  public TableswitchInstruction(Constant[] constants, ByteBuffer buffer)
+  public Lookupswitch(Constant[] constants, ByteBuffer buffer)
   {
     super(constants);
     /*
@@ -29,16 +27,15 @@ public class TableswitchInstruction extends Instruction
         break;
     }
     defaultValue=buffer.getInt();
-    lowValue=buffer.getInt();
-    highValue=buffer.getInt();
-    offsets=new int[highValue-lowValue+1];
-    for(int i=0;i<offsets.length;i++)
-      offsets[i]=buffer.getInt();
+    int npairs=buffer.getInt();
+    pairs=new Pair[npairs];
+    for(int i=0;i<pairs.length;i++)
+      pairs[i]=new Pair(buffer.getInt(),buffer.getInt());
   }
   
   public String toString()
   {
-    return String.format("tableswitch %d, %d, %d, %s",defaultValue,lowValue,highValue,offsets);
+    return String.format("lookupswitch %d,%s",defaultValue,pairs);
   }
 
 }
