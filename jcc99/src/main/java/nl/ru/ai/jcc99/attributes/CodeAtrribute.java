@@ -10,7 +10,6 @@ public class CodeAtrribute extends Attribute
 {
   private short maxStack;
   private short maxLocals;
-  private int codeLength;
   private ExceptionEntry[] exceptions;
   private Attribute[] attributes;
   private List<Instruction> instructions;
@@ -20,7 +19,7 @@ public class CodeAtrribute extends Attribute
     super(constants);
     maxStack=buffer.getShort();
     maxLocals=buffer.getShort();
-    codeLength=buffer.getInt();
+    int codeLength=buffer.getInt();
     byte [] code=new byte[codeLength];
     buffer.get(code);
     instructions=Instruction.create(constants,ByteBuffer.wrap(code));
@@ -38,7 +37,16 @@ public class CodeAtrribute extends Attribute
   
   public String toString()
   {
-    return String.format("Code(maxStack=%d, maxLocals=%d, code=%s)",maxStack,maxLocals,instructions);
+    StringBuffer buffer=new StringBuffer();
+    buffer.append('[');
+    for(int i=0;i<attributes.length;i++)
+    {
+      buffer.append(attributes[i]);
+      if(i!=attributes.length-1)
+        buffer.append(',');
+    }
+    buffer.append(']');
+    return String.format("Code(maxStack=%d, maxLocals=%d, code=%s, attributes=%s)",maxStack,maxLocals,instructions,new String(buffer));
   }
 
 }
