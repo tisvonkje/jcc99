@@ -20,7 +20,7 @@ public enum Type {
       case INT:
         return "i";
       case LONG:
-        return "f";
+        return "l";
       case REF:
         return "a";
       default:
