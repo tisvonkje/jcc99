@@ -238,64 +238,64 @@ public abstract class Instruction
           instruction=new SwapInstruction(constants);
           break;
         case 0x60:
-          instruction=new IdyadInstruction(constants,Operator.ADD);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.ADD);
           break;
         case 0x61:
-          instruction=new LdyadInstruction(constants,Operator.ADD);
+          instruction=new DyadInstruction(constants,Type.LONG,Operator.ADD);
           break;
         case 0x62:
-          instruction=new FdyadInstruction(constants,Operator.ADD);
+          instruction=new DyadInstruction(constants,Type.FLOAT,Operator.ADD);
           break;
         case 0x63:
-          instruction=new DdyadInstruction(constants,Operator.ADD);
+          instruction=new DyadInstruction(constants,Type.DOUBLE, Operator.ADD);
           break;
         case 0x64:
-          instruction=new IdyadInstruction(constants,Operator.SUB);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.SUB);
           break;
         case 0x65:
-          instruction=new LdyadInstruction(constants,Operator.SUB);
+          instruction=new DyadInstruction(constants,Type.LONG,Operator.SUB);
           break;
         case 0x66:
-          instruction=new FdyadInstruction(constants,Operator.SUB);
+          instruction=new DyadInstruction(constants,Type.FLOAT, Operator.SUB);
           break;
         case 0x67:
-          instruction=new DdyadInstruction(constants,Operator.SUB);
+          instruction=new DyadInstruction(constants,Type.DOUBLE, Operator.SUB);
           break;
         case 0x68:
-          instruction=new IdyadInstruction(constants,Operator.MUL);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.MUL);
           break;
         case 0x69:
-          instruction=new LdyadInstruction(constants,Operator.MUL);
+          instruction=new DyadInstruction(constants,Type.LONG,Operator.MUL);
           break;
         case 0x6a:
-          instruction=new FdyadInstruction(constants,Operator.MUL);
+          instruction=new DyadInstruction(constants,Type.FLOAT,Operator.MUL);
           break;
         case 0x6b:
-          instruction=new DdyadInstruction(constants,Operator.MUL);
+          instruction=new DyadInstruction(constants,Type.DOUBLE, Operator.MUL);
           break;
         case 0x6c:
-          instruction=new IdyadInstruction(constants,Operator.DIV);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.DIV);
           break;
         case 0x6d:
-          instruction=new LdyadInstruction(constants,Operator.DIV);
+          instruction=new DyadInstruction(constants,Type.LONG,Operator.DIV);
           break;
         case 0x6e:
-          instruction=new FdyadInstruction(constants,Operator.DIV);
+          instruction=new DyadInstruction(constants,Type.FLOAT,Operator.DIV);
           break;
         case 0x6f:
-          instruction=new DdyadInstruction(constants,Operator.DIV);
+          instruction=new DyadInstruction(constants,Type.DOUBLE, Operator.DIV);
           break;
         case 0x70:
-          instruction=new IdyadInstruction(constants,Operator.REM);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.REM);
           break;
         case 0x71:
-          instruction=new LdyadInstruction(constants,Operator.REM);
+          instruction=new DyadInstruction(constants,Type.LONG,Operator.REM);
           break;
         case 0x72:
-          instruction=new FdyadInstruction(constants,Operator.REM);
+          instruction=new DyadInstruction(constants,Type.FLOAT,Operator.REM);
           break;
         case 0x73:
-          instruction=new DdyadInstruction(constants,Operator.REM);
+          instruction=new DyadInstruction(constants,Type.DOUBLE,Operator.REM);
           break;
         case 0x74:
           instruction=new InegInstruction(constants);
@@ -310,40 +310,40 @@ public abstract class Instruction
           instruction=new DnegInstruction(constants);
           break;
         case 0x78:
-          instruction=new IdyadInstruction(constants,Operator.SHL);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.SHL);
           break;
         case 0x79:
-          instruction=new LdyadInstruction(constants,Operator.SHL);
+          instruction=new DyadInstruction(constants,Type.LONG,Operator.SHL);
           break;
         case 0x7a:
-          instruction=new IdyadInstruction(constants,Operator.SHR);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.SHR);
           break;
         case 0x7b:
-          instruction=new LdyadInstruction(constants,Operator.SHR);
+          instruction=new DyadInstruction(constants,Type.LONG, Operator.SHR);
           break;
         case 0x7c:
-          instruction=new IdyadInstruction(constants,Operator.USHR);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.USHR);
           break;
         case 0x7d:
-          instruction=new LdyadInstruction(constants,Operator.USHR);
+          instruction=new DyadInstruction(constants,Type.LONG, Operator.USHR);
           break;
         case 0x7e:
-          instruction=new IdyadInstruction(constants,Operator.AND);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.AND);
           break;
         case 0x7f:
-          instruction=new LdyadInstruction(constants,Operator.AND);
+          instruction=new DyadInstruction(constants,Type.LONG, Operator.AND);
           break;
         case 0x80:
-          instruction=new IdyadInstruction(constants,Operator.OR);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.OR);
           break;
         case 0x81:
-          instruction=new LdyadInstruction(constants,Operator.OR);
+          instruction=new DyadInstruction(constants,Type.LONG, Operator.OR);
           break;
         case 0x82:
-          instruction=new IdyadInstruction(constants,Operator.XOR);
+          instruction=new DyadInstruction(constants,Type.INT, Operator.XOR);
           break;
         case 0x83:
-          instruction=new LdyadInstruction(constants,Operator.XOR);
+          instruction=new DyadInstruction(constants,Type.LONG, Operator.XOR);
           break;
         case 0x84:
           instruction=new IincInstruction(constants,buffer.get()&0xff,buffer.get());
