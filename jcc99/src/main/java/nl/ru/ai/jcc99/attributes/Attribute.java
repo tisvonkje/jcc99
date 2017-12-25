@@ -26,6 +26,8 @@ public abstract class Attribute
       return new CodeAtrribute(constants,sub);
     if("SourceFile".equals(attributeName))
       return new SourceFileAttribute(constants,sub);
+    else if("LocalVariableTable".equals(attributeName))
+      return new LocalVariableTableAttribute(constants,sub);
     else
       return new CustomAttribute(constants,attributeName,sub);
   }
