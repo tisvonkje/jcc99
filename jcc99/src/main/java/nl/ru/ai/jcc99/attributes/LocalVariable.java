@@ -11,7 +11,7 @@ public class LocalVariable
   private int length;
   private int nameIndex;
   private int descriptorIndex;
-  private int index;
+  private int index; // index of the local variable, note is is not the same as the array index since double/long variables span two variable slots 
 
   public LocalVariable(Constant [] constants,ByteBuffer buffer)
   {
@@ -25,7 +25,7 @@ public class LocalVariable
   
   public String toString()
   {
-    return String.format("<%d,%d>,%d (%s),%d (%s),%d]",startPc,startPc+length,nameIndex,constants[nameIndex].toShortString(),descriptorIndex,constants[descriptorIndex].toShortString(),index);
+    return String.format("[<%d,%d>,%d (%s),%d (%s),%d]",startPc,startPc+length,nameIndex,constants[nameIndex].toShortString(),descriptorIndex,constants[descriptorIndex].toShortString(),index);
   }
 
 }
