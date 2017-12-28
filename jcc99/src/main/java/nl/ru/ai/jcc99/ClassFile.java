@@ -129,11 +129,8 @@ public class ClassFile
     }
     return new String(buffer);
   }
-  public Method getMethod(int accessFlags, String name, String descriptor)
+  public Method [] getMethods()
   {
-    for(Method method:methods)
-      if(method.getAccessFlags()==accessFlags && method.getName().equals(name) && method.getDescriptor().equals(descriptor))
-        return method;
-    return null;
+    return methods;
   }
 }

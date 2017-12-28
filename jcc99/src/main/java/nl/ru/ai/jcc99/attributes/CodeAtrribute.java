@@ -3,8 +3,10 @@ package nl.ru.ai.jcc99.attributes;
 import java.nio.ByteBuffer;
 import java.util.List;
 
+import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.constants.Constant;
 import nl.ru.ai.jcc99.instructions.Instruction;
+import nl.ru.ai.jcc99.instructions.InvokevirtualInstruction;
 
 public class CodeAtrribute extends Attribute
 {
@@ -47,6 +49,13 @@ public class CodeAtrribute extends Attribute
     }
     buffer.append(']');
     return String.format("Code(maxStack=%d, maxLocals=%d, code=%s, attributes=%s)",maxStack,maxLocals,instructions,new String(buffer));
+  }
+
+  public void markForCoding(ClassLoader classLoader)
+  {
+    for(Instruction instruction:instructions)
+      if(instruction instanceof InvokevirtualInstruction)
+        ((InvokevirtualInstruction)instruction).markForCoding(classLoader);
   }
 
 }

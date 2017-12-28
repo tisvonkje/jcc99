@@ -85,21 +85,20 @@ public class Jcc99
      * Load classes
      */
     ClassLoader classLoader=new ClassLoader(charPath);
-    ClassFile mainClass=classLoader.getClass(className.replace('.','/'));
-    if(mainClass==null)
-    {
-      System.err.printf("Error: cannot find class '%s'\n",className);
-      System.exit(1);
-    }
+    String methodName=className.replace('.','/')+".main:([Ljava/lang/String;)V";
     /*
      * Get static main method
      */
-    Method mainMethod=mainClass.getMethod(ClassFile.ACC_PUBLIC|ClassFile.ACC_STATIC,"main","([Ljava/lang/String;)V");
+    Method mainMethod=classLoader.getStaticMethod(methodName);
     if(mainMethod==null)
     {
-      System.err.printf("Error: cannot find main method in class '%s'\n",className);
+      System.err.printf("Error: cannot find main method '%s'\n",methodName);
       System.exit(1);
     }
     System.out.println(mainMethod);
+    /*
+     * Mark methods for coding (recursively)
+     */
+    mainMethod.markForCoding(classLoader);
   }
 }

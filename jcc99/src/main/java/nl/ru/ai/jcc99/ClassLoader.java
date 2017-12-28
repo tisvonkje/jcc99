@@ -16,10 +16,14 @@ import java.util.zip.ZipInputStream;
 public class ClassLoader
 {
   private Map<String, ClassFile> classByName;
+  private Map<String, Method> staticMethodByName;
+  private Map<String, Method> dynamicMethodByName;
 
   public ClassLoader(String [] classPath)
   {
     classByName=new HashMap<String,ClassFile>();
+    staticMethodByName=new HashMap<String,Method>();
+    dynamicMethodByName=new HashMap<String,Method>();
     for(String classPathEntry:classPath)
     {
       File file=new File(classPathEntry);
@@ -43,8 +47,7 @@ public class ClassLoader
               ByteBuffer buffer=ByteBuffer.wrap(byteStream.toByteArray());
               try
               {
-                ClassFile classFile=new ClassFile(buffer);
-                classByName.put(classFile.getName(),classFile);
+                administrate(new ClassFile(buffer));
               }
               catch(ClassLoaderException e)
               {
@@ -77,6 +80,7 @@ public class ClassLoader
       }
     }
   }
+
   
   private void addClassFile(File file)
   {
@@ -96,8 +100,7 @@ public class ClassLoader
           ByteBuffer buffer=ByteBuffer.wrap(byteStream.toByteArray());
           try
           {
-            ClassFile classFile=new ClassFile(buffer);
-            classByName.put(classFile.getName(),classFile);
+            administrate(new ClassFile(buffer));
           }
           catch(ClassLoaderException e)
           {
@@ -118,6 +121,19 @@ public class ClassLoader
       }
     }
   }
+  
+  private void administrate(ClassFile classFile)
+  {
+    classByName.put(classFile.getName(),classFile);
+    for(Method method:classFile.getMethods())
+    {
+      String methodName=classFile.getName()+"."+method.getName()+":"+method.getDescriptor();
+      if(method.isStatic())
+        staticMethodByName.put(methodName,method);
+      else
+        dynamicMethodByName.put(methodName,method);
+    }
+  }
 
   private void copy(InputStream input, OutputStream output) throws IOException
   {
@@ -131,9 +147,14 @@ public class ClassLoader
     }
   }
 
-  public ClassFile getClass(String name)
+  public Method getStaticMethod(String name)
   {
-    return classByName.get(name);
+    return staticMethodByName.get(name);
+  }
+  
+  public Method getDynamicMethod(String name)
+  {
+    return dynamicMethodByName.get(name);
   }
 
 }

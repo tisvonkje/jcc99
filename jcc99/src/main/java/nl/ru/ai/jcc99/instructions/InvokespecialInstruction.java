@@ -14,7 +14,7 @@ public class InvokespecialInstruction extends Instruction
   
   public String toString()
   {
-    return String.format("invokespecial %d (%s),%d,%d",methodIndex,constants[methodIndex].toShortString());
+    return String.format("invokespecial %d (%s)",methodIndex,constants[methodIndex].toShortString());
   }
 
 }
