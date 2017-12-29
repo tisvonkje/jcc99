@@ -8,7 +8,7 @@ import nl.ru.ai.jcc99.constants.Constant;
 import nl.ru.ai.jcc99.instructions.Instruction;
 import nl.ru.ai.jcc99.instructions.InvokevirtualInstruction;
 
-public class CodeAtrribute extends Attribute
+public class CodeAttribute extends Attribute
 {
   private short maxStack;
   private short maxLocals;
@@ -16,7 +16,7 @@ public class CodeAtrribute extends Attribute
   private Attribute[] attributes;
   private List<Instruction> instructions;
 
-  public CodeAtrribute(Constant[] constants, ByteBuffer buffer)
+  public CodeAttribute(Constant[] constants, ByteBuffer buffer)
   {
     super(constants);
     maxStack=buffer.getShort();
@@ -54,8 +54,7 @@ public class CodeAtrribute extends Attribute
   public void markForCoding(ClassLoader classLoader)
   {
     for(Instruction instruction:instructions)
-      if(instruction instanceof InvokevirtualInstruction)
-        ((InvokevirtualInstruction)instruction).markForCoding(classLoader);
+      instruction.markForCoding(classLoader);
   }
 
 }

@@ -14,15 +14,15 @@ public class InvokevirtualInstruction extends Instruction
     this.methodIndex=methodIndex;
   }
   
-  public String toString()
-  {
-    return String.format("invokevirtual %d (%s)",methodIndex,constants[methodIndex].toShortString());
-  }
-
   public void markForCoding(ClassLoader classLoader)
   {
     Method subMethod=classLoader.getDynamicMethod(constants[methodIndex].toShortString());
     subMethod.markForCoding(classLoader);
+  }
+  
+  public String toString()
+  {
+    return String.format("invokevirtual %d (%s)",methodIndex,constants[methodIndex].toShortString());
   }
 
 }

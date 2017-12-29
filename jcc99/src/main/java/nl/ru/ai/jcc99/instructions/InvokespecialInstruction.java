@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Method;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class InvokespecialInstruction extends Instruction
@@ -10,6 +12,12 @@ public class InvokespecialInstruction extends Instruction
   {
     super(constants);
     this.methodIndex=methodIndex;
+  }
+  
+  public void markForCoding(ClassLoader classLoader)
+  {
+    Method subMethod=classLoader.getDynamicMethod(constants[methodIndex].toShortString());
+    subMethod.markForCoding(classLoader);
   }
   
   public String toString()

@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Type;
 import nl.ru.ai.jcc99.constants.Constant;
 /**
@@ -609,6 +610,15 @@ public abstract class Instruction
       instructions.add(instruction);
     }
     return instructions;
+  }
+
+  /**
+   * Default implementation: no operation
+   * @param classLoader
+   */
+  public void markForCoding(ClassLoader classLoader)
+  {
+    ;
   }
 
 }

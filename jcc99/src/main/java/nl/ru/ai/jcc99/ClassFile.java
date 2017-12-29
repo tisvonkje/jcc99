@@ -41,11 +41,13 @@ public class ClassFile
   private short[] interfaces;
   private Field[] fields;
   private Method[] methods;
+  private boolean markedForCoding;
   /*
    * Constructor
    */
   public ClassFile(ByteBuffer buffer) throws IOException, ClassLoaderException
   {
+    this.markedForCoding=false;
     magic=buffer.getInt();
     minor=buffer.getShort();
     major=buffer.getShort();
@@ -96,7 +98,7 @@ public class ClassFile
     short methodCount=buffer.getShort();
     methods=new Method[methodCount];
     for(int i=0;i<methodCount;i++)
-      methods[i]=new Method(constants,buffer);
+      methods[i]=new Method(constants,this,buffer);
     /*
      * Get attributes
      */
@@ -132,5 +134,21 @@ public class ClassFile
   public Method [] getMethods()
   {
     return methods;
+  }
+  public void markForCoding(ClassLoader classLoader)
+  {
+    /*
+     * Already marked? nothing to do
+     */
+    if(markedForCoding)
+      return;
+    markedForCoding=true;
+    /*
+     * Mark class initialization if it exists
+     */
+    System.out.printf("looking for <%s>\n",getName()+".<clinit>:()V");
+    Method clinit=classLoader.getStaticMethod(getName()+".<clinit>:()V");
+    if(clinit!=null)
+      clinit.markForCoding(classLoader);
   }
 }

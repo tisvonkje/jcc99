@@ -23,7 +23,7 @@ public abstract class Attribute
     ByteBuffer sub=ByteBuffer.wrap(info);
     String attributeName=constants[attributeNameIndex].toShortString();
     if("Code".equals(attributeName))
-      return new CodeAtrribute(constants,sub);
+      return new CodeAttribute(constants,sub);
     if("SourceFile".equals(attributeName))
       return new SourceFileAttribute(constants,sub);
     else if("LocalVariableTable".equals(attributeName))

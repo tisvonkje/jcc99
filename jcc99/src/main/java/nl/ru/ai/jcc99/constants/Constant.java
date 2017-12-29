@@ -68,6 +68,4 @@ public abstract class Constant
         throw new RuntimeException(String.format("invalid tag '%d' in constant info",tag));
     }
   }
-
-
 }

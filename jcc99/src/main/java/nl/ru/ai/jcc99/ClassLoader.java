@@ -156,5 +156,32 @@ public class ClassLoader
   {
     return dynamicMethodByName.get(name);
   }
+  
+  /**
+   * For debugging
+   */
+  public void dump()
+  {
+    System.out.println("Static methods marked for coding:");
+    for(String methodName:staticMethodByName.keySet())
+    {
+      Method method=staticMethodByName.get(methodName);
+      if(method.isMarkedForCoding())
+        System.out.println(methodName+":"+method);
+    }
+    System.out.println("Dynamic methods marked for coding:");
+    for(String methodName:dynamicMethodByName.keySet())
+    {
+      Method method=dynamicMethodByName.get(methodName);
+      if(method.isMarkedForCoding())
+        System.out.println(methodName+":"+method);
+    }
+  }
+
+
+  public ClassFile getClassFile(String className)
+  {
+    return classByName.get(className);
+  }
 
 }

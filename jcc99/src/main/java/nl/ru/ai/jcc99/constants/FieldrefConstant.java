@@ -23,4 +23,9 @@ public class FieldrefConstant extends Constant
     return String.format("%s:%s",constants[classIndex].toShortString(),constants[nameAndTypeIndex].toShortString());
   }
 
+  public String getClassName()
+  {
+    return constants[classIndex].toShortString();
+  }
+
 }

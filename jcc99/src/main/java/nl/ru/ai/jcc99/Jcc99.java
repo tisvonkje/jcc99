@@ -95,10 +95,10 @@ public class Jcc99
       System.err.printf("Error: cannot find main method '%s'\n",methodName);
       System.exit(1);
     }
-    System.out.println(mainMethod);
     /*
      * Mark methods for coding (recursively)
      */
     mainMethod.markForCoding(classLoader);
+    classLoader.dump();
   }
 }
