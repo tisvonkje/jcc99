@@ -1,6 +1,5 @@
 package nl.ru.ai.jcc99.attributes;
 
-import java.awt.HeadlessException;
 import java.nio.ByteBuffer;
 
 import nl.ru.ai.jcc99.constants.Constant;

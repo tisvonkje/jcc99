@@ -27,6 +27,7 @@ public class ClassFile
    * https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html
    * javap -c App.class 
    */
+  @SuppressWarnings("unused")
   private int magic;
   private short minor;
   private short major;
@@ -34,8 +35,10 @@ public class ClassFile
    * constants, note that some slots may be unused (null)
    */
   private Constant[] constants;
+  @SuppressWarnings("unused")
   private short accessFlags;
   private short thisClass;
+  @SuppressWarnings("unused")
   private short superClass;
   private Attribute[] attributes;
   private short[] interfaces;

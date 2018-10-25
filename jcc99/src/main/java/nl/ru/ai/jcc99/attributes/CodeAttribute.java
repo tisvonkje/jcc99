@@ -6,7 +6,6 @@ import java.util.List;
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.constants.Constant;
 import nl.ru.ai.jcc99.instructions.Instruction;
-import nl.ru.ai.jcc99.instructions.InvokevirtualInstruction;
 
 public class CodeAttribute extends Attribute
 {
