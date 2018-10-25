@@ -11,6 +11,8 @@ import org.apache.commons.cli.ParseException;
 
 /**
  * Java class compiler
+ * To test it, run it with the following arguments
+ * -classpath target/classes nl.ru.ai.jcc99.Test
  * @author sparky
  */
 public class Jcc99
