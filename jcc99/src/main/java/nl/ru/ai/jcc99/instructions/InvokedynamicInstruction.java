@@ -1,5 +1,8 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Method;
+import nl.ru.ai.jcc99.Util;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class InvokedynamicInstruction extends Instruction
@@ -15,6 +18,16 @@ public class InvokedynamicInstruction extends Instruction
     this.methodIndex=methodIndex;
     this.zero1=zero1;
     this.zero2=zero2;
+  }
+  
+  public void markForCoding(ClassLoader classLoader)
+  {
+    String methodName=constants[methodIndex].toShortString();
+    Method method=classLoader.getDynamicMethod(methodName);
+    if(method==null)
+      Util.error("Cannot mark '%s' for coding",methodName);
+    else
+      method.markForCoding(classLoader);
   }
   
   public String toString()

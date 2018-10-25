@@ -1,5 +1,8 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Method;
+import nl.ru.ai.jcc99.Util;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class InvokestaticInstruction extends Instruction
@@ -12,9 +15,19 @@ public class InvokestaticInstruction extends Instruction
     this.methodIndex=methodIndex;
   }
   
+  public void markForCoding(ClassLoader classLoader)
+  {
+    String methodName=constants[methodIndex].toShortString();
+    Method method=classLoader.getStaticMethod(methodName);
+    if(method==null)
+      Util.error("Cannot mark '%s' for coding",methodName);
+    else
+      method.markForCoding(classLoader);
+  }
+  
   public String toString()
   {
-    return String.format("invokestatic %d (%s),%d,%d",methodIndex,constants[methodIndex].toShortString());
+    return String.format("invokestatic %d (%s)",methodIndex,constants[methodIndex].toShortString());
   }
 
 }

@@ -1,11 +1,18 @@
 package nl.ru.ai.jcc99;
 
-public class Test {
+public class Test
+{
+  public native static void print(int n);
+  
+  public static void main(String[] args)
+  {
+    int a=mul(3,4);
+    print(a);
+  }
 
-	public static void main(String[] args) {
-		int b=4;
-		int a=3*b;
-		System.out.println(a);
-	}
+  private static int mul(int i, int j)
+  {
+    return i*j;
+  }
 
 }
