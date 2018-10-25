@@ -100,6 +100,14 @@ public class Jcc99
      * Mark methods for coding (recursively)
      */
     mainMethod.markForCoding(classLoader);
+    if(Util.foundErrors())
+    {
+    	System.err.println("Errors found, bailing out");
+    	System.exit(1);
+    }
+    /*	
+     * Dump for now
+     */
     classLoader.dump();
   }
 }
