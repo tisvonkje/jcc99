@@ -192,7 +192,8 @@ public class ClassLoader
     for(String methodName:staticMethodByName.keySet())
     {
       Method method=staticMethodByName.get(methodName);
-      method.code(writer);
+      if(method.isMarkedForCoding())
+        method.code(writer);
     }
     // FIXME: Do dynamic methods later
   }
