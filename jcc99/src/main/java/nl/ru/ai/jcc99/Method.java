@@ -1,5 +1,6 @@
 package nl.ru.ai.jcc99;
 
+import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
@@ -84,5 +85,12 @@ public class Method
   public boolean isMarkedForCoding()
   {
     return markedForCoding;
+  }
+
+  public void code(PrintWriter writer)
+  {
+    writer.printf("%s:\n",getName());
+    // TODO Auto-generated method stub
+    
   }
 }

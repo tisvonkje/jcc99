@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -182,6 +183,18 @@ public class ClassLoader
   public ClassFile getClassFile(String className)
   {
     return classByName.get(className);
+  }
+
+
+  public void code(Method mainMethod, PrintWriter writer)
+  {
+    writer.printf("\t.entry\t%s\n",mainMethod.getName());
+    for(String methodName:staticMethodByName.keySet())
+    {
+      Method method=staticMethodByName.get(methodName);
+      method.code(writer);
+    }
+    // FIXME: Do dynamic methods later
   }
 
 }

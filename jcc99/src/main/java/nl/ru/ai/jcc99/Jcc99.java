@@ -1,6 +1,8 @@
 package nl.ru.ai.jcc99;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -109,5 +111,11 @@ public class Jcc99
      * Dump for now
      */
     classLoader.dump();
+    /*
+     * Generate code
+     */
+    PrintWriter writer=new PrintWriter(new File("output.s"));
+    classLoader.code(mainMethod,writer);
+    writer.close();
   }
 }
