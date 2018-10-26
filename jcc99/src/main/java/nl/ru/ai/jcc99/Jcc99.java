@@ -115,7 +115,9 @@ public class Jcc99
      * Generate code
      */
     PrintWriter writer=new PrintWriter(new File("output.s"));
-    classLoader.code(mainMethod,writer);
+    LabelDisambiguator disambiguator=new LabelDisambiguator();
+    Coder coder=new Intel32MacOSXCoder(writer,disambiguator);
+    classLoader.code(mainMethod,coder);
     writer.close();
   }
 }

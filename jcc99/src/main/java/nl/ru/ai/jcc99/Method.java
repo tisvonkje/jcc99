@@ -57,6 +57,11 @@ public class Method
   {
     return constants[nameIndex].toShortString();
   }
+  
+  public String getFullName()
+  {
+    return classFile.getName()+"."+getName()+":"+getDescriptor();
+  }
 
   public boolean isStatic()
   {
@@ -87,10 +92,12 @@ public class Method
     return markedForCoding;
   }
 
-  public void code(PrintWriter writer)
+  public void code(Coder coder)
   {
-    writer.printf("%s:\n",getName());
+    coder.codeLabel(getName());
     // TODO Auto-generated method stub
     
   }
+
+
 }

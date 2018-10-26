@@ -128,7 +128,7 @@ public class ClassLoader
     classByName.put(classFile.getName(),classFile);
     for(Method method:classFile.getMethods())
     {
-      String methodName=classFile.getName()+"."+method.getName()+":"+method.getDescriptor();
+      String methodName=method.getFullName();
       if(method.isStatic())
         staticMethodByName.put(methodName,method);
       else
@@ -186,14 +186,14 @@ public class ClassLoader
   }
 
 
-  public void code(Method mainMethod, PrintWriter writer)
+  public void code(Method mainMethod, Coder coder)
   {
-    writer.printf("\t.entry\t%s\n",mainMethod.getName());
+    coder.codeEntry(mainMethod.getFullName());
     for(String methodName:staticMethodByName.keySet())
     {
       Method method=staticMethodByName.get(methodName);
       if(method.isMarkedForCoding())
-        method.code(writer);
+        method.code(coder);
     }
     // FIXME: Do dynamic methods later
   }
