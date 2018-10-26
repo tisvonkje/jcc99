@@ -18,6 +18,7 @@ public class ClassFile
   public static final short ACC_TRANSIENT=0x0080;
   public static final short ACC_FINAL=0x0010;
   public static final short ACC_SUPER=0x0020;
+  public static final short ACC_NATIVE=0x0100;
   public static final short ACC_INTERFACE=0x0200;
   public static final short ACC_ABSTRACT=0x0400;
   public static final short ACC_SYNTHETIC=0x1000;

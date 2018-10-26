@@ -67,6 +67,11 @@ public class Method
   {
     return (accessFlags&ClassFile.ACC_STATIC)!=0;
   }
+  
+  public boolean isNative()
+  {
+    return (accessFlags&ClassFile.ACC_NATIVE)!=0;
+  }
 
   public void markForCoding(ClassLoader classLoader)
   {
@@ -94,7 +99,8 @@ public class Method
 
   public void code(Coder coder)
   {
-    coder.codeLabel(getName());
+    coder.codeComment("Method "+getFullName());
+    coder.codeLabel(this);
     // TODO Auto-generated method stub
     
   }

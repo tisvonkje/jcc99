@@ -13,14 +13,25 @@ public class Intel32MacOSXCoder implements Coder
     this.disambiguator=disambiguator;
   }
 
-  public void codeEntry(String label)
+  public void codeEntry(Method method)
   { 
-    writer.printf("\t.entry\t%s\n",disambiguator.disambiguate(label));
+    writer.printf("\t.globl\t _main\n");
+    writer.printf("main:\tjmp\t%s\n",disambiguator.name(method));
   }
 
-  public void codeLabel(String label)
+  public void codeLabel(Method method)
   {
-    writer.printf("%s:\n",label);
+    writer.printf("%s:\n",disambiguator.name(method));
+  }
+
+  public String getVersion()
+  {
+    return "MacOSX intel 32 bit coder";
+  }
+
+  public void codeComment(String comment)
+  {
+    writer.printf("# %s\n",comment);
   }
 
 }

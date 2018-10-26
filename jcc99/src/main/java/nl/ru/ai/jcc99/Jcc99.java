@@ -3,6 +3,7 @@ package nl.ru.ai.jcc99;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -27,7 +28,7 @@ public class Jcc99
     this.commandLine=commandLine;
   }
 
-  public static void main(String[] args) throws IOException
+  public static void main(String[] args) throws IOException, NoSuchAlgorithmException
   {
     /*
     * Set options
@@ -78,7 +79,7 @@ public class Jcc99
     }
   }
 
-  private void compile(String className) throws IOException
+  private void compile(String className) throws IOException, NoSuchAlgorithmException
   {
     /*
      * Get charpath
