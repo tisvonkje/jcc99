@@ -16,7 +16,7 @@ public class Intel32MacOSXCoder implements Coder
   public void codeEntry(Method method)
   { 
     writer.printf("\t.globl\t _main\n");
-    writer.printf("main:\tjmp\t%s\n",disambiguator.name(method));
+    writer.printf("_main:\tjmp\t%s\n",disambiguator.name(method));
   }
 
   public void codeLabel(Method method)
