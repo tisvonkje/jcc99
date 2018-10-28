@@ -66,6 +66,18 @@ public class Intel32MacOSXCoder implements Coder
   {
     return "MacOSX Intel 32 bit coder";
   }
+  
+  public void close()
+  {
+    writer.close();
+  }
+  
+  private int offset(int parameterUnits, int local)
+  {
+    if(local<parameterUnits)
+      return (parameterUnits+1-local)*getWordSize(); // parameter
+    return -(local-parameterUnits+1)*getWordSize(); // local
+  }
 
   public void codeComment(String comment)
   {
@@ -77,5 +89,41 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\t%%ebp\n");
     writer.printf("\tmovl\t%%esp,%%ebp\n");
     writer.printf("\tsubl\t$%d,%%esp\n",number*getWordSize());
+  }
+
+  public void codeLoad(int parameterUnits, int local)
+  {
+    writer.printf("\tpushl\t%d(%%ebp)\n",offset(parameterUnits,local));
+  }
+
+  public void codeDload(int parameterUnits, int local)
+  {
+    throw new RuntimeException("notyet");
+  }
+
+  public void codeAddInt()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\taddl\t%%eax,(%%esp)\n");
+  }
+
+  public void codeStore(int parameterUnits, int local)
+  {
+    writer.printf("\tpopl\t%d(%%ebp)\n",offset(parameterUnits,local));
+  }
+
+  public void codeDStore(int parameterUnits, int local)
+  {
+    throw new RuntimeException("notyet");
+  }
+
+  public void codeReturnSingle(int parameterUnits)
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tmovl\t(%%ebp),%%esp\n");
+    writer.printf("\tpopl\t%%ebp\n");
+    writer.printf("\tpopl\t%%ecx\n");
+    writer.printf("\tpushl\t%%eax\n");
+    writer.printf("\tjmpl\t*%%ecx\n");
   }
 }

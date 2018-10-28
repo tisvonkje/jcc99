@@ -1,7 +1,9 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.constants.Constant;
 
+//FIXME maybe merge all D.I,L,A-returnInstruction classes
 public class IreturnInstruction extends Instruction
 {
 
@@ -14,5 +16,12 @@ public class IreturnInstruction extends Instruction
   {
     return "ireturn";
   }
+  
+  public void code(int parameterUnits, Coder coder)
+  {
+    coder.codeReturnSingle(parameterUnits);
+  }
+  
+  
 
 }

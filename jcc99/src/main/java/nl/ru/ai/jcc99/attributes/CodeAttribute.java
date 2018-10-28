@@ -60,6 +60,11 @@ public class CodeAttribute extends Attribute
   public void code(int parameterUnits, Coder coder)
   {
     coder.codeLink(maxLocals-parameterUnits);
+    for(Instruction instruction:instructions)
+    {
+      coder.codeComment(instruction.toString());
+      instruction.code(parameterUnits,coder);
+    }
   }
 
 }

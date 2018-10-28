@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.TypeSuffix;
 import nl.ru.ai.jcc99.constants.Constant;
 /**
@@ -619,6 +620,17 @@ public abstract class Instruction
   public void markForCoding(ClassLoader classLoader)
   {
     ;
+  }
+
+  /**
+   * Defaunlt implementation: give an error (should not occur)
+   * @param parameterUnits
+   * @param coder
+   */
+  public void code(int parameterUnits, Coder coder)
+  {
+    coder.close();
+    throw new RuntimeException("don't know how to code "+getClass());
   }
 
 }

@@ -130,7 +130,6 @@ public class Method
     coder.codeComment("Method "+getFullName());
     coder.codeLabel(this);
     code.code(parameterUnits,coder);
-
   }
 
 }

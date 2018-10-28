@@ -27,4 +27,41 @@ public enum TypeSuffix {
         throw new RuntimeException(String.format("Invalid type '%s'",this));
     }
   }
+
+  public boolean isSingle()
+  {
+    switch(this)
+    {
+      case BOOLEAN:
+      case CHAR:
+      case FLOAT:
+      case SHORT:
+      case INT:
+      case REF:
+        return true;
+      case DOUBLE:
+      case LONG:
+        return false;
+      default:
+        throw new RuntimeException(String.format("Invalid type '%s'",this));
+    }
+  }
+  public boolean isDouble()
+  {
+    switch(this)
+    {
+      case BOOLEAN:
+      case CHAR:
+      case FLOAT:
+      case SHORT:
+      case INT:
+      case REF:
+        return false;
+      case DOUBLE:
+      case LONG:
+        return true;
+      default:
+        throw new RuntimeException(String.format("Invalid type '%s'",this));
+    }
+  }
 }
