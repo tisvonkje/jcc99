@@ -1,14 +1,14 @@
 package nl.ru.ai.jcc99.instructions;
 
-import nl.ru.ai.jcc99.Type;
+import nl.ru.ai.jcc99.TypeSuffix;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class LoadInstruction extends Instruction
 {
-  private Type type; // Allowed: INT, LONG, FLOAT, DOUBLE, REF
+  private TypeSuffix type; // Allowed: INT, LONG, FLOAT, DOUBLE, REF
   private int local;
 
-  public LoadInstruction(Constant[] constants, Type type, int local)
+  public LoadInstruction(Constant[] constants, TypeSuffix type, int local)
   {
     super(constants);
     this.type=type;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.ru.ai.jcc99.ClassLoader;
-import nl.ru.ai.jcc99.Type;
+import nl.ru.ai.jcc99.TypeSuffix;
 import nl.ru.ai.jcc99.constants.Constant;
 /**
  * https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings
@@ -74,142 +74,142 @@ public abstract class Instruction
           instruction=new Ldc2WInstruction(constants,buffer.getShort()&0xffff);
           break;
         case 0x15:
-          instruction=new LoadInstruction(constants,Type.INT,buffer.get()&0xff);
+          instruction=new LoadInstruction(constants,TypeSuffix.INT,buffer.get()&0xff);
           break;
         case 0x16:
-          instruction=new LoadInstruction(constants,Type.LONG,buffer.get()&0xff);
+          instruction=new LoadInstruction(constants,TypeSuffix.LONG,buffer.get()&0xff);
           break;
         case 0x17:
-          instruction=new LoadInstruction(constants,Type.FLOAT,buffer.get()&0xff);
+          instruction=new LoadInstruction(constants,TypeSuffix.FLOAT,buffer.get()&0xff);
           break;
         case 0x18:
-          instruction=new LoadInstruction(constants,Type.DOUBLE,buffer.get()&0xff);
+          instruction=new LoadInstruction(constants,TypeSuffix.DOUBLE,buffer.get()&0xff);
           break;
         case 0x19:
-          instruction=new LoadInstruction(constants,Type.REF,buffer.get()&0xff);
+          instruction=new LoadInstruction(constants,TypeSuffix.REF,buffer.get()&0xff);
           break;
         case 0x1a:
         case 0x1b:
         case 0x1c:
         case 0x1d:
-          instruction=new LoadInstruction(constants,Type.INT,b-0x1a);
+          instruction=new LoadInstruction(constants,TypeSuffix.INT,b-0x1a);
           break;
         case 0x1e:
         case 0x1f:
         case 0x20:
         case 0x21:
-          instruction=new LoadInstruction(constants,Type.LONG,b-0x1e);
+          instruction=new LoadInstruction(constants,TypeSuffix.LONG,b-0x1e);
           break;
         case 0x22:
         case 0x23:
         case 0x24:
         case 0x25:
-          instruction=new LoadInstruction(constants,Type.FLOAT,b-0x24);
+          instruction=new LoadInstruction(constants,TypeSuffix.FLOAT,b-0x24);
           break;
         case 0x26:
         case 0x27:
         case 0x28:
         case 0x29:
-          instruction=new LoadInstruction(constants,Type.DOUBLE,b-0x26);
+          instruction=new LoadInstruction(constants,TypeSuffix.DOUBLE,b-0x26);
           break;
         case 0x2a:
         case 0x2b:
         case 0x2c:
         case 0x2d:
-          instruction=new LoadInstruction(constants,Type.REF,b-0x2a);
+          instruction=new LoadInstruction(constants,TypeSuffix.REF,b-0x2a);
           break;
         case 0x2e:
-          instruction=new AloadInstruction(constants,Type.INT);
+          instruction=new AloadInstruction(constants,TypeSuffix.INT);
           break;
         case 0x2f:
-          instruction=new AloadInstruction(constants,Type.LONG);
+          instruction=new AloadInstruction(constants,TypeSuffix.LONG);
           break;
         case 0x30:
-          instruction=new AloadInstruction(constants,Type.FLOAT);
+          instruction=new AloadInstruction(constants,TypeSuffix.FLOAT);
           break;
         case 0x31:
-          instruction=new AloadInstruction(constants,Type.DOUBLE);
+          instruction=new AloadInstruction(constants,TypeSuffix.DOUBLE);
           break;
         case 0x32:
-          instruction=new AloadInstruction(constants,Type.REF);
+          instruction=new AloadInstruction(constants,TypeSuffix.REF);
           break;
         case 0x33:
-          instruction=new AloadInstruction(constants,Type.BOOLEAN);
+          instruction=new AloadInstruction(constants,TypeSuffix.BOOLEAN);
           break;
         case 0x34:
-          instruction=new AloadInstruction(constants,Type.CHAR);
+          instruction=new AloadInstruction(constants,TypeSuffix.CHAR);
           break;
         case 0x35:
-          instruction=new AloadInstruction(constants,Type.SHORT);
+          instruction=new AloadInstruction(constants,TypeSuffix.SHORT);
           break;
         case 0x36:
-          instruction=new StoreInstruction(constants,Type.INT,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,TypeSuffix.INT,buffer.get()&0xff);
           break;
         case 0x37:
-          instruction=new StoreInstruction(constants,Type.LONG,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,TypeSuffix.LONG,buffer.get()&0xff);
           break;
         case 0x38:
-          instruction=new StoreInstruction(constants,Type.FLOAT,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,TypeSuffix.FLOAT,buffer.get()&0xff);
           break;
         case 0x39:
-          instruction=new StoreInstruction(constants,Type.DOUBLE,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,TypeSuffix.DOUBLE,buffer.get()&0xff);
           break;
         case 0x3a:
-          instruction=new StoreInstruction(constants,Type.REF,buffer.get()&0xff);
+          instruction=new StoreInstruction(constants,TypeSuffix.REF,buffer.get()&0xff);
           break;
         case 0x3b:
         case 0x3c:
         case 0x3d:
         case 0x3e:
-          instruction=new StoreInstruction(constants,Type.INT,b-0x3b);
+          instruction=new StoreInstruction(constants,TypeSuffix.INT,b-0x3b);
           break;
         case 0x3f:
         case 0x40:
         case 0x41:
         case 0x42:
-          instruction=new StoreInstruction(constants,Type.LONG,b-0x3f);
+          instruction=new StoreInstruction(constants,TypeSuffix.LONG,b-0x3f);
           break;
         case 0x43:
         case 0x44:
         case 0x45:
         case 0x46:
-          instruction=new StoreInstruction(constants,Type.FLOAT,b-0x43);
+          instruction=new StoreInstruction(constants,TypeSuffix.FLOAT,b-0x43);
           break;
         case 0x47:
         case 0x48:
         case 0x49:
         case 0x4a:
-          instruction=new StoreInstruction(constants,Type.DOUBLE,b-0x47);
+          instruction=new StoreInstruction(constants,TypeSuffix.DOUBLE,b-0x47);
           break;
         case 0x4b:
         case 0x4c:
         case 0x4d:
         case 0x4e:
-          instruction=new StoreInstruction(constants,Type.REF,b-0x4b);
+          instruction=new StoreInstruction(constants,TypeSuffix.REF,b-0x4b);
           break;
         case 0x4f:
-          instruction=new AstoreInstruction(constants,Type.INT);
+          instruction=new AstoreInstruction(constants,TypeSuffix.INT);
           break;
         case 0x50:
-          instruction=new AstoreInstruction(constants,Type.LONG);
+          instruction=new AstoreInstruction(constants,TypeSuffix.LONG);
           break;
         case 0x51:
-          instruction=new AstoreInstruction(constants,Type.FLOAT);
+          instruction=new AstoreInstruction(constants,TypeSuffix.FLOAT);
           break;
         case 0x52:
-          instruction=new AstoreInstruction(constants,Type.DOUBLE);
+          instruction=new AstoreInstruction(constants,TypeSuffix.DOUBLE);
           break;
         case 0x53:
-          instruction=new AstoreInstruction(constants,Type.REF);
+          instruction=new AstoreInstruction(constants,TypeSuffix.REF);
           break;
         case 0x54:
-          instruction=new AstoreInstruction(constants,Type.BOOLEAN);
+          instruction=new AstoreInstruction(constants,TypeSuffix.BOOLEAN);
           break;
         case 0x55:
-          instruction=new AstoreInstruction(constants,Type.CHAR);
+          instruction=new AstoreInstruction(constants,TypeSuffix.CHAR);
           break;
         case 0x56:
-          instruction=new AstoreInstruction(constants,Type.SHORT);
+          instruction=new AstoreInstruction(constants,TypeSuffix.SHORT);
           break;
         case 0x57:
           instruction=new PopInstruction(constants);
@@ -239,64 +239,64 @@ public abstract class Instruction
           instruction=new SwapInstruction(constants);
           break;
         case 0x60:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.ADD);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.ADD);
           break;
         case 0x61:
-          instruction=new DyadInstruction(constants,Type.LONG,Operator.ADD);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG,Operator.ADD);
           break;
         case 0x62:
-          instruction=new DyadInstruction(constants,Type.FLOAT,Operator.ADD);
+          instruction=new DyadInstruction(constants,TypeSuffix.FLOAT,Operator.ADD);
           break;
         case 0x63:
-          instruction=new DyadInstruction(constants,Type.DOUBLE, Operator.ADD);
+          instruction=new DyadInstruction(constants,TypeSuffix.DOUBLE, Operator.ADD);
           break;
         case 0x64:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.SUB);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.SUB);
           break;
         case 0x65:
-          instruction=new DyadInstruction(constants,Type.LONG,Operator.SUB);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG,Operator.SUB);
           break;
         case 0x66:
-          instruction=new DyadInstruction(constants,Type.FLOAT, Operator.SUB);
+          instruction=new DyadInstruction(constants,TypeSuffix.FLOAT, Operator.SUB);
           break;
         case 0x67:
-          instruction=new DyadInstruction(constants,Type.DOUBLE, Operator.SUB);
+          instruction=new DyadInstruction(constants,TypeSuffix.DOUBLE, Operator.SUB);
           break;
         case 0x68:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.MUL);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.MUL);
           break;
         case 0x69:
-          instruction=new DyadInstruction(constants,Type.LONG,Operator.MUL);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG,Operator.MUL);
           break;
         case 0x6a:
-          instruction=new DyadInstruction(constants,Type.FLOAT,Operator.MUL);
+          instruction=new DyadInstruction(constants,TypeSuffix.FLOAT,Operator.MUL);
           break;
         case 0x6b:
-          instruction=new DyadInstruction(constants,Type.DOUBLE, Operator.MUL);
+          instruction=new DyadInstruction(constants,TypeSuffix.DOUBLE, Operator.MUL);
           break;
         case 0x6c:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.DIV);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.DIV);
           break;
         case 0x6d:
-          instruction=new DyadInstruction(constants,Type.LONG,Operator.DIV);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG,Operator.DIV);
           break;
         case 0x6e:
-          instruction=new DyadInstruction(constants,Type.FLOAT,Operator.DIV);
+          instruction=new DyadInstruction(constants,TypeSuffix.FLOAT,Operator.DIV);
           break;
         case 0x6f:
-          instruction=new DyadInstruction(constants,Type.DOUBLE, Operator.DIV);
+          instruction=new DyadInstruction(constants,TypeSuffix.DOUBLE, Operator.DIV);
           break;
         case 0x70:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.REM);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.REM);
           break;
         case 0x71:
-          instruction=new DyadInstruction(constants,Type.LONG,Operator.REM);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG,Operator.REM);
           break;
         case 0x72:
-          instruction=new DyadInstruction(constants,Type.FLOAT,Operator.REM);
+          instruction=new DyadInstruction(constants,TypeSuffix.FLOAT,Operator.REM);
           break;
         case 0x73:
-          instruction=new DyadInstruction(constants,Type.DOUBLE,Operator.REM);
+          instruction=new DyadInstruction(constants,TypeSuffix.DOUBLE,Operator.REM);
           break;
         case 0x74:
           instruction=new InegInstruction(constants);
@@ -311,40 +311,40 @@ public abstract class Instruction
           instruction=new DnegInstruction(constants);
           break;
         case 0x78:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.SHL);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.SHL);
           break;
         case 0x79:
-          instruction=new DyadInstruction(constants,Type.LONG,Operator.SHL);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG,Operator.SHL);
           break;
         case 0x7a:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.SHR);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.SHR);
           break;
         case 0x7b:
-          instruction=new DyadInstruction(constants,Type.LONG, Operator.SHR);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG, Operator.SHR);
           break;
         case 0x7c:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.USHR);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.USHR);
           break;
         case 0x7d:
-          instruction=new DyadInstruction(constants,Type.LONG, Operator.USHR);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG, Operator.USHR);
           break;
         case 0x7e:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.AND);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.AND);
           break;
         case 0x7f:
-          instruction=new DyadInstruction(constants,Type.LONG, Operator.AND);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG, Operator.AND);
           break;
         case 0x80:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.OR);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.OR);
           break;
         case 0x81:
-          instruction=new DyadInstruction(constants,Type.LONG, Operator.OR);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG, Operator.OR);
           break;
         case 0x82:
-          instruction=new DyadInstruction(constants,Type.INT, Operator.XOR);
+          instruction=new DyadInstruction(constants,TypeSuffix.INT, Operator.XOR);
           break;
         case 0x83:
-          instruction=new DyadInstruction(constants,Type.LONG, Operator.XOR);
+          instruction=new DyadInstruction(constants,TypeSuffix.LONG, Operator.XOR);
           break;
         case 0x84:
           instruction=new IincInstruction(constants,buffer.get()&0xff,buffer.get());
@@ -515,7 +515,7 @@ public abstract class Instruction
           instruction=new NewInstruction(constants,buffer.getShort()&0xffff);
           break;
         case 0xbc:
-          instruction=new NewarrayInstruction(constants,Type.values()[buffer.get()]);
+          instruction=new NewarrayInstruction(constants,TypeSuffix.values()[buffer.get()]);
           break;
         case 0xbd:
           instruction=new AnewarrayInstruction(constants,buffer.getShort()&0xffff);
@@ -543,34 +543,34 @@ public abstract class Instruction
           switch(subCode)
           {
             case 0x15:
-              instruction=new LoadInstruction(constants,Type.INT,buffer.getShort()&0xffff);
+              instruction=new LoadInstruction(constants,TypeSuffix.INT,buffer.getShort()&0xffff);
               break;
             case 0x16:
-              instruction=new LoadInstruction(constants,Type.LONG,buffer.getShort()&0xffff);
+              instruction=new LoadInstruction(constants,TypeSuffix.LONG,buffer.getShort()&0xffff);
               break;
             case 0x17:
-              instruction=new LoadInstruction(constants,Type.FLOAT,buffer.getShort()&0xffff);
+              instruction=new LoadInstruction(constants,TypeSuffix.FLOAT,buffer.getShort()&0xffff);
               break;
             case 0x18:
-              instruction=new LoadInstruction(constants,Type.DOUBLE,buffer.getShort()&0xffff);
+              instruction=new LoadInstruction(constants,TypeSuffix.DOUBLE,buffer.getShort()&0xffff);
               break;
             case 0x19:
-              instruction=new LoadInstruction(constants,Type.REF,buffer.getShort()&0xffff);
+              instruction=new LoadInstruction(constants,TypeSuffix.REF,buffer.getShort()&0xffff);
               break;
             case 0x36:
-              instruction=new StoreInstruction(constants,Type.INT,buffer.getShort()&0xffff);
+              instruction=new StoreInstruction(constants,TypeSuffix.INT,buffer.getShort()&0xffff);
               break;
             case 0x37:
-              instruction=new StoreInstruction(constants,Type.LONG,buffer.getShort()&0xffff);
+              instruction=new StoreInstruction(constants,TypeSuffix.LONG,buffer.getShort()&0xffff);
               break;
             case 0x38:
-              instruction=new StoreInstruction(constants,Type.FLOAT,buffer.getShort()&0xffff);
+              instruction=new StoreInstruction(constants,TypeSuffix.FLOAT,buffer.getShort()&0xffff);
               break;
             case 0x39:
-              instruction=new StoreInstruction(constants,Type.DOUBLE,buffer.getShort()&0xffff);
+              instruction=new StoreInstruction(constants,TypeSuffix.DOUBLE,buffer.getShort()&0xffff);
               break;
             case 0x3a:
-              instruction=new StoreInstruction(constants,Type.REF,buffer.getShort()&0xffff);
+              instruction=new StoreInstruction(constants,TypeSuffix.REF,buffer.getShort()&0xffff);
               break;
             case 0x84:
               instruction=new IincInstruction(constants,buffer.getShort()&0xffff,buffer.getShort());

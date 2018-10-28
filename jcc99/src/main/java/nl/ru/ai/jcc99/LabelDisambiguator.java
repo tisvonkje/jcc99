@@ -21,7 +21,6 @@ public class LabelDisambiguator
 
   public String name(Method method)
   {
-    System.out.printf("called with label <%s>\n",method);
     String name=method.getFullName();
     /*
      * Already translated before? return it

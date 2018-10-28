@@ -2,10 +2,25 @@ package nl.ru.ai.jcc99;
 
 import java.io.PrintWriter;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.attributes.CodeAttribute;
 import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.types.ArrayType;
+import nl.ru.ai.jcc99.types.BooleanType;
+import nl.ru.ai.jcc99.types.CharacterType;
+import nl.ru.ai.jcc99.types.ClassType;
+import nl.ru.ai.jcc99.types.DoubleType;
+import nl.ru.ai.jcc99.types.FloatType;
+import nl.ru.ai.jcc99.types.IntegerType;
+import nl.ru.ai.jcc99.types.LongType;
+import nl.ru.ai.jcc99.types.MethodType;
+import nl.ru.ai.jcc99.types.ShortType;
+import nl.ru.ai.jcc99.types.Type;
+import nl.ru.ai.jcc99.types.VoidType;
 
 public class Method
 {
@@ -17,6 +32,7 @@ public class Method
   private Attribute[] attributes;
   private CodeAttribute code;
   private boolean markedForCoding;
+  private int parameterUnits;
 
   public Method(Constant[] constants, ClassFile classFile, ByteBuffer buffer)
   {
@@ -35,7 +51,19 @@ public class Method
       if(attributes[i] instanceof CodeAttribute)
         code=(CodeAttribute)attributes[i];
     }
+    /*
+     * Convert descriptor into type structure
+     */
+    Type type=Util.convert(constants[descriptorIndex].toShortString());
+    System.out.println(type);
+    /*
+     * Determine how many units the parameters take in a stack frame
+     */
+    parameterUnits=type.parameterUnitSize();
+
   }
+
+  
 
   public String toString()
   {
@@ -57,7 +85,7 @@ public class Method
   {
     return constants[nameIndex].toShortString();
   }
-  
+
   public String getFullName()
   {
     return classFile.getName()+"."+getName()+":"+getDescriptor();
@@ -67,7 +95,7 @@ public class Method
   {
     return (accessFlags&ClassFile.ACC_STATIC)!=0;
   }
-  
+
   public boolean isNative()
   {
     return (accessFlags&ClassFile.ACC_NATIVE)!=0;
@@ -101,9 +129,8 @@ public class Method
   {
     coder.codeComment("Method "+getFullName());
     coder.codeLabel(this);
-    // TODO Auto-generated method stub
-    
-  }
+    code.code(parameterUnits,coder);
 
+  }
 
 }

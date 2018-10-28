@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.constants.Constant;
 import nl.ru.ai.jcc99.instructions.Instruction;
 
@@ -14,7 +15,7 @@ public class CodeAttribute extends Attribute
   private ExceptionEntry[] exceptions;
   private Attribute[] attributes;
   private List<Instruction> instructions;
-
+  
   public CodeAttribute(Constant[] constants, ByteBuffer buffer)
   {
     super(constants);
@@ -54,6 +55,11 @@ public class CodeAttribute extends Attribute
   {
     for(Instruction instruction:instructions)
       instruction.markForCoding(classLoader);
+  }
+
+  public void code(int parameterUnits, Coder coder)
+  {
+    coder.codeLink(maxLocals-parameterUnits);
   }
 
 }

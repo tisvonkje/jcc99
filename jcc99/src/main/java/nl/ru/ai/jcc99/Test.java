@@ -12,7 +12,9 @@ public class Test
 
   private static int mul(int i, int j)
   {
-    return i*j;
+    int k;
+    k=i*j;
+    return k;
   }
 
 }

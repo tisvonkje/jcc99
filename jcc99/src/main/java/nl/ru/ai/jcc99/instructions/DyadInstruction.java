@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.instructions;
 
-import nl.ru.ai.jcc99.Type;
+import nl.ru.ai.jcc99.TypeSuffix;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class DyadInstruction extends Instruction
@@ -11,10 +11,10 @@ public class DyadInstruction extends Instruction
    * For FLOAT  allowed: ADD, SUB, MUL, DIV, REM
    * for DOUBLE allowed: ADD, SUB. MUL, DIV, REM
    */
-  private Type type;
+  private TypeSuffix type;
   private Operator operator;
 
-  public DyadInstruction(Constant[] constants, Type type, Operator operator)
+  public DyadInstruction(Constant[] constants, TypeSuffix type, Operator operator)
   {
     super(constants);
     this.type=type;
