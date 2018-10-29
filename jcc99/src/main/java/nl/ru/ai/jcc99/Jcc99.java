@@ -101,8 +101,9 @@ public class Jcc99
     }
     /*
      * Mark methods for coding (recursively)
+     * and collect constants
      */
-    mainMethod.markForCoding(classLoader);
+    mainMethod.analyze(classLoader);
     if(Util.foundErrors())
     {
     	System.err.println("Errors found, bailing out");

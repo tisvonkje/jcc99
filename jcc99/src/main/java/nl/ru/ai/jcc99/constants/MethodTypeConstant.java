@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class MethodTypeConstant extends Constant
+public class MethodTypeConstant extends InlineConstant
 {
   private short descriptorIndex;
 

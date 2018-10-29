@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class MethodrefConstant extends Constant
+public class MethodrefConstant extends InlineConstant
 {
   private short classIndex;
   private short nameAndTypeIndex;

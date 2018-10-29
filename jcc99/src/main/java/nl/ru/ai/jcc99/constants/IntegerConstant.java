@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class IntegerConstant extends Constant
+public class IntegerConstant extends InlineConstant
 {
   private int value;
 

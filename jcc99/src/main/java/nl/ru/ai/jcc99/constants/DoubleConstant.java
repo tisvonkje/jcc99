@@ -1,6 +1,8 @@
 package nl.ru.ai.jcc99.constants;
 
-public class DoubleConstant extends Constant
+import nl.ru.ai.jcc99.ClassLoader;
+
+public class DoubleConstant extends InlineConstant
 {
   private double value;
 

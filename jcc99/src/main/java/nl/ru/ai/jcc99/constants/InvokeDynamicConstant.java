@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class InvokeDynamicConstant extends Constant
+public class InvokeDynamicConstant extends InlineConstant
 {
   private short bootstrapMethodAttrIndex;
   private short nameAndTypeIndex;

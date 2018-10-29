@@ -17,14 +17,14 @@ public class InvokestaticInstruction extends Instruction
     this.methodIndex=methodIndex;
   }
   
-  public void markForCoding(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader)
   {
     String methodName=constants[methodIndex].toShortString();
     method=classLoader.getStaticMethod(methodName);
     if(method==null)
       Util.error("Cannot mark '%s' for coding",methodName);
     else
-      method.markForCoding(classLoader);
+      method.analyze(classLoader);
   }
   
   public String toString()

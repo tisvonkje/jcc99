@@ -2,6 +2,9 @@ package nl.ru.ai.jcc99.constants;
 
 import java.nio.ByteBuffer;
 
+import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Coder;
+
 public abstract class Constant
 {
   private static final byte CONSTANT_CLASS=7;
@@ -68,4 +71,9 @@ public abstract class Constant
         throw new RuntimeException(String.format("invalid tag '%d' in constant info",tag));
     }
   }
+
+  public abstract void codeLoad(Coder coder);
+
+  public abstract void analyze(ClassLoader loader);
+
 }

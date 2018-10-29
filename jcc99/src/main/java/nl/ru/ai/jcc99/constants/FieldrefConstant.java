@@ -1,6 +1,8 @@
 package nl.ru.ai.jcc99.constants;
 
-public class FieldrefConstant extends Constant
+import nl.ru.ai.jcc99.ClassLoader;
+
+public class FieldrefConstant extends InlineConstant
 {
   private short classIndex;
   private short nameAndTypeIndex;
@@ -27,5 +29,4 @@ public class FieldrefConstant extends Constant
   {
     return constants[classIndex].toShortString();
   }
-
 }

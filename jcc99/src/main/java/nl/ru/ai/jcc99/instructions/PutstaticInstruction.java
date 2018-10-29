@@ -16,7 +16,7 @@ public class PutstaticInstruction extends Instruction
     this.fieldIndex=fieldIndex;
   }
   
-  public void markForCoding(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader)
   {
     FieldrefConstant fieldrefConstant=(FieldrefConstant)constants[fieldIndex];
     String className=fieldrefConstant.getClassName();
@@ -24,7 +24,7 @@ public class PutstaticInstruction extends Instruction
     if(classFile==null)
       Util.error("Cannot mark '%s' for coding",className);
     else
-      classFile.markForCoding(classLoader);
+      classFile.analyze(classLoader);
   }
   
   public String toString()

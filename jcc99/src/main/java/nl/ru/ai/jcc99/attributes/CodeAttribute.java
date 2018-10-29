@@ -51,10 +51,10 @@ public class CodeAttribute extends Attribute
     return String.format("Code(maxStack=%d, maxLocals=%d, code=%s, attributes=%s)",maxStack,maxLocals,instructions,new String(buffer));
   }
 
-  public void markForCoding(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader)
   {
     for(Instruction instruction:instructions)
-      instruction.markForCoding(classLoader);
+      instruction.analyze(classLoader);
   }
 
   public void code(int parameterUnits, Coder coder)

@@ -9,22 +9,31 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.constants.OutlineConstant;
+import nl.ru.ai.jcc99.constants.StringConstant;
 
 public class ClassLoader
 {
   private Map<String, ClassFile> classByName;
   private Map<String, Method> staticMethodByName;
   private Map<String, Method> dynamicMethodByName;
+  private List<OutlineConstant> constantPool;
 
   public ClassLoader(String [] classPath)
   {
     classByName=new HashMap<String,ClassFile>();
     staticMethodByName=new HashMap<String,Method>();
     dynamicMethodByName=new HashMap<String,Method>();
+    constantPool=new ArrayList<OutlineConstant>();
+    
     for(String classPathEntry:classPath)
     {
       File file=new File(classPathEntry);
@@ -197,6 +206,16 @@ public class ClassLoader
         method.code(coder);
     }
     // FIXME: Do dynamic methods later
+    coder.codeData();
+    for(OutlineConstant constant:constantPool)
+      constant.code(coder);
+  }
+
+  public int addConstant(OutlineConstant constant)
+  {
+    int result=constantPool.size();
+    constantPool.add(constant);
+    return result;
   }
 
 }

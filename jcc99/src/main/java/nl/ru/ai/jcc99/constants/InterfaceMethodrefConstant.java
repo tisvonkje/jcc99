@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class InterfaceMethodrefConstant extends Constant
+public class InterfaceMethodrefConstant extends InlineConstant
 {
   private short classIndex;
   private short nameAndTypeIndex;

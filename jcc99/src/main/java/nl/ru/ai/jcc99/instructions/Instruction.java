@@ -617,7 +617,7 @@ public abstract class Instruction
    * Default implementation: no operation
    * @param classLoader
    */
-  public void markForCoding(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader)
   {
     ;
   }

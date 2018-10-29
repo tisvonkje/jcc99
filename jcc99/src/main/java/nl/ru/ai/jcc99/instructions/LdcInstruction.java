@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class LdcInstruction extends Instruction
@@ -15,6 +17,17 @@ public class LdcInstruction extends Instruction
   public String toString()
   {
     return String.format("ldc %d (%s)",index,constants[index].toShortString());
+  }
+  
+  public void analyze(ClassLoader loader)
+  {
+    constants[index].analyze(loader);
+  }
+
+  
+  public void code(int parameterUnits, Coder coder)
+  {
+    constants[index].codeLoad(coder);
   }
 
 }

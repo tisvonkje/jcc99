@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class UTF8Constant extends Constant
+public class UTF8Constant extends InlineConstant
 {
   private byte[] bytes;
 

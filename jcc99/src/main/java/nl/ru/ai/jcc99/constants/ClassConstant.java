@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class ClassConstant extends Constant
+public class ClassConstant extends InlineConstant
 {
   private short nameIndex;
 

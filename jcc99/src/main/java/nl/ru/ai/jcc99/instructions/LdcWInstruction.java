@@ -1,5 +1,6 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class LdcWInstruction extends Instruction
@@ -10,6 +11,11 @@ public class LdcWInstruction extends Instruction
   {
     super(constants);
     this.index=index;
+  }
+  
+  public void analyze(ClassLoader loader)
+  {
+    
   }
 
   public String toString()

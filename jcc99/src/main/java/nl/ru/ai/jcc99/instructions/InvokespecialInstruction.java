@@ -14,10 +14,10 @@ public class InvokespecialInstruction extends Instruction
     this.methodIndex=methodIndex;
   }
   
-  public void markForCoding(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader)
   {
     Method subMethod=classLoader.getDynamicMethod(constants[methodIndex].toShortString());
-    subMethod.markForCoding(classLoader);
+    subMethod.analyze(classLoader);
   }
   
   public String toString()

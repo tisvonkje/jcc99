@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class MethodHandleConstant extends Constant
+public class MethodHandleConstant extends InlineConstant
 {
   private byte referenceKind;
   private short referenceIndex;

@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class NameAndTypeConstant extends Constant
+public class NameAndTypeConstant extends InlineConstant
 {
   private short nameIndex;
   private short descriptorIndex;

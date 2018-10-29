@@ -1,6 +1,8 @@
 package nl.ru.ai.jcc99.constants;
 
-public class StringConstant extends Constant
+import nl.ru.ai.jcc99.Coder;
+
+public class StringConstant extends OutlineConstant
 {
   private short stringIndex;
 
@@ -19,6 +21,12 @@ public class StringConstant extends Constant
   public String toShortString()
   {
     return constants[stringIndex].toShortString();
+  }
+  
+  public void code(Coder coder)
+  {
+    super.code(coder);
+    coder.codeAsciz(constants[stringIndex].toShortString());
   }
 
 }

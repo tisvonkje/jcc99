@@ -139,7 +139,7 @@ public class ClassFile
   {
     return methods;
   }
-  public void markForCoding(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader)
   {
     /*
      * Already marked? nothing to do
@@ -153,6 +153,6 @@ public class ClassFile
     System.out.printf("looking for <%s>\n",getName()+".<clinit>:()V");
     Method clinit=classLoader.getStaticMethod(getName()+".<clinit>:()V");
     if(clinit!=null)
-      clinit.markForCoding(classLoader);
+      clinit.analyze(classLoader);
   }
 }

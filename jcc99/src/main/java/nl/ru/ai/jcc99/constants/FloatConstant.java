@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class FloatConstant extends Constant
+public class FloatConstant extends InlineConstant
 {
   private float value;
 

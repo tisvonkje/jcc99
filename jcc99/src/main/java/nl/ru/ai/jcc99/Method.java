@@ -31,14 +31,14 @@ public class Method
   private short descriptorIndex;
   private Attribute[] attributes;
   private CodeAttribute code;
-  private boolean markedForCoding;
+  private boolean analysed;
   private int parameterUnits;
 
   public Method(Constant[] constants, ClassFile classFile, ByteBuffer buffer)
   {
     this.constants=constants;
     this.classFile=classFile;
-    this.markedForCoding=false;
+    this.analysed=false;
     this.code=null;
     accessFlags=buffer.getShort();
     nameIndex=buffer.getShort();
@@ -101,28 +101,28 @@ public class Method
     return (accessFlags&ClassFile.ACC_NATIVE)!=0;
   }
 
-  public void markForCoding(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader)
   {
     /*
      * Already marked? nothing to do
      */
-    if(markedForCoding)
+    if(analysed)
       return;
-    markedForCoding=true;
+    analysed=true;
     /*
-     * Be sure our own class is marked for coding which will marked class initialization methods
+     * Be sure our own class is analyzed which will marked class initialization methods
      */
-    classFile.markForCoding(classLoader);
+    classFile.analyze(classLoader);
     /*
-     * Mark methods used in our code
+     * Analyze the code
      */
     if(code!=null)
-      code.markForCoding(classLoader);
+      code.analyze(classLoader);
   }
 
   public boolean isMarkedForCoding()
   {
-    return markedForCoding;
+    return analysed;
   }
 
   public void code(Coder coder)

@@ -1,6 +1,6 @@
 package nl.ru.ai.jcc99.constants;
 
-public class LongConstant extends Constant
+public class LongConstant extends InlineConstant
 {
   private long value;
 

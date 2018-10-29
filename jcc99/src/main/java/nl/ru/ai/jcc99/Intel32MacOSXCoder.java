@@ -2,6 +2,8 @@ package nl.ru.ai.jcc99;
 
 import java.io.PrintWriter;
 
+import nl.ru.ai.jcc99.constants.OutlineConstant;
+
 /*
  * Stack frame usuage 
  * Note stack is predecrement, so sp points to top (used) element growing upward 
@@ -45,14 +47,14 @@ public class Intel32MacOSXCoder implements Coder
     this.writer=writer;
     this.disambiguator=disambiguator;
   }
-  
+
   public short getWordSize()
   {
     return 4;
   }
 
   public void codeEntry(Method method)
-  { 
+  {
     writer.printf("\t.globl\t _main\n");
     writer.printf("_main:\tjmp\t%s\n",disambiguator.name(method));
   }
@@ -62,16 +64,21 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("%s:\n",disambiguator.name(method));
   }
 
+  public void codeLabel(OutlineConstant constant)
+  {
+    writer.printf("%s:\n",constant.getLabel());
+  }
+
   public String getVersion()
   {
     return "MacOSX Intel 32 bit coder";
   }
-  
+
   public void close()
   {
     writer.close();
   }
-  
+
   private int offset(int parameterUnits, int local)
   {
     if(local<parameterUnits)
@@ -81,7 +88,29 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeComment(String comment)
   {
-    writer.printf("# %s\n",comment);
+    StringBuffer buffer=new StringBuffer();
+    buffer.append("# ");
+    for(int i=0;i<comment.length();i++)
+    {
+      char c=comment.charAt(i);
+      switch(c)
+      {
+        case '\n':
+          buffer.append("\\n");
+          break;
+        case '\r':
+          buffer.append("\\r");
+          break;
+        case '\t':
+          buffer.append("\\t");
+          break;
+        default:
+          buffer.append(c);
+          break;
+      }
+    }
+    buffer.append("\"\n");
+    writer.write(new String(buffer));
   }
 
   public void codeLink(int number)
@@ -143,5 +172,42 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tmovl\t(%%ebp),%%esp\n");
     writer.printf("\tpopl\t%%ebp\n");
     writer.printf("\tret\n");
+  }
+
+  public void codePushLabel(OutlineConstant constant)
+  {
+    writer.printf("\tpushl\t%s\n",constant.getLabel());
+  }
+
+  public void codeData()
+  {
+    writer.printf("\t.data\n");
+  }
+
+  public void codeAsciz(String string)
+  {
+    StringBuffer buffer=new StringBuffer();
+    buffer.append("\t.asciz \"");
+    for(int i=0;i<string.length();i++)
+    {
+      char c=string.charAt(i);
+      switch(c)
+      {
+        case '\n':
+          buffer.append("\\n");
+          break;
+        case '\r':
+          buffer.append("\\r");
+          break;
+        case '\t':
+          buffer.append("\\t");
+          break;
+        default:
+          buffer.append(c);
+          break;
+      }
+    }
+    buffer.append("\"\n");
+    writer.write(new String(buffer));
   }
 }

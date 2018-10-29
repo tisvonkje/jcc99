@@ -15,14 +15,14 @@ public class InvokevirtualInstruction extends Instruction
     this.methodIndex=methodIndex;
   }
   
-  public void markForCoding(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader)
   {
     String name = constants[methodIndex].toShortString();
 	Method subMethod=classLoader.getDynamicMethod(name);
     if(subMethod==null)
       Util.error("Cannot mark '%s' for coding",name);
     else
-      subMethod.markForCoding(classLoader);
+      subMethod.analyze(classLoader);
   }
   
   public String toString()
