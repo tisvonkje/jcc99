@@ -15,4 +15,7 @@ public interface Coder
   void codeStore(int parameterUnits, int local);
   void codeDStore(int parameterUnits, int local);
   void codeReturnSingle(int parameterUnits);
+  void codePushInt(int value);
+  void codeCall(Method method);
+  void codeReturn();
 }

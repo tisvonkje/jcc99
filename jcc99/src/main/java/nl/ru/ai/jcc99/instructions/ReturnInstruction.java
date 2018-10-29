@@ -1,5 +1,6 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class ReturnInstruction extends Instruction
@@ -13,6 +14,11 @@ public class ReturnInstruction extends Instruction
   public String toString()
   {
     return "return";
+  }
+  
+  public void code(int parameterUnits, Coder coder)
+  {
+    coder.codeReturn();
   }
 
 }

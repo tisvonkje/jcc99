@@ -21,7 +21,4 @@ public class IreturnInstruction extends Instruction
   {
     coder.codeReturnSingle(parameterUnits);
   }
-  
-  
-
 }

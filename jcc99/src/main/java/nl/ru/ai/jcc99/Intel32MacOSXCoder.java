@@ -126,4 +126,22 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\t%%eax\n");
     writer.printf("\tjmpl\t*%%ecx\n");
   }
+
+  public void codePushInt(int value)
+  {
+    writer.printf("\tpushl\t$%d\n",value);
+  }
+
+  public void codeCall(Method method)
+  {
+    writer.printf("\tcall\t%s\n",disambiguator.name(method));
+  }
+
+  public void codeReturn()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tmovl\t(%%ebp),%%esp\n");
+    writer.printf("\tpopl\t%%ebp\n");
+    writer.printf("\tret\n");
+  }
 }
