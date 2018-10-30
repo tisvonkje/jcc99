@@ -14,6 +14,13 @@ import org.apache.commons.cli.ParseException;
 
 /**
  * Java class compiler
+ * Ideas behind compiler
+ * - make it possible to generate code for 16 bit processors
+ * - int -> 16 bit, long -> 32 bit
+ * - float -> 16 bit, double ->32 bit
+ * - char -> 16 bit, String are arrays of chars
+ * Might introduce CStrings later
+ * 
  * To test it, run it with the following arguments
  * -classpath target/classes nl.ru.ai.jcc99.Test
  * @author sparky

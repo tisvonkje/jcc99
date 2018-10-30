@@ -6,6 +6,9 @@ public class Test
   
   public static void main(String[] args)
   {
-    print("Hello World\n");
+    char [] test=new char[2];
+    test[0]='A';
+    test[1]='B';
+    String s=new String(test);
   }
 }

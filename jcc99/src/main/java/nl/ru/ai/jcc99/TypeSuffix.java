@@ -23,8 +23,10 @@ public enum TypeSuffix {
         return "l";
       case REF:
         return "a";
+      case BYTE:
+        return "?"; //FIXME
       default:
-        throw new RuntimeException(String.format("Invalid type '%s'",this));
+        throw new RuntimeException("Invalid type");
     }
   }
 
