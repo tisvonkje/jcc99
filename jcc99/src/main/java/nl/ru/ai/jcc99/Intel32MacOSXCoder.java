@@ -109,7 +109,7 @@ public class Intel32MacOSXCoder implements Coder
           break;
       }
     }
-    buffer.append("\"\n");
+    buffer.append("\n");
     writer.write(new String(buffer));
   }
 
@@ -149,11 +149,18 @@ public class Intel32MacOSXCoder implements Coder
   public void codeReturnSingle(int parameterUnits)
   {
     writer.printf("\tpopl\t%%eax\n");
-    writer.printf("\tmovl\t(%%ebp),%%esp\n");
+    writer.printf("\tmovl\t%%ebp,%%esp\n");
     writer.printf("\tpopl\t%%ebp\n");
     writer.printf("\tpopl\t%%ecx\n");
     writer.printf("\tpushl\t%%eax\n");
     writer.printf("\tjmpl\t*%%ecx\n");
+  }
+  
+  public void codeReturn()
+  {
+    writer.printf("\tmovl\t%%ebp,%%esp\n");
+    writer.printf("\tpopl\t%%ebp\n");
+    writer.printf("\tret\n");
   }
 
   public void codePushInt(int value)
@@ -166,17 +173,10 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tcall\t%s\n",disambiguator.name(method));
   }
 
-  public void codeReturn()
+  public void codePushAddress(OutlineConstant constant)
   {
-    writer.printf("\tpopl\t%%eax\n");
-    writer.printf("\tmovl\t(%%ebp),%%esp\n");
-    writer.printf("\tpopl\t%%ebp\n");
-    writer.printf("\tret\n");
-  }
-
-  public void codePushLabel(OutlineConstant constant)
-  {
-    writer.printf("\tpushl\t%s\n",constant.getLabel());
+    writer.printf("\tleal\t%s,%%eax\n",constant.getLabel());
+    writer.printf("\tpush\t%%eax\n");
   }
 
   public void codeData()

@@ -21,7 +21,7 @@ public interface Coder
   void codePushInt(int value);
   void codeCall(Method method);
   void codeReturn();
-  void codePushLabel(OutlineConstant constant);
+  void codePushAddress(OutlineConstant constant);
   void codeData();
   void codeAsciz(String string);
 }

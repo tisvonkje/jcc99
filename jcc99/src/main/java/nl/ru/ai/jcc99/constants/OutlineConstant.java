@@ -26,7 +26,7 @@ public abstract class OutlineConstant extends Constant
 
   public void codeLoad(Coder coder)
   {
-    coder.codePushLabel(this);
+    coder.codePushAddress(this);
   }
 
   public String getLabel()
