@@ -53,6 +53,27 @@ public class Intel32MacOSXCoder implements Coder
     return 4;
   }
 
+
+  /**
+   * Returns the real size of the type (as for example in an array)
+   */
+  public int getRealSize(TypeSuffix type)
+  {
+    switch(type)
+    {
+      case BOOLEAN:
+      case BYTE:
+        return 1;
+      case CHAR:
+      case SHORT:
+        return 2;
+      case INT:
+        return 4;
+      default:
+        throw new RuntimeException("Invalid type");
+    }
+  }
+
   public void codeEntry(Method method)
   {
     writer.printf("\t.globl\t _main\n");
@@ -155,7 +176,7 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\t%%eax\n");
     writer.printf("\tjmpl\t*%%ecx\n");
   }
-  
+
   public void codeReturn()
   {
     writer.printf("\tmovl\t%%ebp,%%esp\n");
@@ -209,5 +230,13 @@ public class Intel32MacOSXCoder implements Coder
     }
     buffer.append("\"\n");
     writer.write(new String(buffer));
+  }
+
+  public void codeAllocate(int elementSize)
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tpushl\theapptr\n");
+    writer.printf("\tshll\t$%d,%%eax\n",Util.log2(elementSize));
+    writer.printf("\taddl\t%%eax,heapptr\n");
   }
 }

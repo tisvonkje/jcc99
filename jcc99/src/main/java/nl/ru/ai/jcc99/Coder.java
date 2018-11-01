@@ -6,6 +6,7 @@ public interface Coder
 {
   short getWordSize();
   String getVersion();
+  int getRealSize(TypeSuffix type);
   void close();
   void codeEntry(Method method);
   void codeLabel(Method method);
@@ -24,4 +25,5 @@ public interface Coder
   void codePushAddress(OutlineConstant constant);
   void codeData();
   void codeAsciz(String string);
+  void codeAllocate(int elementSize);
 }
