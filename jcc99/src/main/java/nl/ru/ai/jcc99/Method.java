@@ -1,26 +1,11 @@
 package nl.ru.ai.jcc99;
 
-import java.io.PrintWriter;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.attributes.CodeAttribute;
 import nl.ru.ai.jcc99.constants.Constant;
-import nl.ru.ai.jcc99.types.ArrayType;
-import nl.ru.ai.jcc99.types.BooleanType;
-import nl.ru.ai.jcc99.types.CharacterType;
-import nl.ru.ai.jcc99.types.ClassType;
-import nl.ru.ai.jcc99.types.DoubleType;
-import nl.ru.ai.jcc99.types.FloatType;
-import nl.ru.ai.jcc99.types.IntegerType;
-import nl.ru.ai.jcc99.types.LongType;
-import nl.ru.ai.jcc99.types.MethodType;
-import nl.ru.ai.jcc99.types.ShortType;
 import nl.ru.ai.jcc99.types.Type;
-import nl.ru.ai.jcc99.types.VoidType;
 
 public class Method
 {
@@ -60,10 +45,7 @@ public class Method
      * Determine how many units the parameters take in a stack frame
      */
     parameterUnits=type.parameterUnitSize();
-
   }
-
-  
 
   public String toString()
   {
@@ -120,16 +102,21 @@ public class Method
       code.analyze(classLoader);
   }
 
-  public boolean isMarkedForCoding()
+  public boolean isAnalyzed()
   {
     return analysed;
   }
 
-  public void code(Coder coder)
+  public void code(ClassLoader classLoader, Coder coder)
   {
     coder.codeComment("Method "+getFullName());
     coder.codeLabel(this);
-    code.code(parameterUnits,coder);
+    code.code(classLoader,this,coder);
+  }
+
+  public int getParameterUnits()
+  {
+    return parameterUnits;
   }
 
 }

@@ -176,14 +176,14 @@ public class ClassLoader
     for(String methodName:staticMethodByName.keySet())
     {
       Method method=staticMethodByName.get(methodName);
-      if(method.isMarkedForCoding())
+      if(method.isAnalyzed())
         System.out.println(methodName+":"+method);
     }
     System.out.println("Dynamic methods marked for coding:");
     for(String methodName:dynamicMethodByName.keySet())
     {
       Method method=dynamicMethodByName.get(methodName);
-      if(method.isMarkedForCoding())
+      if(method.isAnalyzed())
         System.out.println(methodName+":"+method);
     }
   }
@@ -211,8 +211,8 @@ public class ClassLoader
     for(String methodName:staticMethodByName.keySet())
     {
       Method method=staticMethodByName.get(methodName);
-      if(method.isMarkedForCoding()&&!method.isNative())
-        method.code(coder);
+      if(method.isAnalyzed()&&!method.isNative())
+        method.code(this,coder);
     }
     // FIXME: Do dynamic methods later
     /*

@@ -1,5 +1,8 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Coder;
+import nl.ru.ai.jcc99.Method;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class GotoInstruction extends Instruction
@@ -17,4 +20,9 @@ public class GotoInstruction extends Instruction
     return String.format("goto %d",offset);
   }
 
+  public void code(ClassLoader classLoader, Method method, Coder coder)
+  {
+    coder.close();
+    throw new RuntimeException("don't know how to code "+getClass());
+  }
 }

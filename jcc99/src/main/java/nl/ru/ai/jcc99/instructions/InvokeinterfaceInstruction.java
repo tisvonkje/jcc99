@@ -1,5 +1,8 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Coder;
+import nl.ru.ai.jcc99.Method;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class InvokeinterfaceInstruction extends Instruction
@@ -21,4 +24,9 @@ public class InvokeinterfaceInstruction extends Instruction
     return String.format("invokedynamic %d (%s),%d,%d",methodIndex,constants[methodIndex].toShortString(),count,zero);
   }
 
+  public void code(ClassLoader classLoader, Method method, Coder coder)
+  {
+    coder.close();
+    throw new RuntimeException("don't know how to code "+getClass());
+  }
 }

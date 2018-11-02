@@ -2,6 +2,7 @@ package nl.ru.ai.jcc99.instructions;
 
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
+import nl.ru.ai.jcc99.Method;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class LdcInstruction extends Instruction
@@ -24,8 +25,7 @@ public class LdcInstruction extends Instruction
     constants[index].analyze(loader);
   }
 
-  
-  public void code(int parameterUnits, Coder coder)
+  public void code(ClassLoader classLoader, Method method, Coder coder)
   {
     constants[index].codeLoad(coder);
   }

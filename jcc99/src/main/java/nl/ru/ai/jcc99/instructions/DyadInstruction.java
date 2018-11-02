@@ -1,6 +1,8 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
+import nl.ru.ai.jcc99.Method;
 import nl.ru.ai.jcc99.TypeSuffix;
 import nl.ru.ai.jcc99.constants.Constant;
 
@@ -27,7 +29,7 @@ public class DyadInstruction extends Instruction
     return type.toString()+operator.toString().toLowerCase();
   }
   
-  public void code(int parameterUnits, Coder coder)
+  public void code(ClassLoader classLoader, Method method, Coder coder)
   {
     if(type==TypeSuffix.INT && operator==Operator.ADD)
       coder.codeAddInt();

@@ -5,6 +5,7 @@ import java.util.List;
 
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
+import nl.ru.ai.jcc99.Method;
 import nl.ru.ai.jcc99.constants.Constant;
 import nl.ru.ai.jcc99.instructions.Instruction;
 
@@ -57,13 +58,13 @@ public class CodeAttribute extends Attribute
       instruction.analyze(classLoader);
   }
 
-  public void code(int parameterUnits, Coder coder)
+  public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.codeLink(maxLocals-parameterUnits);
+    coder.codeLink(maxLocals-method.getParameterUnits());
     for(Instruction instruction:instructions)
     {
       coder.codeComment(instruction.toString());
-      instruction.code(parameterUnits,coder);
+      instruction.code(classLoader,method,coder);
     }
   }
 

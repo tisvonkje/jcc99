@@ -32,7 +32,7 @@ public class InvokestaticInstruction extends Instruction
     return String.format("invokestatic %d (%s)",methodIndex,constants[methodIndex].toShortString());
   }
   
-  public void code(int parameterUnits, Coder coder)
+  public void code(ClassLoader classLoader, Method method, Coder coder)
   {
     coder.codeCall(method);
   }
