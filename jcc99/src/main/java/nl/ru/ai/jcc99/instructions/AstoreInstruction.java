@@ -1,5 +1,6 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.TypeSuffix;
 import nl.ru.ai.jcc99.constants.Constant;
 
@@ -16,6 +17,11 @@ public class AstoreInstruction extends Instruction
   public String toString()
   {
     return String.format("%sastore",type.toString());
+  }
+  
+  public void code(int parameterUnits, Coder coder)
+  {
+    coder.codeArrayStore(type);
   }
 
 }

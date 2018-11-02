@@ -2,6 +2,8 @@ package nl.ru.ai.jcc99;
 
 import java.io.PrintWriter;
 
+import javax.print.DocFlavor.CHAR_ARRAY;
+
 import nl.ru.ai.jcc99.constants.OutlineConstant;
 
 /*
@@ -53,24 +55,21 @@ public class Intel32MacOSXCoder implements Coder
     return 4;
   }
 
-
-  /**
-   * Returns the real size of the type (as for example in an array)
-   */
-  public int getRealSize(TypeSuffix type)
+  private int bitShift(TypeSuffix type)
   {
     switch(type)
     {
       case BOOLEAN:
       case BYTE:
-        return 1;
+        return 0;
       case CHAR:
       case SHORT:
-        return 2;
+        return 1;
       case INT:
-        return 4;
+      case FLOAT:
+        return 2;
       default:
-        throw new RuntimeException("Invalid type");
+        throw new RuntimeException("Illegal type");
     }
   }
 
@@ -232,11 +231,46 @@ public class Intel32MacOSXCoder implements Coder
     writer.write(new String(buffer));
   }
 
-  public void codeAllocate(int elementSize)
+  public void codeAllocate(TypeSuffix elementType)
   {
     writer.printf("\tpopl\t%%eax\n");
     writer.printf("\tpushl\theapptr\n");
-    writer.printf("\tshll\t$%d,%%eax\n",Util.log2(elementSize));
+    writer.printf("\tshll\t$%d,%%eax\n",bitShift(elementType));
     writer.printf("\taddl\t%%eax,heapptr\n");
+  }
+
+  public void codePushByte(int value)
+  {
+    /*
+     * Sign extend the byte into an int and push
+     */
+    value<<=24;
+    value>>=24;
+    writer.printf("\tpushl\t$%d\n",value);
+  }
+
+  public void codeArrayStore(TypeSuffix elementType)
+  {
+    writer.printf("\tpopl\t%%eax\n"); // value to store
+    writer.printf("\tpopl\t%%ebx\n"); // index position
+    writer.printf("\tshll\t$%d,%%ebx\n",bitShift(elementType)); // multiple by element size
+    writer.printf("\tpopl\t%%ecx\n"); // address of array
+    writer.printf("\tadd\t%%ebx,%%ecx\n"); // add it together
+    switch(elementType)
+    {
+      case BYTE:
+      case BOOLEAN:
+        writer.printf("\tmovb\t%%eax(%%ecx)\n"); // store value
+        break;
+      case CHAR:
+        writer.printf("\tmovw\t%%eax(%%ecx)\n"); // store value
+        break;
+      case INT:
+      case FLOAT:
+        writer.printf("\tmovl\t%%eax(%%ecx)\n"); // store value
+        break;
+      default:
+        throw new RuntimeException("invalid type");
+    }
   }
 }

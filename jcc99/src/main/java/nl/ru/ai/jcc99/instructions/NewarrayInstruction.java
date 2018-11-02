@@ -19,10 +19,9 @@ public class NewarrayInstruction extends Instruction
     return String.format("newarray %s",type.toString());
   }
   
-  // number of elements on stack
   public void code(int parameterUnits, Coder coder)
   {
-    coder.codeAllocate(coder.getRealSize(type));
+    coder.codeAllocate(type);
   }
 
 }

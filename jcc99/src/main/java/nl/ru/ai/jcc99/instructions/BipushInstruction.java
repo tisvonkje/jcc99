@@ -1,5 +1,6 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class BipushInstruction extends Instruction
@@ -15,5 +16,10 @@ public class BipushInstruction extends Instruction
   public String toString()
   {
     return String.format("bipush %d",value);
+  }
+  
+  public void code(int parameterUnits, Coder coder)
+  {
+    coder.codePushByte(value);
   }
 }

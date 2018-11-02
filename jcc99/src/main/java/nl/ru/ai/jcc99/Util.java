@@ -86,22 +86,4 @@ public class Util
         throw new RuntimeException("Cannot parse descriptor, char='"+c+"'");
     }
   }
-
-  public static int log2(int n)
-  {
-    switch(n)
-    {
-      case 1:
-        return 0;
-      case 2:
-        return 1;
-      case 4:
-        return 2;
-      case 8:
-        return 3;
-      default:
-        throw new RuntimeException("Invalid argument");
-    }
-  }
-
 }

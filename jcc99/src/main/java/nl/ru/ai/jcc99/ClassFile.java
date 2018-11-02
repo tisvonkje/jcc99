@@ -45,13 +45,13 @@ public class ClassFile
   private short[] interfaces;
   private Field[] fields;
   private Method[] methods;
-  private boolean markedForCoding;
+  private boolean analyzed;
   /*
    * Constructor
    */
   public ClassFile(ByteBuffer buffer) throws IOException, ClassLoaderException
   {
-    this.markedForCoding=false;
+    this.analyzed=false;
     magic=buffer.getInt();
     minor=buffer.getShort();
     major=buffer.getShort();
@@ -144,9 +144,9 @@ public class ClassFile
     /*
      * Already marked? nothing to do
      */
-    if(markedForCoding)
+    if(analyzed)
       return;
-    markedForCoding=true;
+    analyzed=true;
     /*
      * Mark class initialization if it exists
      */
