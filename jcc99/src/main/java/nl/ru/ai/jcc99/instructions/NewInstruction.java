@@ -1,5 +1,6 @@
 package nl.ru.ai.jcc99.instructions;
 
+import nl.ru.ai.jcc99.ClassFile;
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -22,7 +23,9 @@ public class NewInstruction extends Instruction
   
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    throw new RuntimeException("notyet");
+    ClassFile classFile=classLoader.getClassFile(constants[classIndex].toShortString());
+    int size=classFile.getSize();
+    coder.codeAllocateObject(size);
   }
 
 }

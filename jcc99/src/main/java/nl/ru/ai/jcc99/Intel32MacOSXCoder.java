@@ -231,7 +231,7 @@ public class Intel32MacOSXCoder implements Coder
     writer.write(new String(buffer));
   }
 
-  public void codeAllocate(TypeSuffix elementType)
+  public void codeAllocateArray(TypeSuffix elementType)
   {
     writer.printf("\tpopl\t%%eax\n");
     writer.printf("\tpushl\theapptr\n");
@@ -272,5 +272,11 @@ public class Intel32MacOSXCoder implements Coder
       default:
         throw new RuntimeException("invalid type");
     }
+  }
+
+  public void codeAllocateObject(int size)
+  {
+    writer.printf("\tpushl\theapptr\n");
+    writer.printf("\taddl\t$%d,heapptr\n",size*getWordSize());
   }
 }

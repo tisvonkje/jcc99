@@ -155,4 +155,20 @@ public class ClassFile
     if(clinit!=null)
       clinit.analyze(classLoader);
   }
+  
+  /**
+   * FIXME: for now ignoring size of superclass, ignoring size for dynamic calling
+   * Return the size of an object of the class in memory
+   * @return the size
+   */
+  public int getSize()
+  {
+    int result=0;
+    /*
+     * Loop through all non-static fields and add their size
+     */
+    for(Field field:fields)
+      result+=field.getSize();
+    return result;
+  }
 }

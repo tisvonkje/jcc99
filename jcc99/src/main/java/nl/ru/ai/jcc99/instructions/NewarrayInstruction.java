@@ -23,7 +23,7 @@ public class NewarrayInstruction extends Instruction
   
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.codeAllocate(type);
+    coder.codeAllocateArray(type);
   }
 
 }

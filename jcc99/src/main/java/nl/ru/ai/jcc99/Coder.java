@@ -24,7 +24,8 @@ public interface Coder
   void codePushAddress(OutlineConstant constant);
   void codeData();
   void codeAsciz(String string);
-  void codeAllocate(TypeSuffix elementType);
+  void codeAllocateArray(TypeSuffix elementType);
   void codePushByte(int value);
   void codeArrayStore(TypeSuffix elementType);
+  void codeAllocateObject(int size);
 }

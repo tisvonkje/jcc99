@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.types.Type;
 
 public class Field
 {
@@ -34,6 +35,19 @@ public class Field
       attr.append(' ');
     }
     return String.format("flags=%04x, name=%s, descriptor=%s attributes=%s",accessFlags,constants[nameIndex].toShortString(),constants[descriptorIndex].toShortString(),new String(attr));
+  }
+
+  public int getSize()
+  {
+    /*
+     * Only count non-static fields
+     */
+    if((accessFlags & ClassFile.ACC_STATIC)==0)
+    {
+      Type type=Util.convert(constants[descriptorIndex].toShortString());
+      return type.unitSize();
+    } else
+      return 0;
   }
 
 }
