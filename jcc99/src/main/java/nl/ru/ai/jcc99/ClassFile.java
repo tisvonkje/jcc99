@@ -46,16 +46,19 @@ public class ClassFile
   private Field[] fields;
   private Method[] methods;
   private boolean analyzed;
+
+  private Integer size;
   /*
    * Constructor
    */
   public ClassFile(ByteBuffer buffer) throws IOException, ClassLoaderException
   {
     this.analyzed=false;
+    this.size=null;
     magic=buffer.getInt();
     minor=buffer.getShort();
     major=buffer.getShort();
-    if(major!=49 || minor!=0)
+    if(major!=49||minor!=0)
       throw new ClassLoaderException(String.format("Invalid class file version, expected 49,0, got %d,%d",major,minor));
     short constantPoolCount=buffer.getShort();
     constants=new Constant[constantPoolCount];
@@ -67,7 +70,7 @@ public class ClassFile
        * From JVM spec: In retrospect, making 8-byte constants take two constant pool entries was a poor choice.
        * I agree, but who ever thought it was a good idea? UTF8 slots have fixed length so why?
        */
-      if(constants[i] instanceof LongConstant || constants[i] instanceof DoubleConstant)
+      if(constants[i] instanceof LongConstant||constants[i] instanceof DoubleConstant)
         i++;
     }
     /*
@@ -124,20 +127,39 @@ public class ClassFile
   {
     return constants[thisClass].toShortString();
   }
-  
+
   public String toString()
   {
     StringBuffer buffer=new StringBuffer();
-    for(Method method:methods)
+    for(Method method : methods)
     {
       buffer.append(method.toString());
       buffer.append('\n');
     }
     return new String(buffer);
   }
-  public Method [] getMethods()
+  public Method[] getMethods()
   {
     return methods;
+  }
+  public int getSizeAndCalculateFieldOffsets(int startOffset, ClassLoader classLoader)
+  {
+    if(size==null)
+    {
+      Constant superClassConstant=constants[superClass];
+      if(superClassConstant!=null)
+      {
+        ClassFile parentClass=classLoader.getClassFile(superClassConstant.toShortString());
+        if(parentClass==null)
+          throw new RuntimeException("Invalid parent class");
+        startOffset=parentClass.getSizeAndCalculateFieldOffsets(startOffset,classLoader);
+      }
+      for(Field field : fields)
+        if(field.isNonStatic())
+          startOffset+=field.getSizeAndSetOffset(startOffset);
+      size=startOffset;
+    }
+    return size;
   }
   public void analyze(ClassLoader classLoader)
   {
@@ -148,10 +170,9 @@ public class ClassFile
       return;
     analyzed=true;
     /*
-     * Determine the size of our parent class
+     * Calculate size and field offsets
      */
-    int parentSize=getParentSize(classLoader);
-    HERE;
+    getSizeAndCalculateFieldOffsets(0,classLoader);
     /*
      * Mark class initialization if it exists
      */
@@ -161,23 +182,8 @@ public class ClassFile
       clinit.analyze(classLoader);
   }
   
-  public int getSize(ClassLoader classLoader)
+  public Integer getSize()
   {
-    int size=getParentSize(classLoader);
-    /*
-     * Loop through all non-static fields and add their size
-     */
-    for(Field field:fields)
-      if(field.isNonStatic())
-        size+=field.getSize();
     return size;
-  }
-  
-  public int getParentSize(ClassLoader classLoader)
-  {
-    ClassFile parentClass=classLoader.getClassFile(constants[superClass].toShortString());
-    if(parentClass==null)
-      throw new RuntimeException("Cannot get size of parent class");
-    return parentClass.getSize(classLoader);
   }
 }

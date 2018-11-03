@@ -13,10 +13,12 @@ public class Field
   private short descriptorIndex;
   private Attribute[] attributes;
   private Constant[] constants;
+  private Integer offset;
 
   public Field(Constant[] constants, ByteBuffer buffer)
   {
     this.constants=constants;
+    this.offset=null;
     accessFlags=buffer.getShort();
     nameIndex=buffer.getShort();
     descriptorIndex=buffer.getShort();
@@ -37,14 +39,15 @@ public class Field
     return String.format("flags=%04x, name=%s, descriptor=%s attributes=%s",accessFlags,constants[nameIndex].toShortString(),constants[descriptorIndex].toShortString(),new String(attr));
   }
 
-  public int getSize()
-  {
-    Type type=Util.convert(constants[descriptorIndex].toShortString());
-    return type.unitSize();
-  }
-
   public boolean isNonStatic()
   {
     return (accessFlags&ClassFile.ACC_STATIC)==0;
+  }
+
+  public int getSizeAndSetOffset(int offset)
+  {
+    this.offset=offset;
+    Type type=Util.convert(constants[descriptorIndex].toShortString());
+    return type.unitSize();
   }
 }
