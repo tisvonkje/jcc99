@@ -148,6 +148,11 @@ public class ClassFile
       return;
     analyzed=true;
     /*
+     * Determine the size of our parent class
+     */
+    int parentSize=getParentSize(classLoader);
+    HERE;
+    /*
      * Mark class initialization if it exists
      */
     System.out.printf("looking for <%s>\n",getName()+".<clinit>:()V");
@@ -156,19 +161,23 @@ public class ClassFile
       clinit.analyze(classLoader);
   }
   
-  /**
-   * FIXME: for now ignoring size of superclass, ignoring size for dynamic calling
-   * Return the size of an object of the class in memory
-   * @return the size
-   */
-  public int getSize()
+  public int getSize(ClassLoader classLoader)
   {
-    int result=0;
+    int size=getParentSize(classLoader);
     /*
      * Loop through all non-static fields and add their size
      */
     for(Field field:fields)
-      result+=field.getSize();
-    return result;
+      if(field.isNonStatic())
+        size+=field.getSize();
+    return size;
+  }
+  
+  public int getParentSize(ClassLoader classLoader)
+  {
+    ClassFile parentClass=classLoader.getClassFile(constants[superClass].toShortString());
+    if(parentClass==null)
+      throw new RuntimeException("Cannot get size of parent class");
+    return parentClass.getSize(classLoader);
   }
 }

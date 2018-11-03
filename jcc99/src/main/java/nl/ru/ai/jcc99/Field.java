@@ -14,7 +14,7 @@ public class Field
   private Attribute[] attributes;
   private Constant[] constants;
 
-  public Field(Constant [] constants, ByteBuffer buffer)
+  public Field(Constant[] constants, ByteBuffer buffer)
   {
     this.constants=constants;
     accessFlags=buffer.getShort();
@@ -25,7 +25,7 @@ public class Field
     for(int i=0;i<attributeCount;i++)
       attributes[i]=Attribute.create(constants,buffer);
   }
-  
+
   public String toString()
   {
     StringBuffer attr=new StringBuffer();
@@ -39,15 +39,12 @@ public class Field
 
   public int getSize()
   {
-    /*
-     * Only count non-static fields
-     */
-    if((accessFlags & ClassFile.ACC_STATIC)==0)
-    {
-      Type type=Util.convert(constants[descriptorIndex].toShortString());
-      return type.unitSize();
-    } else
-      return 0;
+    Type type=Util.convert(constants[descriptorIndex].toShortString());
+    return type.unitSize();
   }
 
+  public boolean isNonStatic()
+  {
+    return (accessFlags&ClassFile.ACC_STATIC)==0;
+  }
 }
