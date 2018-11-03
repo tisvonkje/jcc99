@@ -9,7 +9,7 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class InvokestaticInstruction extends Instruction
 {
   private int methodIndex;
-  private Method method;
+  private Method subMethod;
 
   public InvokestaticInstruction(Constant[] constants, int methodIndex)
   {
@@ -20,11 +20,11 @@ public class InvokestaticInstruction extends Instruction
   public void analyze(ClassLoader classLoader)
   {
     String methodName=constants[methodIndex].toShortString();
-    method=classLoader.getStaticMethod(methodName);
-    if(method==null)
+    subMethod=classLoader.getStaticMethod(methodName);
+    if(subMethod==null)
       Util.error("Cannot mark '%s' for coding",methodName);
     else
-      method.analyze(classLoader);
+      subMethod.analyze(classLoader);
   }
   
   public String toString()
@@ -34,7 +34,7 @@ public class InvokestaticInstruction extends Instruction
   
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.codeCall(method);
+    coder.codeCall(subMethod);
   }
 
 }

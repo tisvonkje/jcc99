@@ -28,4 +28,5 @@ public interface Coder
   void codePushByte(int value);
   void codeArrayStore(TypeSuffix elementType);
   void codeAllocateObject(int size);
+  void codeDup();
 }

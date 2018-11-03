@@ -279,4 +279,10 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\theapptr\n");
     writer.printf("\taddl\t$%d,heapptr\n",size*getWordSize());
   }
+
+  public void codeDup()
+  {
+    writer.printf("\tpushl\t(%%esp)\n");
+    
+  }
 }

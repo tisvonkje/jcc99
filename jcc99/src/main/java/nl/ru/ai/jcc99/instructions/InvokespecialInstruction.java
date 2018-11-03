@@ -3,11 +3,13 @@ package nl.ru.ai.jcc99.instructions;
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
+import nl.ru.ai.jcc99.Util;
 import nl.ru.ai.jcc99.constants.Constant;
 
 public class InvokespecialInstruction extends Instruction
 {
   private int methodIndex;
+  private Method subMethod;
 
   public InvokespecialInstruction(Constant[] constants, int methodIndex)
   {
@@ -17,8 +19,12 @@ public class InvokespecialInstruction extends Instruction
   
   public void analyze(ClassLoader classLoader)
   {
-    Method subMethod=classLoader.getDynamicMethod(constants[methodIndex].toShortString());
-    subMethod.analyze(classLoader);
+    String methodName=constants[methodIndex].toShortString();
+    subMethod=classLoader.getDynamicMethod(methodName);
+    if(subMethod==null)
+      Util.error("Cannot mark '%s' for coding",methodName);
+    else
+      subMethod.analyze(classLoader);
   }
   
   public String toString()
@@ -28,7 +34,6 @@ public class InvokespecialInstruction extends Instruction
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codeCall(subMethod);
   }
 }

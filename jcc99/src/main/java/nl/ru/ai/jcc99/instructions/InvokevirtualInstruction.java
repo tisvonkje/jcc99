@@ -9,6 +9,7 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class InvokevirtualInstruction extends Instruction
 {
   private int methodIndex;
+  private Method subMethod;
 
   public InvokevirtualInstruction(Constant[] constants, int methodIndex)
   {
@@ -19,7 +20,7 @@ public class InvokevirtualInstruction extends Instruction
   public void analyze(ClassLoader classLoader)
   {
     String name = constants[methodIndex].toShortString();
-	Method subMethod=classLoader.getDynamicMethod(name);
+	subMethod=classLoader.getDynamicMethod(name);
     if(subMethod==null)
       Util.error("Cannot mark '%s' for coding",name);
     else
@@ -33,7 +34,6 @@ public class InvokevirtualInstruction extends Instruction
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codeCall(subMethod);
   }
 }

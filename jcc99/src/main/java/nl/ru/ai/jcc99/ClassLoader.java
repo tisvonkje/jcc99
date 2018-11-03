@@ -214,7 +214,12 @@ public class ClassLoader
       if(method.isAnalyzed()&&!method.isNative())
         method.code(this,coder);
     }
-    // FIXME: Do dynamic methods later
+    for(String methodName:dynamicMethodByName.keySet())
+    {
+      Method method=dynamicMethodByName.get(methodName);
+      if(method.isAnalyzed()&&!method.isNative())
+        method.code(this,coder);
+    }
     /*
      * Generate constant pool in data segment
      */
