@@ -186,4 +186,9 @@ public class ClassFile
   {
     return size;
   }
+  
+  public Field getField(String fieldName)
+  {
+    throw new RuntimeException("notyet");
+  }
 }

@@ -29,4 +29,14 @@ public class FieldrefConstant extends InlineConstant
   {
     return constants[classIndex].toShortString();
   }
+
+  public int getclassIndex()
+  {
+    return classIndex;
+  }
+
+  public int getNameAndTypeIndex()
+  {
+    return nameAndTypeIndex;
+  }
 }

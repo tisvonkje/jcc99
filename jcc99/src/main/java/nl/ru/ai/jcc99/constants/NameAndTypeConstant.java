@@ -22,5 +22,10 @@ public class NameAndTypeConstant extends InlineConstant
   {
     return String.format("%s:%s",constants[nameIndex].toShortString(),constants[descriptorIndex].toShortString());
   }
+  
+  public int getNameIndex()
+  {
+    return nameIndex;
+  }
 
 }
