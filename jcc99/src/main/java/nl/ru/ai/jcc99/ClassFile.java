@@ -189,6 +189,9 @@ public class ClassFile
   
   public Field getField(String fieldName)
   {
-    throw new RuntimeException("notyet");
+    for(Field field:fields)
+      if(fieldName.equals(field.getName()))
+        return field;
+    return null;
   }
 }

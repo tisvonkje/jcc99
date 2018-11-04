@@ -31,6 +31,6 @@ public class PutfieldInstruction extends Instruction
     NameAndTypeConstant nameAndType=(NameAndTypeConstant)constants[constant.getNameAndTypeIndex()];
     String fieldName=constants[nameAndType.getNameIndex()].toShortString();
     Field field=classFile.getField(fieldName);
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codePutField(field.getOffset());
   }
 }

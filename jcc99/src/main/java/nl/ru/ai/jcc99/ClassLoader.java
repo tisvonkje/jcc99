@@ -226,6 +226,7 @@ public class ClassLoader
     coder.codeData();
     for(OutlineConstant constant:constantPool)
       constant.code(coder);
+    coder.codeHeap();
   }
 
   public int addConstant(OutlineConstant constant)

@@ -7,6 +7,11 @@ import javax.print.DocFlavor.CHAR_ARRAY;
 import nl.ru.ai.jcc99.constants.OutlineConstant;
 
 /*
+ * FIXME: interesting, optimize array access
+ * movl    -8(%ebp, %edx, 4), %eax  # Full example: load *(ebp + (edx * 4) - 8) into eax
+ * https://en.wikibooks.org/wiki/X86_Assembly/GAS_Syntax
+ */
+/*
  * Stack frame usuage 
  * Note stack is predecrement, so sp points to top (used) element growing upward 
  * (from high address to low addresses).
@@ -76,7 +81,18 @@ public class Intel32MacOSXCoder implements Coder
   public void codeEntry(Method method)
   {
     writer.printf("\t.globl\t _main\n");
-    writer.printf("_main:\tjmp\t%s\n",disambiguator.name(method));
+    writer.printf("_main:\n");
+    writer.printf("\tlea\theapstart,%%eax\n");
+    writer.printf("\tmovl\t%%eax,heapptr\n");
+    writer.printf("\tjmp\t%s\n",disambiguator.name(method));
+  }
+  
+  public void codeHeap()
+  {
+    writer.printf("\t.data\n");
+    writer.printf("\t.align\t4\n");
+    writer.printf("heapptr:\t.word\n");
+    writer.printf("heapstart:\n");
   }
 
   public void codeLabel(Method method)
@@ -260,14 +276,14 @@ public class Intel32MacOSXCoder implements Coder
     {
       case BYTE:
       case BOOLEAN:
-        writer.printf("\tmovb\t%%eax(%%ecx)\n"); // store value
+        writer.printf("\tmovb\t%%al,(%%ecx)\n"); // store value
         break;
       case CHAR:
-        writer.printf("\tmovw\t%%eax(%%ecx)\n"); // store value
+        writer.printf("\tmovw\t%%ax,(%%ecx)\n"); // store value
         break;
       case INT:
       case FLOAT:
-        writer.printf("\tmovl\t%%eax(%%ecx)\n"); // store value
+        writer.printf("\tmovl\t%%eax,(%%ecx)\n"); // store value
         break;
       default:
         throw new RuntimeException("invalid type");
@@ -284,5 +300,12 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tpushl\t(%%esp)\n");
     
+  }
+
+  public void codePutField(int offset)
+  {
+    writer.printf("\tpopl\t%%eax\n"); //value to store
+    writer.printf("\tpopl\t%%ebx\n"); //this
+    writer.printf("\tmovl\t%%eax,%d(%%ebx)\n",offset*getWordSize());
   }
 }

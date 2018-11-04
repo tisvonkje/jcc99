@@ -50,4 +50,14 @@ public class Field
     Type type=Util.convert(constants[descriptorIndex].toShortString());
     return type.unitSize();
   }
+
+  public String getName()
+  {
+    return constants[nameIndex].toShortString();
+  }
+
+  public Integer getOffset()
+  {
+    return offset;
+  }
 }

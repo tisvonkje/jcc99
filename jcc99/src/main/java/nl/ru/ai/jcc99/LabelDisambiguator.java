@@ -60,6 +60,15 @@ public class LabelDisambiguator
         throw new RuntimeException("Illegal label name '"+method+"'");
       String suggestion=name.substring(start+1,end);
       /*
+       * For constructors we do something special
+       */
+      if("<init>".equals(suggestion))
+      {
+        String before=name.substring(0,start);
+        end=before.lastIndexOf('/');
+        suggestion=before.substring(end+1);
+      }
+      /*
        * Suggested version already given?
        */
       Integer instance=lastInstanceNumber.get(suggestion);

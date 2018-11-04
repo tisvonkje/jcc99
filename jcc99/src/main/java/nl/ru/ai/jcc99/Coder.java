@@ -29,4 +29,6 @@ public interface Coder
   void codeArrayStore(TypeSuffix elementType);
   void codeAllocateObject(int size);
   void codeDup();
+  void codePutField(int offset);
+  void codeHeap();
 }
