@@ -40,11 +40,15 @@ public class Method
      * Convert descriptor into type structure
      */
     Type type=Util.convert(constants[descriptorIndex].toShortString());
-    System.out.println(type);
     /*
      * Determine how many units the parameters take in a stack frame
      */
     parameterUnits=type.parameterUnitSize();
+    /*
+     * Nonstatic methods have (hidden) first parameter this
+     */
+    if(!isStatic())
+      parameterUnits++;
   }
 
   public String toString()

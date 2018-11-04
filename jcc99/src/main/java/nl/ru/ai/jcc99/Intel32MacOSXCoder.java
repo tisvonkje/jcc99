@@ -91,7 +91,7 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\t.data\n");
     writer.printf("\t.align\t4\n");
-    writer.printf("heapptr:\t.word\n");
+    writer.printf("heapptr:\t.long\t0\n");
     writer.printf("heapstart:\n");
   }
 
