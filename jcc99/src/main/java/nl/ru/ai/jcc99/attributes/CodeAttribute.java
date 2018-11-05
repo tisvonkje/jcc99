@@ -64,6 +64,7 @@ public class CodeAttribute extends Attribute
     for(Instruction instruction:instructions)
     {
       coder.codeComment(instruction.toString());
+      method.codeLabel(instruction,coder);
       instruction.code(classLoader,method,coder);
     }
   }

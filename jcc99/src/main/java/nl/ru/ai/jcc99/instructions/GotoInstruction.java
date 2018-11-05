@@ -10,6 +10,7 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class GotoInstruction extends Instruction
 {
   private int offset;
+  private String label;
 
   public GotoInstruction(ByteBuffer buffer, Constant[] constants, int offset)
   {
@@ -24,14 +25,12 @@ public class GotoInstruction extends Instruction
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codeJump(label);
   }
 
   @Override
   public void analyze(ClassLoader classLoader, Method method)
   {
-    // TODO Auto-generated method stub
-    
+    label=method.getLabel(classLoader,location+offset);
   }
 }

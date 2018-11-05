@@ -1,10 +1,13 @@
 package nl.ru.ai.jcc99;
 
 import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.attributes.CodeAttribute;
 import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.instructions.Instruction;
 import nl.ru.ai.jcc99.types.Type;
 
 public class Method
@@ -18,6 +21,8 @@ public class Method
   private CodeAttribute code;
   private boolean analysed;
   private int parameterUnits;
+  
+  private Map<Integer,String> labels;
 
   public Method(Constant[] constants, ClassFile classFile, ByteBuffer buffer)
   {
@@ -25,6 +30,7 @@ public class Method
     this.classFile=classFile;
     this.analysed=false;
     this.code=null;
+    labels=new HashMap<Integer,String>();
     accessFlags=buffer.getShort();
     nameIndex=buffer.getShort();
     descriptorIndex=buffer.getShort();
@@ -121,6 +127,22 @@ public class Method
   public int getParameterUnits()
   {
     return parameterUnits;
+  }
+
+  public String getLabel(ClassLoader classLoader, int location)
+  {
+    if(labels.containsKey(location))
+      return labels.get(location);
+    String label=classLoader.getNextLabel();
+    labels.put(location,label);
+    return label;
+  }
+
+  public void codeLabel(Instruction instruction, Coder coder)
+  {
+    int location=instruction.getLocation();
+    if(labels.containsKey(location))
+      coder.codeLabel(labels.get(location));
   }
 
 }

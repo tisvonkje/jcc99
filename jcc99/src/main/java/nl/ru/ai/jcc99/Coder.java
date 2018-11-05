@@ -10,6 +10,7 @@ public interface Coder
   void codeEntry(Method method);
   void codeLabel(Method method);
   void codeLabel(OutlineConstant constant);
+  void codeLabel(String string);
   void codeComment(String version);
   void codeLink(int number);
   void codeLoad(int parameterUnits, int local);
@@ -33,4 +34,5 @@ public interface Coder
   void codeHeap();
   void codeArrayLength();
   void codeGetField(int offset);
+  void codeJump(String label);
 }

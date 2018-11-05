@@ -330,4 +330,14 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n"); //this
     writer.printf("\tpushl\t%d(%%eax)\n",offset*getWordSize());
   }
+
+  public void codeJump(String label)
+  {
+    writer.printf("\tjmp\t%s\n",label);
+  }
+
+  public void codeLabel(String label)
+  {
+    writer.printf("%s:\n",label);
+  }
 }

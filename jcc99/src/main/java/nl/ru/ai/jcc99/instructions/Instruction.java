@@ -24,6 +24,11 @@ public abstract class Instruction
     this.location=buffer.position();
     this.constants=constants;
   }
+  
+  public int getLocation()
+  {
+    return location;
+  }
 
   public static List<Instruction> create(Constant[] constants, ByteBuffer buffer)
   {

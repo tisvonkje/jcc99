@@ -26,6 +26,7 @@ public class ClassLoader
   private Map<String, Method> staticMethodByName;
   private Map<String, Method> dynamicMethodByName;
   private List<OutlineConstant> constantPool;
+  private int nextLabel;
 
   public ClassLoader(String [] classPath)
   {
@@ -33,6 +34,7 @@ public class ClassLoader
     staticMethodByName=new HashMap<String,Method>();
     dynamicMethodByName=new HashMap<String,Method>();
     constantPool=new ArrayList<OutlineConstant>();
+    nextLabel=0;
     
     for(String classPathEntry:classPath)
     {
@@ -234,6 +236,11 @@ public class ClassLoader
     int result=constantPool.size();
     constantPool.add(constant);
     return result;
+  }
+
+  public String getNextLabel()
+  {
+    return String.format("L%d",nextLabel);
   }
 
 }
