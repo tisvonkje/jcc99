@@ -20,7 +20,6 @@ public class ArraylengthInstruction extends Instruction
   
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codeArrayLength();
   }
 }

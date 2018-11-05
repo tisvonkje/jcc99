@@ -247,12 +247,22 @@ public class Intel32MacOSXCoder implements Coder
     writer.write(new String(buffer));
   }
 
+  /**
+   * Allocate an array on the heap
+   * Arrays are stored in the heap starting with a word that indicates the size
+   * followed by the data (rounded up to full words)
+   * @param elementType type of element
+   */
   public void codeAllocateArray(TypeSuffix elementType)
   {
-    writer.printf("\tpopl\t%%eax\n");
-    writer.printf("\tpushl\theapptr\n");
-    writer.printf("\tshll\t$%d,%%eax\n",bitShift(elementType));
-    writer.printf("\taddl\t%%eax,heapptr\n");
+    writer.printf("\tpopl\t%%eax\n"); // the size of the array
+    writer.printf("\tmovl\theapptr,%%ebx\n"); // get heapptr in ebx
+    writer.printf("\tpushl\t%%ebx\n"); // the address of the array as the result
+    writer.printf("\tmovl\t%%eax,(%%ebx)\n"); // store length
+    writer.printf("\tshll\t$%d,%%eax\n",bitShift(elementType)); // multiply number of elements by type length
+    writer.printf("\taddl\t$%d,%%eax\n",getWordSize()+getWordSize()-1);  // one wordsize for the length, wordsize-1 for rounding
+    writer.printf("\tandl\t$0xfffffffc,%%eax\n"); // round it
+    writer.printf("\taddl\t%%eax,heapptr\n"); // adjust heap pointer
   }
 
   public void codePushByte(int value)
@@ -276,14 +286,14 @@ public class Intel32MacOSXCoder implements Coder
     {
       case BYTE:
       case BOOLEAN:
-        writer.printf("\tmovb\t%%al,(%%ecx)\n"); // store value
+        writer.printf("\tmovb\t%%al,%d(%%ecx)\n",getWordSize()); // store value
         break;
       case CHAR:
-        writer.printf("\tmovw\t%%ax,(%%ecx)\n"); // store value
+        writer.printf("\tmovw\t%%ax,%d(%%ecx)\n",getWordSize()); // store value
         break;
       case INT:
       case FLOAT:
-        writer.printf("\tmovl\t%%eax,(%%ecx)\n"); // store value
+        writer.printf("\tmovl\t%%eax,%d(%%ecx)\n",getWordSize()); // store value
         break;
       default:
         throw new RuntimeException("invalid type");
@@ -307,5 +317,11 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n"); //value to store
     writer.printf("\tpopl\t%%ebx\n"); //this
     writer.printf("\tmovl\t%%eax,%d(%%ebx)\n",offset*getWordSize());
+  }
+
+  public void codeArrayLength()
+  {
+    writer.printf("\tpopl\t%%eax\n"); // address of array
+    writer.printf("\tpushl\t(%%eax)\n"); // push length
   }
 }
