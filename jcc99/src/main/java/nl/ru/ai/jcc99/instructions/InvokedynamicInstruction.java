@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -13,9 +15,9 @@ public class InvokedynamicInstruction extends Instruction
   private byte zero1;
   private byte zero2;
 
-  public InvokedynamicInstruction(Constant[] constants, int methodIndex, byte zero1, byte zero2)
+  public InvokedynamicInstruction(ByteBuffer buffer, Constant[] constants, int methodIndex, byte zero1, byte zero2)
   {
-    super(constants);
+    super(buffer,constants);
     this.methodIndex=methodIndex;
     this.zero1=zero1;
     this.zero2=zero2;

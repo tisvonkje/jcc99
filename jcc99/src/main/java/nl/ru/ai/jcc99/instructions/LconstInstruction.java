@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -9,9 +11,9 @@ public class LconstInstruction extends Instruction
 {
   private long value;
 
-  public LconstInstruction(Constant[] constants, long value)
+  public LconstInstruction(ByteBuffer buffer, Constant[] constants, long value)
   {
-    super(constants);
+    super(buffer,constants);
     this.value=value;
   }
   

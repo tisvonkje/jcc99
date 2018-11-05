@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -17,9 +19,9 @@ public class DyadInstruction extends Instruction
   private TypeSuffix type;
   private Operator operator;
 
-  public DyadInstruction(Constant[] constants, TypeSuffix type, Operator operator)
+  public DyadInstruction(ByteBuffer buffer, Constant[] constants, TypeSuffix type, Operator operator)
   {
-    super(constants);
+    super(buffer,constants);
     this.type=type;
     this.operator=operator;
   }

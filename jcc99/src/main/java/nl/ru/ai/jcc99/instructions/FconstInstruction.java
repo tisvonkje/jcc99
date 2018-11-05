@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -10,9 +12,9 @@ public class FconstInstruction extends Instruction
 
   private float value;
 
-  public FconstInstruction(Constant[] constants, float value)
+  public FconstInstruction(ByteBuffer buffer, Constant[] constants, float value)
   {
-    super(constants);
+    super(buffer,constants);
     this.value=value;
   }
   

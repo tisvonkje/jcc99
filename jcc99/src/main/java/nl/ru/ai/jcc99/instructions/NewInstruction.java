@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassFile;
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
@@ -10,9 +12,9 @@ public class NewInstruction extends Instruction
 {
   private int classIndex;
 
-  public NewInstruction(Constant[] constants, int classIndex)
+  public NewInstruction(ByteBuffer buffer, Constant[] constants, int classIndex)
   {
-    super(constants);
+    super(buffer,constants);
     this.classIndex=classIndex;
   }
   

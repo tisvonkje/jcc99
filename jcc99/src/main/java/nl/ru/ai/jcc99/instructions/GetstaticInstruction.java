@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassFile;
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
@@ -12,9 +14,9 @@ public class GetstaticInstruction extends Instruction
 {
   private int fieldIndex;
 
-  public GetstaticInstruction(Constant[] constants, int fieldIndex)
+  public GetstaticInstruction(ByteBuffer buffer, Constant[] constants, int fieldIndex)
   {
-    super(constants);
+    super(buffer,constants);
     this.fieldIndex=fieldIndex;
   }
   

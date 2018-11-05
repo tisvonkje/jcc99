@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -10,9 +12,9 @@ public class IfAcmpInstruction extends Instruction
   private Condition condition;
   private short offset;
 
-  public IfAcmpInstruction(Constant[] constants, Condition condition, short offset)
+  public IfAcmpInstruction(ByteBuffer buffer, Constant[] constants, Condition condition, short offset)
   {
-    super(constants);
+    super(buffer,constants);
     this.condition=condition;
     this.offset=offset;
   }

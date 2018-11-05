@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -9,9 +11,9 @@ public class CheckcastInstruction extends Instruction
 {
   private int classIndex;
 
-  public CheckcastInstruction(Constant[] constants, int classIndex)
+  public CheckcastInstruction(ByteBuffer buffer, Constant[] constants, int classIndex)
   {
-    super(constants);
+    super(buffer,constants);
     this.classIndex=classIndex;
   }
   

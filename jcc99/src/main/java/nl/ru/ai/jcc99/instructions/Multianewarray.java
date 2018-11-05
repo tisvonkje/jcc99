@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -11,9 +13,9 @@ public class Multianewarray extends Instruction
   private int classIndex;
   private int dimensions;
 
-  public Multianewarray(Constant[] constants, int classIndex, int dimensions)
+  public Multianewarray(ByteBuffer buffer, Constant[] constants, int classIndex, int dimensions)
   {
-    super(constants);
+    super(buffer,constants);
     this.classIndex=classIndex;
     this.dimensions=dimensions;
   }

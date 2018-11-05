@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -9,9 +11,9 @@ public class LdcInstruction extends Instruction
 {
   private int index;
 
-  public LdcInstruction(Constant[] constants, int index)
+  public LdcInstruction(ByteBuffer buffer, Constant[] constants, int index)
   {
-    super(constants);
+    super(buffer,constants);
     this.index=index;
   }
   

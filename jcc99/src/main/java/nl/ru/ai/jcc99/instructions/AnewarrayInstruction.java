@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -9,9 +11,9 @@ public class AnewarrayInstruction extends Instruction
 {
   private int componentTypeIndex;
 
-  public AnewarrayInstruction(Constant[] constants, int componentTypeIndex)
+  public AnewarrayInstruction(ByteBuffer buffer, Constant[] constants, int componentTypeIndex)
   {
-    super(constants);
+    super(buffer,constants);
     this.componentTypeIndex=componentTypeIndex;
   }
   

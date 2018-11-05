@@ -32,4 +32,5 @@ public interface Coder
   void codePutField(int offset);
   void codeHeap();
   void codeArrayLength();
+  void codeGetField(int offset);
 }

@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -10,9 +12,9 @@ public class RetInstruction extends Instruction
   @SuppressWarnings("unused")
   private int local;
 
-  public RetInstruction(Constant[] constants, int local)
+  public RetInstruction(ByteBuffer buffer, Constant[] constants, int local)
   {
-    super(constants);
+    super(buffer,constants);
     this.local=local;
   }
 

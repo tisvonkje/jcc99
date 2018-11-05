@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -11,9 +13,9 @@ public class InvokestaticInstruction extends Instruction
   private int methodIndex;
   private Method subMethod;
 
-  public InvokestaticInstruction(Constant[] constants, int methodIndex)
+  public InvokestaticInstruction(ByteBuffer buffer, Constant[] constants, int methodIndex)
   {
-    super(constants);
+    super(buffer,constants);
     this.methodIndex=methodIndex;
   }
   

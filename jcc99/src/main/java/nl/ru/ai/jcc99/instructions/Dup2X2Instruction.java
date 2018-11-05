@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -8,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class Dup2X2Instruction extends Instruction
 {
 
-  public Dup2X2Instruction(Constant[] constants)
+  public Dup2X2Instruction(ByteBuffer buffer, Constant[] constants)
   {
-    super(constants);
+    super(buffer,constants);
   }
   
   public String toString()

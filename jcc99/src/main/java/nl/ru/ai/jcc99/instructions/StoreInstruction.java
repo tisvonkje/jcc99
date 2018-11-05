@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -11,9 +13,9 @@ public class StoreInstruction extends Instruction
   private TypeSuffix type; // Allowed: INT, LONG, FLOAT, DOUBLE, REF
   private int local;
 
-  public StoreInstruction(Constant[] constants, TypeSuffix type, int local)
+  public StoreInstruction(ByteBuffer buffer, Constant[] constants, TypeSuffix type, int local)
   {
-    super(constants);
+    super(buffer,constants);
     this.type=type;
     this.local=local;
   }

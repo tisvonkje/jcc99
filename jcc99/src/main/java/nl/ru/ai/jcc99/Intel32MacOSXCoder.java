@@ -324,4 +324,10 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n"); // address of array
     writer.printf("\tpushl\t(%%eax)\n"); // push length
   }
+
+  public void codeGetField(int offset)
+  {
+    writer.printf("\tpopl\t%%eax\n"); //this
+    writer.printf("\tpushl\t%d(%%eax)\n",offset*getWordSize());
+  }
 }

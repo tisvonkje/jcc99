@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -10,9 +12,9 @@ public class AstoreInstruction extends Instruction
 {
   private TypeSuffix type; // Allowed: INT, LONG, FLOAT, DOUBLE, REF, BOOLEAN, CHAR, SHORT
 
-  public AstoreInstruction(Constant[] constants, TypeSuffix type)
+  public AstoreInstruction(ByteBuffer buffer, Constant[] constants, TypeSuffix type)
   {
-    super(constants);
+    super(buffer,constants);
     this.type=type;
   }
   

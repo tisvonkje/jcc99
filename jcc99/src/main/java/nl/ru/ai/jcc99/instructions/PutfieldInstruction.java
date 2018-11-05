@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassFile;
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
@@ -13,9 +15,9 @@ public class PutfieldInstruction extends Instruction
 {
   private int fieldIndex;
 
-  public PutfieldInstruction(Constant[] constants, int fieldIndex)
+  public PutfieldInstruction(ByteBuffer buffer, Constant[] constants, int fieldIndex)
   {
-    super(constants);
+    super(buffer,constants);
     this.fieldIndex=fieldIndex;
   }
   

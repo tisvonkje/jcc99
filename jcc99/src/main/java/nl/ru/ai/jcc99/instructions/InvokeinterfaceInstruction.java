@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.instructions;
 
+import java.nio.ByteBuffer;
+
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -11,9 +13,9 @@ public class InvokeinterfaceInstruction extends Instruction
   private int count;
   private byte zero;
 
-  public InvokeinterfaceInstruction(Constant[] constants, int methodIndex, int count, byte zero)
+  public InvokeinterfaceInstruction(ByteBuffer buffer, Constant[] constants, int methodIndex, int count, byte zero)
   {
-    super(constants);
+    super(buffer,constants);
     this.methodIndex=methodIndex;
     this.count=count;
     this.zero=zero;
