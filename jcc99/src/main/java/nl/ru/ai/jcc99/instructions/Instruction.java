@@ -616,14 +616,6 @@ public abstract class Instruction
     return instructions;
   }
 
-  /**
-   * Default implementation: no operation
-   * @param classLoader
-   */
-  public void analyze(ClassLoader classLoader)
-  {
-    ;
-  }
-
+  public abstract void analyze(ClassLoader classLoader, Method method);
   public abstract void code(ClassLoader classLoader, Method method, Coder coder);
 }

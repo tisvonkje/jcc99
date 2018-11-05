@@ -30,4 +30,11 @@ public class NewInstruction extends Instruction
     coder.codeAllocateObject(size);
   }
 
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

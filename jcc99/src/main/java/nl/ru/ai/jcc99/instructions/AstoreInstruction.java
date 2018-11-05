@@ -28,4 +28,11 @@ public class AstoreInstruction extends Instruction
     coder.codeArrayStore(type);
   }
 
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

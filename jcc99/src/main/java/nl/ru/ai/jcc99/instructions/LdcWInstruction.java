@@ -17,7 +17,7 @@ public class LdcWInstruction extends Instruction
     this.index=index;
   }
   
-  public void analyze(ClassLoader loader)
+  public void analyze(ClassLoader loader, Method method)
   {
     
   }

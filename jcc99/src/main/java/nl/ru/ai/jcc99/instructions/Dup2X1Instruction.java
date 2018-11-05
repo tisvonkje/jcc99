@@ -25,4 +25,11 @@ public class Dup2X1Instruction extends Instruction
     coder.close();
     throw new RuntimeException("don't know how to code "+getClass());
   }
+
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
 }

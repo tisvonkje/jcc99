@@ -23,14 +23,14 @@ public class InvokedynamicInstruction extends Instruction
     this.zero2=zero2;
   }
   
-  public void analyze(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader, Method method)
   {
     String methodName=constants[methodIndex].toShortString();
-    Method method=classLoader.getDynamicMethod(methodName);
-    if(method==null)
+    Method subMethod=classLoader.getDynamicMethod(methodName);
+    if(subMethod==null)
       Util.error("Cannot mark '%s' for coding",methodName);
     else
-      method.analyze(classLoader);
+      subMethod.analyze(classLoader);
   }
   
   public String toString()

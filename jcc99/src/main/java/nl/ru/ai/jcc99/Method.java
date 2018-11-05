@@ -103,7 +103,7 @@ public class Method
      * Analyze the code
      */
     if(code!=null)
-      code.analyze(classLoader);
+      code.analyze(classLoader,this);
   }
 
   public boolean isAnalyzed()

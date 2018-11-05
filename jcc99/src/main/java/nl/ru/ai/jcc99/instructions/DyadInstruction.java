@@ -38,4 +38,11 @@ public class DyadInstruction extends Instruction
     else
       throw new RuntimeException("notyet");
   }
+
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
 }

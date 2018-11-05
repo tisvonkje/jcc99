@@ -24,4 +24,11 @@ public class ArraylengthInstruction extends Instruction
   {
     coder.codeArrayLength();
   }
+
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
 }

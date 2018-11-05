@@ -25,4 +25,11 @@ public class ReturnInstruction extends Instruction
     coder.codeReturn();
   }
 
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

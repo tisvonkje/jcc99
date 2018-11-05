@@ -33,4 +33,11 @@ public class LoadInstruction extends Instruction
       coder.codeDload(method.getParameterUnits(),local);
   }
 
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

@@ -35,4 +35,11 @@ public class PutfieldInstruction extends Instruction
     Field field=classFile.getField(fieldName);
     coder.codePutField(field.getOffset());
   }
+
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
 }

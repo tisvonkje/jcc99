@@ -19,7 +19,7 @@ public class InvokestaticInstruction extends Instruction
     this.methodIndex=methodIndex;
   }
   
-  public void analyze(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader, Method method)
   {
     String methodName=constants[methodIndex].toShortString();
     subMethod=classLoader.getStaticMethod(methodName);

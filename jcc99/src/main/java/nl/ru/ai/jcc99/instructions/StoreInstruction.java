@@ -33,4 +33,11 @@ public class StoreInstruction extends Instruction
       coder.codeDStore(method.getParameterUnits(),local);
   }
 
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

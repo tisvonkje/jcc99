@@ -26,4 +26,11 @@ public class BipushInstruction extends Instruction
   {
     coder.codePushByte(value);
   }
+
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
 }

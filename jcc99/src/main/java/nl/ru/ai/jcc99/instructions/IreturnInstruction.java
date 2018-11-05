@@ -25,4 +25,11 @@ public class IreturnInstruction extends Instruction
   {
     coder.codeReturnSingle(method.getParameterUnits());
   }
+
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
 }

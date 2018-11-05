@@ -22,7 +22,7 @@ public class LdcInstruction extends Instruction
     return String.format("ldc %d (%s)",index,constants[index].toShortString());
   }
   
-  public void analyze(ClassLoader loader)
+  public void analyze(ClassLoader loader, Method method)
   {
     constants[index].analyze(loader);
   }

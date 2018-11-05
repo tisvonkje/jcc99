@@ -19,7 +19,7 @@ public class InvokevirtualInstruction extends Instruction
     this.methodIndex=methodIndex;
   }
   
-  public void analyze(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader, Method method)
   {
     String name = constants[methodIndex].toShortString();
 	subMethod=classLoader.getDynamicMethod(name);

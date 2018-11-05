@@ -20,7 +20,7 @@ public class PutstaticInstruction extends Instruction
     this.fieldIndex=fieldIndex;
   }
   
-  public void analyze(ClassLoader classLoader)
+  public void analyze(ClassLoader classLoader, Method method)
   {
     FieldrefConstant fieldrefConstant=(FieldrefConstant)constants[fieldIndex];
     String className=fieldrefConstant.getClassName();

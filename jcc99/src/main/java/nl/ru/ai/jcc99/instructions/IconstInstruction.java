@@ -27,4 +27,11 @@ public class IconstInstruction extends Instruction
     coder.codePushInt(value);
   }
 
+  @Override
+  public void analyze(ClassLoader classLoader, Method method)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
 }
