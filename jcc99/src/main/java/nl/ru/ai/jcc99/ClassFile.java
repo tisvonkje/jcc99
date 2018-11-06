@@ -98,7 +98,7 @@ public class ClassFile
     short fieldCount=buffer.getShort();
     fields=new Field[fieldCount];
     for(int i=0;i<fieldCount;i++)
-      fields[i]=new Field(constants,buffer);
+      fields[i]=new Field(this,constants,buffer);
     /*
      * Get methods
      */
@@ -142,6 +142,10 @@ public class ClassFile
   {
     return methods;
   }
+  public  Field[] getFields()
+  {
+    return fields;
+  }
   public int getSizeAndCalculateFieldOffsets(int startOffset, ClassLoader classLoader)
   {
     if(size==null)
@@ -176,10 +180,12 @@ public class ClassFile
     /*
      * Mark class initialization if it exists
      */
-    System.out.printf("looking for <%s>\n",getName()+".<clinit>:()V");
     Method clinit=classLoader.getStaticMethod(getName()+".<clinit>:()V");
     if(clinit!=null)
+    {
+      classLoader.addInitialization(clinit);
       clinit.analyze(classLoader);
+    }
   }
   
   public Integer getSize()

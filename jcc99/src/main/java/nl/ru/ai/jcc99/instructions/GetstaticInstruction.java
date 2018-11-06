@@ -26,7 +26,7 @@ public class GetstaticInstruction extends Instruction
     String className=fieldrefConstant.getClassName();
     ClassFile classFile=classLoader.getClassFile(className);
     if(classFile==null)
-      Util.error("Cannot mark '%s' for coding",className);
+      Util.error("Cannot analyze'%s'",className);
     else
       classFile.analyze(classLoader);
   }

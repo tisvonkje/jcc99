@@ -80,13 +80,12 @@ public class Intel32MacOSXCoder implements Coder
     }
   }
 
-  public void codeEntry(Method method)
+  public void codeEntry()
   {
     writer.printf("\t.globl\t _main\n");
     writer.printf("_main:\n");
     writer.printf("\tlea\theapstart,%%eax\n");
     writer.printf("\tmovl\t%%eax,heapptr\n");
-    writer.printf("\tjmp\t%s\n",disambiguator.name(method));
   }
 
   public void codeHeap()
@@ -224,7 +223,7 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tcall\t%s\n",disambiguator.name(method));
   }
-
+  
   public void codePushAddress(OutlineConstant constant)
   {
     writer.printf("\tleal\t%s,%%eax\n",constant.getLabel());
@@ -379,6 +378,11 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tjmp\t%s\n",label);
   }
 
+  public void codeJump(Method method)
+  {
+    writer.printf("\tjmp\t%s\n",disambiguator.name(method));
+  }
+  
   public void codeLabel(String label)
   {
     writer.printf("%s:\n",label);

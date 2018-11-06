@@ -12,11 +12,13 @@ public class Field
   private short nameIndex;
   private short descriptorIndex;
   private Attribute[] attributes;
+  private ClassFile classFile;
   private Constant[] constants;
   private Integer offset;
 
-  public Field(Constant[] constants, ByteBuffer buffer)
+  public Field(ClassFile classFile,Constant[] constants, ByteBuffer buffer)
   {
+    this.classFile=classFile;
     this.constants=constants;
     this.offset=null;
     accessFlags=buffer.getShort();
@@ -43,6 +45,11 @@ public class Field
   {
     return (accessFlags&ClassFile.ACC_STATIC)==0;
   }
+  
+  public boolean isStatic()
+  {
+    return (accessFlags&ClassFile.ACC_STATIC)!=0;
+  }
 
   public int getSizeAndSetOffset(int offset)
   {
@@ -59,5 +66,15 @@ public class Field
   public Integer getOffset()
   {
     return offset;
+  }
+
+  public String getFullName()
+  {
+    return classFile.getName()+"."+getName();
+  }
+
+  public void code(ClassLoader classLoader, Coder coder)
+  {
+    throw new RuntimeException("notyet");
   }
 }

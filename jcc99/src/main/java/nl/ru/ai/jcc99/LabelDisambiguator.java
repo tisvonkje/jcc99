@@ -62,7 +62,7 @@ public class LabelDisambiguator
       /*
        * For constructors we do something special
        */
-      if("<init>".equals(suggestion))
+      if("<init>".equals(suggestion) || "<clinit>".equals(suggestion))
       {
         String before=name.substring(0,start);
         end=before.lastIndexOf('/');

@@ -25,15 +25,19 @@ public class ClassLoader
   private Map<String, ClassFile> classByName;
   private Map<String, Method> staticMethodByName;
   private Map<String, Method> dynamicMethodByName;
+  private Map<String, Field> staticFieldByName;
   private List<OutlineConstant> constantPool;
   private int nextLabel;
+  private List<Method> init;
 
   public ClassLoader(String [] classPath)
   {
     classByName=new HashMap<String,ClassFile>();
     staticMethodByName=new HashMap<String,Method>();
     dynamicMethodByName=new HashMap<String,Method>();
+    staticFieldByName=new HashMap<String,Field>();
     constantPool=new ArrayList<OutlineConstant>();
+    init=new ArrayList<Method>();
     nextLabel=0;
     
     for(String classPathEntry:classPath)
@@ -145,6 +149,12 @@ public class ClassLoader
       else
         dynamicMethodByName.put(methodName,method);
     }
+    for(Field field:classFile.getFields())
+      if(field.isStatic())
+      {
+        String fieldName=field.getFullName();
+        staticFieldByName.put(fieldName,field);
+      }
   }
 
   private void copy(InputStream input, OutputStream output) throws IOException
@@ -206,7 +216,13 @@ public class ClassLoader
     /*
      * Code entry
      */
-    coder.codeEntry(mainMethod);
+    coder.codeEntry();
+    /*
+     * Code call to class initialization methods
+     */
+    for(Method method: init)
+      coder.codeCall(method);
+    coder.codeJump(mainMethod);
     /*
      * Code all methods
      */
@@ -221,6 +237,15 @@ public class ClassLoader
       Method method=dynamicMethodByName.get(methodName);
       if(method.isAnalyzed()&&!method.isNative())
         method.code(this,coder);
+    }
+    /*
+     * Generate all static fields
+     */
+    coder.codeData();
+    for(String fieldName:staticFieldByName.keySet())
+    {
+      Field field=staticFieldByName.get(fieldName);
+      field.code(this,coder);
     }
     /*
      * Generate constant pool in data segment
@@ -241,6 +266,11 @@ public class ClassLoader
   public String getNextLabel()
   {
     return String.format("L%d",nextLabel++);
+  }
+
+  public void addInitialization(Method method)
+  {
+    init.add(method);
   }
 
 }
