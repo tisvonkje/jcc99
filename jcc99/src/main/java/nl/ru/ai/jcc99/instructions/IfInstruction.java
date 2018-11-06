@@ -12,9 +12,9 @@ public class IfInstruction extends Instruction
   private Condition condition;
   private short offset;;
 
-  public IfInstruction(ByteBuffer buffer, Constant[] constants, Condition condition, short offset)
+  public IfInstruction(int position, Constant[] constants, Condition condition, short offset)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.condition=condition;
     this.offset=offset;
   }

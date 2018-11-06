@@ -15,9 +15,9 @@ public class PutfieldInstruction extends Instruction
 {
   private int fieldIndex;
 
-  public PutfieldInstruction(ByteBuffer buffer, Constant[] constants, int fieldIndex)
+  public PutfieldInstruction(int position, Constant[] constants, int fieldIndex)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.fieldIndex=fieldIndex;
   }
   

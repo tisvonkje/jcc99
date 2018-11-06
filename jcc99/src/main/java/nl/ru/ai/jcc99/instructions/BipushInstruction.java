@@ -11,9 +11,9 @@ public class BipushInstruction extends Instruction
 {
   private int value;
 
-  public BipushInstruction(ByteBuffer buffer, Constant[] constants, int value)
+  public BipushInstruction(int position, Constant[] constants, int value)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.value=value;
   }
   

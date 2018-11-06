@@ -12,9 +12,9 @@ public class AloadInstruction extends Instruction
 {
   private TypeSuffix type; // Allowed: INT, LONG, FLOAT, DOUBLE, REF, BOOLEAN, CHAR, SHORT
 
-  public AloadInstruction(ByteBuffer buffer, Constant[] constants, TypeSuffix type)
+  public AloadInstruction(int position, Constant[] constants, TypeSuffix type)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.type=type;
   }
   

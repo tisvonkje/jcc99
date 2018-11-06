@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class Pop2Instruction extends Instruction
 {
 
-  public Pop2Instruction(ByteBuffer buffer, Constant[] constants)
+  public Pop2Instruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

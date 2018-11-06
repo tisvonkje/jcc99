@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class LreturnInstruction extends Instruction
 {
 
-  public LreturnInstruction(ByteBuffer buffer, Constant[] constants)
+  public LreturnInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

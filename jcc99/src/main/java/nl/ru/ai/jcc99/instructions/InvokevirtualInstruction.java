@@ -13,9 +13,9 @@ public class InvokevirtualInstruction extends Instruction
   private int methodIndex;
   private Method subMethod;
 
-  public InvokevirtualInstruction(ByteBuffer buffer, Constant[] constants, int methodIndex)
+  public InvokevirtualInstruction(int position, Constant[] constants, int methodIndex)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.methodIndex=methodIndex;
   }
   

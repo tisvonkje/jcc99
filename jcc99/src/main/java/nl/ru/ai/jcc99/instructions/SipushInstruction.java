@@ -11,9 +11,9 @@ public class SipushInstruction extends Instruction
 {
   private int value;
 
-  public SipushInstruction(ByteBuffer buffer, Constant[] constants, short value)
+  public SipushInstruction(int position, Constant[] constants, short value)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.value=value;
   }
   

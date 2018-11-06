@@ -13,9 +13,9 @@ public class Multianewarray extends Instruction
   private int classIndex;
   private int dimensions;
 
-  public Multianewarray(ByteBuffer buffer, Constant[] constants, int classIndex, int dimensions)
+  public Multianewarray(int position, Constant[] constants, int classIndex, int dimensions)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.classIndex=classIndex;
     this.dimensions=dimensions;
   }

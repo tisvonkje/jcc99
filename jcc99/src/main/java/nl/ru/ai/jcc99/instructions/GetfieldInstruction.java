@@ -15,9 +15,9 @@ public class GetfieldInstruction extends Instruction
 {
   private int fieldIndex;
 
-  public GetfieldInstruction(ByteBuffer buffer, Constant[] constants, int fieldIndex)
+  public GetfieldInstruction(int position, Constant[] constants, int fieldIndex)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.fieldIndex=fieldIndex;
   }
   

@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class DcmpgInstruction extends Instruction
 {
 
-  public DcmpgInstruction(ByteBuffer buffer, Constant[] constants)
+  public DcmpgInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

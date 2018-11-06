@@ -63,8 +63,8 @@ public class CodeAttribute extends Attribute
     coder.codeLink(maxLocals-method.getParameterUnits());
     for(Instruction instruction:instructions)
     {
-      coder.codeComment(instruction.toString());
       method.codeLabel(instruction,coder);
+      coder.codeComment(instruction.toString());
       instruction.code(classLoader,method,coder);
     }
   }

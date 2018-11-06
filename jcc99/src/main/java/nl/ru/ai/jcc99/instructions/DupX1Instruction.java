@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class DupX1Instruction extends Instruction
 {
 
-  public DupX1Instruction(ByteBuffer buffer, Constant[] constants)
+  public DupX1Instruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

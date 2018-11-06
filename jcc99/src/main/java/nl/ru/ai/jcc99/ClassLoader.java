@@ -240,7 +240,7 @@ public class ClassLoader
 
   public String getNextLabel()
   {
-    return String.format("L%d",nextLabel);
+    return String.format("L%d",nextLabel++);
   }
 
 }

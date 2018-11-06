@@ -12,9 +12,9 @@ public class NewInstruction extends Instruction
 {
   private int classIndex;
 
-  public NewInstruction(ByteBuffer buffer, Constant[] constants, int classIndex)
+  public NewInstruction(int position, Constant[] constants, int classIndex)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.classIndex=classIndex;
   }
   

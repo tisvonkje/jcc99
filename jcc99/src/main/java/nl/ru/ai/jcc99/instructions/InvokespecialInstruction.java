@@ -13,9 +13,9 @@ public class InvokespecialInstruction extends Instruction
   private int methodIndex;
   private Method subMethod;
 
-  public InvokespecialInstruction(ByteBuffer buffer, Constant[] constants, int methodIndex)
+  public InvokespecialInstruction(int position, Constant[] constants, int methodIndex)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.methodIndex=methodIndex;
   }
   

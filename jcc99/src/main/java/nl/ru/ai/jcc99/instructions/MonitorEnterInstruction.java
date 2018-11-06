@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class MonitorEnterInstruction extends Instruction
 {
 
-  public MonitorEnterInstruction(ByteBuffer buffer, Constant[] constants)
+  public MonitorEnterInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
 
   public void code(ClassLoader classLoader, Method method, Coder coder)

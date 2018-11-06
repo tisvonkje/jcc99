@@ -12,9 +12,9 @@ public class IincInstruction extends Instruction
   private int local;
   private int value;
 
-  public IincInstruction(ByteBuffer buffer, Constant[] constants, int local, int value)
+  public IincInstruction(int position, Constant[] constants, int local, int value)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.local=local;
     this.value=value;
   }

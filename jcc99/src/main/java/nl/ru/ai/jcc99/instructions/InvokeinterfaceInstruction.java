@@ -13,9 +13,9 @@ public class InvokeinterfaceInstruction extends Instruction
   private int count;
   private byte zero;
 
-  public InvokeinterfaceInstruction(ByteBuffer buffer, Constant[] constants, int methodIndex, int count, byte zero)
+  public InvokeinterfaceInstruction(int position, Constant[] constants, int methodIndex, int count, byte zero)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.methodIndex=methodIndex;
     this.count=count;
     this.zero=zero;

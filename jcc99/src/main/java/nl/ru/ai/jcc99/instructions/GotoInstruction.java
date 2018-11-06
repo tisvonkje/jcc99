@@ -12,9 +12,9 @@ public class GotoInstruction extends Instruction
   private int offset;
   private String label;
 
-  public GotoInstruction(ByteBuffer buffer, Constant[] constants, int offset)
+  public GotoInstruction(int position, Constant[] constants, int offset)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.offset=offset;
   }
   
@@ -31,6 +31,6 @@ public class GotoInstruction extends Instruction
   @Override
   public void analyze(ClassLoader classLoader, Method method)
   {
-    label=method.getLabel(classLoader,location+offset);
+    label=method.getLabel(classLoader,position+offset);
   }
 }

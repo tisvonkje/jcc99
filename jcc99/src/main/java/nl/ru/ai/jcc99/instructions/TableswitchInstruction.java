@@ -14,9 +14,9 @@ public class TableswitchInstruction extends Instruction
   private int highValue;
   private int[] offsets;
 
-  public TableswitchInstruction(Constant[] constants, ByteBuffer buffer)
+  public TableswitchInstruction(int position, Constant[] constants, ByteBuffer buffer)
   {
-    super(buffer,constants);
+    super(position,constants);
     /*
      * This instruction is tricky there can be some padding here, depending on the position of the bytecode
      */

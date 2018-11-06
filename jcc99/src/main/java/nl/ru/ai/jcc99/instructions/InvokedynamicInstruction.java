@@ -15,9 +15,9 @@ public class InvokedynamicInstruction extends Instruction
   private byte zero1;
   private byte zero2;
 
-  public InvokedynamicInstruction(ByteBuffer buffer, Constant[] constants, int methodIndex, byte zero1, byte zero2)
+  public InvokedynamicInstruction(int position, Constant[] constants, int methodIndex, byte zero1, byte zero2)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.methodIndex=methodIndex;
     this.zero1=zero1;
     this.zero2=zero2;

@@ -12,9 +12,9 @@ public class FconstInstruction extends Instruction
 
   private float value;
 
-  public FconstInstruction(ByteBuffer buffer, Constant[] constants, float value)
+  public FconstInstruction(int position, Constant[] constants, float value)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.value=value;
   }
   

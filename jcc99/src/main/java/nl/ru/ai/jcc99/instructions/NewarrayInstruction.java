@@ -12,9 +12,9 @@ public class NewarrayInstruction extends Instruction
 {
   private TypeSuffix type;
 
-  public NewarrayInstruction(ByteBuffer buffer, Constant[] constants, TypeSuffix type)
+  public NewarrayInstruction(int position, Constant[] constants, TypeSuffix type)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.type=type;
   }
   

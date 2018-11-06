@@ -12,9 +12,9 @@ public class Lookupswitch extends Instruction
   private int defaultValue;
   private Pair[] pairs;
 
-  public Lookupswitch(Constant[] constants, ByteBuffer buffer)
+  public Lookupswitch(int position,Constant[] constants, ByteBuffer buffer)
   {
-    super(buffer,constants);
+    super(position,constants);
     /*
      * This instruction is tricky there can be some padding here, depending on the position of the bytecode
      */

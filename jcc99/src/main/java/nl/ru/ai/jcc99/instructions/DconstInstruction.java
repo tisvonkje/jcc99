@@ -11,9 +11,9 @@ public class DconstInstruction extends Instruction
 {
   private double value;
 
-  public DconstInstruction(ByteBuffer buffer, Constant[] constants, double value)
+  public DconstInstruction(int position, Constant[] constants, double value)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.value=value;
   }
   

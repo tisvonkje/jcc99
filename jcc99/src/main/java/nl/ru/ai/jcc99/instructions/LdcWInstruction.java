@@ -11,9 +11,9 @@ public class LdcWInstruction extends Instruction
 {
   private int index;
 
-  public LdcWInstruction(ByteBuffer buffer, Constant[] constants, int index)
+  public LdcWInstruction(int position, Constant[] constants, int index)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.index=index;
   }
   

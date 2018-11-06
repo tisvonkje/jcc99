@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class NopInstruction extends Instruction
 {
 
-  public NopInstruction(ByteBuffer buffer, Constant[] constants)
+  public NopInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

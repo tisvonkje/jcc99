@@ -127,7 +127,7 @@ public class Intel32MacOSXCoder implements Coder
   public void codeComment(String comment)
   {
     StringBuffer buffer=new StringBuffer();
-    buffer.append("# ");
+    buffer.append("\t# ");
     for(int i=0;i<comment.length();i++)
     {
       char c=comment.charAt(i);

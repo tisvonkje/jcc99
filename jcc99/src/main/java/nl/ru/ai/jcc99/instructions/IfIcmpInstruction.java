@@ -13,9 +13,9 @@ public class IfIcmpInstruction extends Instruction
   private short offset;
   private String label;
 
-  public IfIcmpInstruction(ByteBuffer buffer, Constant[] constants, Condition condition, short offset)
+  public IfIcmpInstruction(int position, Constant[] constants, Condition condition, short offset)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.condition=condition;
     this.offset=offset;
   }
@@ -33,6 +33,6 @@ public class IfIcmpInstruction extends Instruction
   @Override
   public void analyze(ClassLoader classLoader, Method method)
   {
-    label=method.getLabel(classLoader,location+offset);
+    label=method.getLabel(classLoader,position+offset);
   }
 }

@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class AthrowInstruction extends Instruction
 {
 
-  public AthrowInstruction(ByteBuffer buffer, Constant[] constants)
+  public AthrowInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
 
   public String toString()

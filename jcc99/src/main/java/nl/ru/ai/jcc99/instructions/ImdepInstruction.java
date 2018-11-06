@@ -12,9 +12,9 @@ public class ImdepInstruction extends Instruction
 
   private int value;
 
-  public ImdepInstruction(ByteBuffer buffer, Constant[] constants, int value)
+  public ImdepInstruction(int position, Constant[] constants, int value)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.value=value;
   }
   

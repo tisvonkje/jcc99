@@ -11,9 +11,9 @@ public class IconstInstruction extends Instruction
 {
   private int value;
 
-  public IconstInstruction(ByteBuffer buffer, Constant[] constants, int value)
+  public IconstInstruction(int position, Constant[] constants, int value)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.value=value;
   }
   

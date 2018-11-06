@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class SwapInstruction extends Instruction
 {
 
-  public SwapInstruction(ByteBuffer buffer, Constant[] constants)
+  public SwapInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

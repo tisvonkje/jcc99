@@ -11,9 +11,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class IreturnInstruction extends Instruction
 {
 
-  public IreturnInstruction(ByteBuffer buffer, Constant[] constants)
+  public IreturnInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

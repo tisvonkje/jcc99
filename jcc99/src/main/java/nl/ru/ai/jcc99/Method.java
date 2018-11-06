@@ -129,20 +129,20 @@ public class Method
     return parameterUnits;
   }
 
-  public String getLabel(ClassLoader classLoader, int location)
+  public String getLabel(ClassLoader classLoader, int position)
   {
-    if(labels.containsKey(location))
-      return labels.get(location);
+    if(labels.containsKey(position))
+      return labels.get(position);
     String label=classLoader.getNextLabel();
-    labels.put(location,label);
+    labels.put(position,label);
     return label;
   }
 
   public void codeLabel(Instruction instruction, Coder coder)
   {
-    int location=instruction.getLocation();
-    if(labels.containsKey(location))
-      coder.codeLabel(labels.get(location));
+    int position=instruction.getPosition();
+    if(labels.containsKey(position))
+      coder.codeLabel(labels.get(position));
   }
 
 }

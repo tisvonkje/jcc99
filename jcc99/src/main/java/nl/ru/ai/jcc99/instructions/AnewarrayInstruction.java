@@ -11,9 +11,9 @@ public class AnewarrayInstruction extends Instruction
 {
   private int componentTypeIndex;
 
-  public AnewarrayInstruction(ByteBuffer buffer, Constant[] constants, int componentTypeIndex)
+  public AnewarrayInstruction(int position, Constant[] constants, int componentTypeIndex)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.componentTypeIndex=componentTypeIndex;
   }
   

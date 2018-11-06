@@ -11,9 +11,9 @@ public class LconstInstruction extends Instruction
 {
   private long value;
 
-  public LconstInstruction(ByteBuffer buffer, Constant[] constants, long value)
+  public LconstInstruction(int position, Constant[] constants, long value)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.value=value;
   }
   

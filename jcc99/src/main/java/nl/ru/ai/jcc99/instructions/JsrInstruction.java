@@ -11,9 +11,9 @@ public class JsrInstruction extends Instruction
 {
   private int offset;
 
-  public JsrInstruction(ByteBuffer buffer, Constant[] constants, int offset)
+  public JsrInstruction(int position, Constant[] constants, int offset)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.offset=offset;
   }
   

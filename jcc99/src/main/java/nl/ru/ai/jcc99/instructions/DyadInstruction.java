@@ -19,9 +19,9 @@ public class DyadInstruction extends Instruction
   private TypeSuffix type;
   private Operator operator;
 
-  public DyadInstruction(ByteBuffer buffer, Constant[] constants, TypeSuffix type, Operator operator)
+  public DyadInstruction(int position, Constant[] constants, TypeSuffix type, Operator operator)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.type=type;
     this.operator=operator;
   }

@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class AconstNullInstruction extends Instruction
 {
 
-  public AconstNullInstruction(ByteBuffer buffer, Constant[] constants)
+  public AconstNullInstruction(int position, Constant[] constants)
   {
-    super(buffer, constants);
+    super(position, constants);
   }
   
   public String toString()

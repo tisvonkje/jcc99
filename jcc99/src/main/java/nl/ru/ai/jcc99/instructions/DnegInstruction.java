@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class DnegInstruction extends Instruction
 {
 
-  public DnegInstruction(ByteBuffer buffer, Constant[] constants)
+  public DnegInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

@@ -13,9 +13,9 @@ public class StoreInstruction extends Instruction
   private TypeSuffix type; // Allowed: INT, LONG, FLOAT, DOUBLE, REF
   private int local;
 
-  public StoreInstruction(ByteBuffer buffer, Constant[] constants, TypeSuffix type, int local)
+  public StoreInstruction(int position, Constant[] constants, TypeSuffix type, int local)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.type=type;
     this.local=local;
   }

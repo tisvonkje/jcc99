@@ -12,9 +12,9 @@ public class IfAcmpInstruction extends Instruction
   private Condition condition;
   private short offset;
 
-  public IfAcmpInstruction(ByteBuffer buffer, Constant[] constants, Condition condition, short offset)
+  public IfAcmpInstruction(int position, Constant[] constants, Condition condition, short offset)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.condition=condition;
     this.offset=offset;
   }

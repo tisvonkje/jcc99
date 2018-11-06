@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class FcmpgInstruction extends Instruction
 {
 
-  public FcmpgInstruction(ByteBuffer buffer, Constant[] constants)
+  public FcmpgInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

@@ -10,9 +10,9 @@ import nl.ru.ai.jcc99.constants.Constant;
 public class DcmplInstruction extends Instruction
 {
 
-  public DcmplInstruction(ByteBuffer buffer, Constant[] constants)
+  public DcmplInstruction(int position, Constant[] constants)
   {
-    super(buffer,constants);
+    super(position,constants);
   }
   
   public String toString()

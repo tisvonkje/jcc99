@@ -12,9 +12,9 @@ public class RetInstruction extends Instruction
   @SuppressWarnings("unused")
   private int local;
 
-  public RetInstruction(ByteBuffer buffer, Constant[] constants, int local)
+  public RetInstruction(int position, Constant[] constants, int local)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.local=local;
   }
 

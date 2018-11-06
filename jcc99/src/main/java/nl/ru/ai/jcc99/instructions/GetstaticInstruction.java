@@ -14,9 +14,9 @@ public class GetstaticInstruction extends Instruction
 {
   private int fieldIndex;
 
-  public GetstaticInstruction(ByteBuffer buffer, Constant[] constants, int fieldIndex)
+  public GetstaticInstruction(int position, Constant[] constants, int fieldIndex)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.fieldIndex=fieldIndex;
   }
   

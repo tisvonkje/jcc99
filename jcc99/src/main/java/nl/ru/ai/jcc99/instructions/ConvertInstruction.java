@@ -11,9 +11,9 @@ public class ConvertInstruction extends Instruction
 {
   private Conversion conversion;
 
-  public ConvertInstruction(ByteBuffer buffer, Constant[] constants, Conversion conversion)
+  public ConvertInstruction(int position, Constant[] constants, Conversion conversion)
   {
-    super(buffer,constants);
+    super(position,constants);
     this.conversion=conversion;
   }
 
