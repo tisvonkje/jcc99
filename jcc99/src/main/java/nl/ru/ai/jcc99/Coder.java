@@ -28,6 +28,7 @@ public interface Coder
   void codeAllocateArray(TypeSuffix elementType);
   void codePushByte(int value);
   void codeArrayStore(TypeSuffix elementType);
+  void codeArrayLoad(TypeSuffix elementType);
   void codeAllocateObject(int size);
   void codeDup();
   void codePutField(int offset);

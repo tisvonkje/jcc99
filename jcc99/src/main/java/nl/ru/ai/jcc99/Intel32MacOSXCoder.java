@@ -299,6 +299,33 @@ public class Intel32MacOSXCoder implements Coder
         throw new RuntimeException("invalid type");
     }
   }
+  
+  public void codeArrayLoad(TypeSuffix elementType)
+  {
+    writer.printf("\tpopl\t%%ebx\n"); // index position
+    writer.printf("\tshll\t$%d,%%ebx\n",bitShift(elementType)); // multiple by element size
+    writer.printf("\tpopl\t%%ecx\n"); // address of array
+    writer.printf("\tadd\t%%ebx,%%ecx\n"); // add it together
+    switch(elementType)
+    {
+      case BYTE:
+      case BOOLEAN:
+        writer.printf("\tclrl\t%%eax\n"); //FIXME: needed? sign extend?
+        writer.printf("\tmovb\t%d(%%ecx),%%al\n",getWordSize()); // store value
+        break;
+      case CHAR:
+        writer.printf("\tclrl\t%%eax\n"); //FIXME: needed? sign extend?
+        writer.printf("\tmovw\t%d(%%ecx),%%ax\n",getWordSize()); // store value
+        break;
+      case INT:
+      case FLOAT:
+        writer.printf("\tmovl\t%d(%%ecx),%%eax\n",getWordSize()); // store value
+        break;
+      default:
+        throw new RuntimeException("invalid type");
+    }
+    writer.printf("\tpushl\t%%eax\n");
+  }
 
   public void codeAllocateObject(int size)
   {
