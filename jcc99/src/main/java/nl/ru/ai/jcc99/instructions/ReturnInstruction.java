@@ -22,14 +22,13 @@ public class ReturnInstruction extends Instruction
   
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.codeReturn();
+    coder.codeReturn(method.getParameterUnits());
   }
 
   @Override
   public void analyze(ClassLoader classLoader, Method method)
   {
-    // TODO Auto-generated method stub
-    
+    ;
   }
 
 }

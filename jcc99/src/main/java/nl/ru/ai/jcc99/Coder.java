@@ -1,6 +1,7 @@
 package nl.ru.ai.jcc99;
 
 import nl.ru.ai.jcc99.constants.OutlineConstant;
+import nl.ru.ai.jcc99.instructions.Condition;
 
 public interface Coder
 {
@@ -14,15 +15,16 @@ public interface Coder
   void codeComment(String version);
   void codeLink(int number);
   void codeLoad(int parameterUnits, int local);
+  void codeIntInc(int parameterUnits, int local, int value);
   void codeDload(int parameterUnits, int local);
   void codeAddInt();
   void codeAndInt();
   void codeStore(int parameterUnits, int local);
   void codeDStore(int parameterUnits, int local);
   void codeReturnSingle(int parameterUnits);
+  void codeReturn(int parameterUnits);
   void codePushInt(int value);
   void codeCall(Method method);
-  void codeReturn();
   void codePushAddress(OutlineConstant constant);
   void codeData();
   void codeAsciz(String string);
@@ -37,4 +39,6 @@ public interface Coder
   void codeArrayLength();
   void codeGetField(int offset);
   void codeJump(String label);
+  void codeIntToByte();
+  void codeIntCompare(Condition condition, String label);
 }

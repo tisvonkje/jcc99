@@ -2,9 +2,11 @@ package nl.ru.ai.jcc99;
 
 import java.io.PrintWriter;
 
+import javax.management.RuntimeErrorException;
 import javax.print.DocFlavor.CHAR_ARRAY;
 
 import nl.ru.ai.jcc99.constants.OutlineConstant;
+import nl.ru.ai.jcc99.instructions.Condition;
 
 /*
  * FIXME: interesting, optimize array access
@@ -86,7 +88,7 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tmovl\t%%eax,heapptr\n");
     writer.printf("\tjmp\t%s\n",disambiguator.name(method));
   }
-  
+
   public void codeHeap()
   {
     writer.printf("\t.data\n");
@@ -161,6 +163,11 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\t%d(%%ebp)\n",offset(parameterUnits,local));
   }
 
+  public void codeIntInc(int parameterUnits, int local, int value)
+  {
+    writer.printf("\taddl\t$%d,%d(%%ebp)\n",value,offset(parameterUnits,local));
+  }
+
   public void codeDload(int parameterUnits, int local)
   {
     throw new RuntimeException("notyet");
@@ -171,7 +178,7 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n");
     writer.printf("\taddl\t%%eax,(%%esp)\n");
   }
-  
+
   public void codeAndInt()
   {
     writer.printf("\tpopl\t%%eax\n");
@@ -190,19 +197,22 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeReturnSingle(int parameterUnits)
   {
-    writer.printf("\tpopl\t%%eax\n");
-    writer.printf("\tmovl\t%%ebp,%%esp\n");
+    writer.printf("\tpopl\t%%eax\n"); // get value to return
+    writer.printf("\tmovl\t%%ebp,%%esp\n"); // unlink stack frame
     writer.printf("\tpopl\t%%ebp\n");
-    writer.printf("\tpopl\t%%ecx\n");
-    writer.printf("\tpushl\t%%eax\n");
-    writer.printf("\tjmpl\t*%%ecx\n");
+    writer.printf("\tpopl\t%%ecx\n"); // save return address
+    writer.printf("\taddl\t$%d,%%esp\n",parameterUnits*getWordSize()); // remove parameters
+    writer.printf("\tpushl\t%%eax\n"); // push return value
+    writer.printf("\tjmpl\t*%%ecx\n"); // return
   }
 
-  public void codeReturn()
+  public void codeReturn(int parameterUnits)
   {
-    writer.printf("\tmovl\t%%ebp,%%esp\n");
+    writer.printf("\tmovl\t%%ebp,%%esp\n"); // unlink stack frame
     writer.printf("\tpopl\t%%ebp\n");
-    writer.printf("\tret\n");
+    writer.printf("\tpopl\t%%ecx\n"); // save return address
+    writer.printf("\taddl\t$%d,%%esp\n",parameterUnits*getWordSize()); // remove parameters
+    writer.printf("\tjmpl\t*%%ecx\n"); // return
   }
 
   public void codePushInt(int value)
@@ -266,7 +276,7 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\t%%ebx\n"); // the address of the array as the result
     writer.printf("\tmovl\t%%eax,(%%ebx)\n"); // store length
     writer.printf("\tshll\t$%d,%%eax\n",bitShift(elementType)); // multiply number of elements by type length
-    writer.printf("\taddl\t$%d,%%eax\n",getWordSize()+getWordSize()-1);  // one wordsize for the length, wordsize-1 for rounding
+    writer.printf("\taddl\t$%d,%%eax\n",getWordSize()+getWordSize()-1); // one wordsize for the length, wordsize-1 for rounding
     writer.printf("\tandl\t$0xfffffffc,%%eax\n"); // round it
     writer.printf("\taddl\t%%eax,heapptr\n"); // adjust heap pointer
   }
@@ -305,7 +315,7 @@ public class Intel32MacOSXCoder implements Coder
         throw new RuntimeException("invalid type");
     }
   }
-  
+
   public void codeArrayLoad(TypeSuffix elementType)
   {
     writer.printf("\tpopl\t%%ebx\n"); // index position
@@ -342,7 +352,7 @@ public class Intel32MacOSXCoder implements Coder
   public void codeDup()
   {
     writer.printf("\tpushl\t(%%esp)\n");
-    
+
   }
 
   public void codePutField(int offset)
@@ -372,5 +382,30 @@ public class Intel32MacOSXCoder implements Coder
   public void codeLabel(String label)
   {
     writer.printf("%s:\n",label);
+  }
+
+  public void codeIntToByte()
+  {
+    writer.printf("\tmovsbl\t(%%esp),%%eax\n");
+    writer.printf("\tmovl\t%%eax,(%%esp)\n");
+  }
+
+  public void codeIntCompare(Condition condition, String label)
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tpopl\t%%ebx\n");
+    writer.printf("\tcmpl\t%%eax,%%ebx\n");
+    /*
+     * Switch to SIGNED jumps only
+     */
+    switch(condition)
+    {
+      case LT:
+        writer.printf("\tjl\t%s\n",label);
+        break;
+      default:
+        throw new RuntimeException("notyet");
+
+    }
   }
 }

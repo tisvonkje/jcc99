@@ -16,7 +16,7 @@ public class ConvertInstruction extends Instruction
     super(buffer,constants);
     this.conversion=conversion;
   }
-  
+
   public String toString()
   {
     return conversion.toString().toLowerCase();
@@ -24,14 +24,20 @@ public class ConvertInstruction extends Instruction
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    switch(conversion)
+    {
+      case I2B:
+        coder.codeIntToByte();
+        break;
+      default:
+        throw new RuntimeException("notyet");
+    }
   }
 
   @Override
   public void analyze(ClassLoader classLoader, Method method)
   {
     // TODO Auto-generated method stub
-    
+
   }
 }

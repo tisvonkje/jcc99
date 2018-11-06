@@ -26,8 +26,7 @@ public class IincInstruction extends Instruction
   
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codeIntInc(method.getParameterUnits(),local,value);
   }
 
   @Override

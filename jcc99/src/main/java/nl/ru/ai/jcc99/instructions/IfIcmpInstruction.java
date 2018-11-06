@@ -11,6 +11,7 @@ public class IfIcmpInstruction extends Instruction
 {
   private Condition condition;
   private short offset;
+  private String label;
 
   public IfIcmpInstruction(ByteBuffer buffer, Constant[] constants, Condition condition, short offset)
   {
@@ -26,14 +27,12 @@ public class IfIcmpInstruction extends Instruction
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codeIntCompare(condition,label);
   }
 
   @Override
   public void analyze(ClassLoader classLoader, Method method)
   {
-    // TODO Auto-generated method stub
-    
+    label=method.getLabel(classLoader,location+offset);
   }
 }
