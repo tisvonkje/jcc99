@@ -9,7 +9,7 @@ import nl.ru.ai.jcc99.constants.Constant;
 
 public class SipushInstruction extends Instruction
 {
-  private short value;
+  private int value;
 
   public SipushInstruction(ByteBuffer buffer, Constant[] constants, short value)
   {
@@ -24,8 +24,7 @@ public class SipushInstruction extends Instruction
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codePushInt((value<<16)>>16);
   }
 
   @Override

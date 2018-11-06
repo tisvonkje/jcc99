@@ -16,6 +16,7 @@ public interface Coder
   void codeLoad(int parameterUnits, int local);
   void codeDload(int parameterUnits, int local);
   void codeAddInt();
+  void codeAndInt();
   void codeStore(int parameterUnits, int local);
   void codeDStore(int parameterUnits, int local);
   void codeReturnSingle(int parameterUnits);

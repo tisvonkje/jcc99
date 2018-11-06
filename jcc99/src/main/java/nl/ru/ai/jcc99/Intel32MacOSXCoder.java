@@ -171,6 +171,12 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n");
     writer.printf("\taddl\t%%eax,(%%esp)\n");
   }
+  
+  public void codeAndInt()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tandl\t%%eax,(%%esp)\n");
+  }
 
   public void codeStore(int parameterUnits, int local)
   {
