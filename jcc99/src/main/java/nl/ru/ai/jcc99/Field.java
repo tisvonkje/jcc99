@@ -70,7 +70,7 @@ public class Field
 
   public String getFullName()
   {
-    return classFile.getName()+"."+getName();
+    return classFile.getName()+":"+getName()+':'+constants[descriptorIndex].toShortString();
   }
 
   public void code(ClassLoader classLoader, Coder coder)

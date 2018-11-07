@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,9 +15,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import nl.ru.ai.jcc99.constants.Constant;
 import nl.ru.ai.jcc99.constants.OutlineConstant;
-import nl.ru.ai.jcc99.constants.StringConstant;
 
 public class ClassLoader
 {
@@ -174,6 +171,11 @@ public class ClassLoader
     return staticMethodByName.get(name);
   }
   
+  public Field getStaticField(String name)
+  {
+    return staticFieldByName.get(name);
+  }
+  
   public Method getDynamicMethod(String name)
   {
     return dynamicMethodByName.get(name);
@@ -272,5 +274,4 @@ public class ClassLoader
   {
     init.add(method);
   }
-
 }

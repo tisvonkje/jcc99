@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import nl.ru.ai.jcc99.ClassFile;
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
+import nl.ru.ai.jcc99.Field;
 import nl.ru.ai.jcc99.Method;
 import nl.ru.ai.jcc99.Util;
 import nl.ru.ai.jcc99.constants.Constant;
@@ -13,6 +14,7 @@ import nl.ru.ai.jcc99.constants.FieldrefConstant;
 public class GetstaticInstruction extends Instruction
 {
   private int fieldIndex;
+  private Field field;
 
   public GetstaticInstruction(int position, Constant[] constants, int fieldIndex)
   {
@@ -23,6 +25,13 @@ public class GetstaticInstruction extends Instruction
   public void analyze(ClassLoader classLoader, Method method)
   {
     FieldrefConstant fieldrefConstant=(FieldrefConstant)constants[fieldIndex];
+    String fieldName=fieldrefConstant.toShortString();
+    field=classLoader.getStaticField(fieldName);
+    if(field==null)
+      Util.error("Cannot analyse '%s'",fieldName);
+    /*
+     * Analyze the class of this static reference
+     */
     String className=fieldrefConstant.getClassName();
     ClassFile classFile=classLoader.getClassFile(className);
     if(classFile==null)
