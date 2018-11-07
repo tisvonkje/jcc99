@@ -425,7 +425,7 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeBss(Field field)
   {
-    writer.printf("\t.lcomm\t%s,%d\n",disambiguator.name(field),getWordSize());
+    writer.printf("%s:\t.long\t0\n",disambiguator.name(field));
   }
 
 }

@@ -243,6 +243,7 @@ public class ClassLoader
     /*
      * Generate all static fields
      */
+    coder.codeData();
     for(String fieldName:staticFieldByName.keySet())
     {
       Field field=staticFieldByName.get(fieldName);
