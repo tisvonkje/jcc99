@@ -90,10 +90,8 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeHeap()
   {
-    writer.printf("\t.data\n");
-    writer.printf("\t.align\t4\n");
-    writer.printf("heapptr:\t.long\t0\n");
-    writer.printf("heapstart:\n");
+    writer.printf("\t.lcomm\theapptr,%d,%d\n",getWordSize(),getWordSize());
+    writer.printf("\t.lcomm\theapstart,%d,%d\n",getWordSize(),getWordSize()); //FIXME: maybe change size if segment does not grow
   }
 
   public void codeLabel(Method method)
@@ -425,7 +423,7 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeBss(Field field)
   {
-    writer.printf("%s:\t.long\t0\n",disambiguator.name(field));
+    writer.printf("\t.lcomm\t %s,%d,%d\n",disambiguator.name(field),getWordSize(),getWordSize());
   }
 
 }
