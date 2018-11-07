@@ -83,4 +83,35 @@ public class LabelDisambiguator
     return result;
   }
 
+  public String name(Field field)
+  {
+    String name=field.getFullName();
+    /*
+     * Already translated before? return it
+     */
+    String result=translate.get(name);
+    if(result!=null)
+      return result;
+    /*
+     * First occurrence
+     */
+    int start=name.indexOf(':');
+    int end=name.lastIndexOf(':');
+    if(start<0||end<0)
+      throw new RuntimeException("Illegal label name '"+field+"'");
+    String suggestion=name.substring(start+1,end);
+    /*
+     * Suggested version already given?
+     */
+    Integer instance=lastInstanceNumber.get(suggestion);
+    if(instance==null)
+      instance=0;
+    else
+      instance++;
+    lastInstanceNumber.put(suggestion,instance);
+    result=instance==0 ? suggestion : suggestion+instance;
+    translate.put(name,result);
+    return result;
+  }
+
 }

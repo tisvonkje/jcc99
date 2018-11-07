@@ -24,6 +24,8 @@ public interface Coder
   void codeReturnSingle(int parameterUnits);
   void codeReturn(int parameterUnits);
   void codePushInt(int value);
+  void codePush(Field field);
+  void codePop(Field field);
   void codeCall(Method method);
   void codePushAddress(OutlineConstant constant);
   void codeData();
@@ -42,4 +44,5 @@ public interface Coder
   void codeJump(Method method);
   void codeIntToByte();
   void codeIntCompare(Condition condition, String label);
+  void codeBss(Field field);
 }

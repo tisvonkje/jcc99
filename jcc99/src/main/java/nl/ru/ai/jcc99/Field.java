@@ -75,6 +75,6 @@ public class Field
 
   public void code(ClassLoader classLoader, Coder coder)
   {
-    throw new RuntimeException("notyet");
+    coder.codeBss(this);
   }
 }
