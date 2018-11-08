@@ -3,10 +3,10 @@
 #
 
 #
-# private native void print(char c)
+# private native void print(byte b)
 #
-	.globl	la53c0e
-la53c0e:
+	.globl	l8147fc
+l8147fc:
 # link stack frame
 	pushl	%ebp
 	movl	%esp,%ebp
