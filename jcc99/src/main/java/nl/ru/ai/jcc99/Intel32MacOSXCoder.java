@@ -181,6 +181,12 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n");
     writer.printf("\tandl\t%%eax,(%%esp)\n");
   }
+  
+  public void codeOrInt()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\torl\t%%eax,(%%esp)\n");
+  }
 
   public void codeStore(int parameterUnits, int local)
   {
@@ -405,8 +411,11 @@ public class Intel32MacOSXCoder implements Coder
       case LT:
         writer.printf("\tjl\t%s\n",label);
         break;
+      case GE:
+        writer.printf("\tjge\t%s\n",label);
+        break;
       default:
-        throw new RuntimeException("notyet");
+        throw new RuntimeException("notyet '"+condition+"'");
 
     }
   }
@@ -426,4 +435,9 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\t.lcomm\t %s,%d,%d\n",disambiguator.name(field),getWordSize(),getWordSize());
   }
 
+  public void codeShiftRightInt()
+  {
+    writer.printf("\tpopl\t%%ecx\n"); // shift count
+    writer.printf("\tsarl\t%%cl,(%%esp)\n");
+  }
 }

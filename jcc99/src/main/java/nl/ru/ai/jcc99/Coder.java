@@ -19,6 +19,7 @@ public interface Coder
   void codeDload(int parameterUnits, int local);
   void codeAddInt();
   void codeAndInt();
+  void codeOrInt();
   void codeStore(int parameterUnits, int local);
   void codeDStore(int parameterUnits, int local);
   void codeReturnSingle(int parameterUnits);
@@ -45,4 +46,5 @@ public interface Coder
   void codeIntToByte();
   void codeIntCompare(Condition condition, String label);
   void codeBss(Field field);
+  void codeShiftRightInt();
 }
