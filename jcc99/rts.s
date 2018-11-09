@@ -12,13 +12,14 @@ l8147fc:
 	movl	%esp,%ebp
 # align stack
 	andl	$0xfffffff0,%esp
-# get address of parameter
+# get address of parameter (we need pointer for w write)
 	leal	8(%ebp),%edi
-	pushl	$0
-	pushl	$1
-	pushl	%edi
-	movl	12(%ebp),%eax
-	pushl	(%eax)
+	pushl	$0 // padding
+	pushl	$1 // numver of characters
+	pushl	%edi // address
+	movl	12(%ebp),%eax // PrintStream
+	movl	(%eax),%eax // get FileDescriptor
+	pushl	(%eax) // get fd
 	calll	_write$UNIX2003
 //	addl	$16, %esp
 	movl	%ebp,%esp

@@ -222,8 +222,8 @@ public class ClassLoader
     /*
      * Code call to class initialization methods
      */
-    for(Method method: init)
-      coder.codeCall(method);
+    for(int i=init.size()-1;i>=0;i--)
+      coder.codeCall(init.get(i));
     coder.codeJump(mainMethod);
     /*
      * Code all methods
