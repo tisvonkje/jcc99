@@ -9,6 +9,8 @@ public interface Coder
   String getVersion();
   void close();
   void codeEntry();
+  void codePrepare();
+  void codeExit();
   void codeLabel(Method method);
   void codeLabel(OutlineConstant constant);
   void codeLabel(String string);
@@ -42,7 +44,6 @@ public interface Coder
   void codeArrayLength();
   void codeGetField(int offset);
   void codeJump(String label);
-  void codeJump(Method method);
   void codeIntToByte();
   void codeIntCompare(Condition condition, String label);
   void codeBss(Field field);

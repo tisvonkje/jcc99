@@ -98,7 +98,7 @@ public class Jcc99
      * Load classes
      */
     ClassLoader classLoader=new ClassLoader(charPath);
-    String methodName=className.replace('.','/')+".main:([Ljava/lang/String;)V";
+    String methodName=className.replace('.','/')+".main:([Ljava/lang/String;)I";
     /*
      * Get static main method
      */

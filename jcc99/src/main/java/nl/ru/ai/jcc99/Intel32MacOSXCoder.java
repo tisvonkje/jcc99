@@ -82,15 +82,34 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeEntry()
   {
-    writer.printf("\t.globl\t _main\n");
+    writer.printf("\t.globl\t _main,_heapptr\n");
     writer.printf("_main:\n");
+    writer.printf("\tpushl\t%%ebp\n");
+    writer.printf("\tmovl\t%%esp,%%ebp\n");
     writer.printf("\tlea\theapstart,%%eax\n");
-    writer.printf("\tmovl\t%%eax,heapptr\n");
+    writer.printf("\tmovl\t%%eax,_heapptr\n");
+  }
+  
+  public void codePrepare()
+  {
+    writer.printf("\tpushl\t12(%%ebp)\n");
+    writer.printf("\tpushl\t8(%%ebp)\n");
+    writer.printf("\tcall\t_entry\n");
+    writer.printf("\taddl\t$8,(%%esp)\n");
+    writer.printf("\tpushl\t%%eax\n");
+  }
+  
+  public void codeExit()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tmovl\t%%ebp,%%esp\n"); // unlink stack frame
+    writer.printf("\tpopl\t%%ebp\n");
+    writer.printf("\tret\n");
   }
 
   public void codeHeap()
   {
-    writer.printf("\t.lcomm\theapptr,%d,%d\n",getWordSize(),getWordSize());
+    writer.printf("\t.lcomm\t_heapptr,%d,%d\n",getWordSize(),getWordSize());
     writer.printf("\t.lcomm\theapstart,%d,%d\n",getWordSize(),getWordSize()); //FIXME: maybe change size if segment does not grow
   }
 
@@ -275,13 +294,13 @@ public class Intel32MacOSXCoder implements Coder
   public void codeAllocateArray(TypeSuffix elementType)
   {
     writer.printf("\tpopl\t%%eax\n"); // the size of the array
-    writer.printf("\tmovl\theapptr,%%ebx\n"); // get heapptr in ebx
+    writer.printf("\tmovl\t_heapptr,%%ebx\n"); // get _heapptr in ebx
     writer.printf("\tpushl\t%%ebx\n"); // the address of the array as the result
     writer.printf("\tmovl\t%%eax,(%%ebx)\n"); // store length
     writer.printf("\tshll\t$%d,%%eax\n",bitShift(elementType)); // multiply number of elements by type length
     writer.printf("\taddl\t$%d,%%eax\n",getWordSize()+getWordSize()-1); // one wordsize for the length, wordsize-1 for rounding
     writer.printf("\tandl\t$0xfffffffc,%%eax\n"); // round it
-    writer.printf("\taddl\t%%eax,heapptr\n"); // adjust heap pointer
+    writer.printf("\taddl\t%%eax,_heapptr\n"); // adjust heap pointer
   }
 
   public void codePushByte(int value)
@@ -348,8 +367,8 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeAllocateObject(int size)
   {
-    writer.printf("\tpushl\theapptr\n");
-    writer.printf("\taddl\t$%d,heapptr\n",size*getWordSize());
+    writer.printf("\tpushl\t_heapptr\n");
+    writer.printf("\taddl\t$%d,_heapptr\n",size*getWordSize());
   }
 
   public void codeDup()
@@ -382,11 +401,6 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tjmp\t%s\n",label);
   }
 
-  public void codeJump(Method method)
-  {
-    writer.printf("\tjmp\t%s\n",disambiguator.name(method));
-  }
-  
   public void codeLabel(String label)
   {
     writer.printf("%s:\n",label);

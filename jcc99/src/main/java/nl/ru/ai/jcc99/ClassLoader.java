@@ -224,7 +224,18 @@ public class ClassLoader
      */
     for(int i=init.size()-1;i>=0;i--)
       coder.codeCall(init.get(i));
-    coder.codeJump(mainMethod);
+    /*
+     * Prepare the c arguments for main method
+     */
+    coder.codePrepare();
+    /*
+     * Call main
+     */
+    coder.codeCall(mainMethod);
+    /*
+     * Code exit
+     */
+    coder.codeExit();
     /*
      * Code all methods
      */
