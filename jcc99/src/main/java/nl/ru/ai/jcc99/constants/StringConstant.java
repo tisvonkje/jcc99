@@ -26,7 +26,11 @@ public class StringConstant extends OutlineConstant
   public void code(Coder coder)
   {
     super.code(coder);
-    coder.codeAsciz(constants[stringIndex].toShortString());
+    coder.codeWord(".+4");
+    String string=constants[stringIndex].toShortString();
+    coder.codeWord(string.length());
+    for(int i=0;i<string.length();i++)
+      coder.codeChar(string.charAt(i));
   }
 
 }

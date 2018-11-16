@@ -36,6 +36,7 @@ public abstract class OutlineConstant extends Constant
 
   public void code(Coder coder)
   {
+    coder.codeAlignWord();
     coder.codeLabel(this);
   }
 }

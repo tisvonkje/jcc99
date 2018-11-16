@@ -48,4 +48,8 @@ public interface Coder
   void codeIntCompare(Condition condition, String label);
   void codeBss(Field field);
   void codeShiftRightInt();
+  void codeAlignWord();
+  void codeWord(String string);
+  void codeWord(int length);
+  void codeChar(char charAt);
 }

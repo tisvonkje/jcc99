@@ -456,4 +456,24 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%ecx\n"); // shift count
     writer.printf("\tsarl\t%%cl,(%%esp)\n");
   }
+
+  public void codeAlignWord()
+  {
+    writer.printf("\t.align\t4\n");
+  }
+
+  public void codeWord(String string)
+  {
+    writer.printf("\t.long\t%s\n",string);
+  }
+
+  public void codeWord(int value)
+  {
+    writer.printf("\t.long\t%d\n",value);
+  }
+
+  public void codeChar(char value)
+  {
+    writer.printf("\t.word\t%d\n",(int)value);
+  }
 }
