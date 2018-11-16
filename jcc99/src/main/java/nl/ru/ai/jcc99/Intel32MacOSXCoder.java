@@ -74,9 +74,10 @@ public class Intel32MacOSXCoder implements Coder
         return 1;
       case INT:
       case FLOAT:
+      case REF:
         return 2;
       default:
-        throw new RuntimeException("Illegal type");
+        throw new RuntimeException("Illegal type '"+type+"'");
     }
   }
 
@@ -357,6 +358,7 @@ public class Intel32MacOSXCoder implements Coder
         break;
       case INT:
       case FLOAT:
+      case REF:
         writer.printf("\tmovl\t%d(%%ecx),%%eax\n",getWordSize()); // store value
         break;
       default:
