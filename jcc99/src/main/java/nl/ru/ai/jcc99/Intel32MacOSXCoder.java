@@ -45,6 +45,11 @@ import nl.ru.ai.jcc99.instructions.Condition;
  *  The locals are numbered as well, d has number 3 and e has number 4
  *  The locals are reachable through fp with the offset -(i-n+1)*w
  *  
+ *  Objects live on the heap. Arrays are objects too. To resolve dynamic binding of methods
+ *  every object starts with a word called the classvector. The classvector points to a sequence
+ *  of words that are common for all objects of that class. The classvector contains the addresses
+ *  of the dynamic methods are stored.
+ *  
  */
 public class Intel32MacOSXCoder implements Coder
 {
