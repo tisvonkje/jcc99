@@ -195,6 +195,13 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n");
     writer.printf("\taddl\t%%eax,(%%esp)\n");
   }
+  
+
+  public void codeSubInt()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tsubl\t%%eax,(%%esp)\n");
+  }
 
   public void codeAndInt()
   {
@@ -419,6 +426,18 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n");
     writer.printf("\tpopl\t%%ebx\n");
     writer.printf("\tcmpl\t%%eax,%%ebx\n");
+    codeConditionalJump(condition,label);
+  }
+  
+  public void codeZeroCompare(Condition condition, String label)
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tcmpl\t$0,%%eax\n");
+    codeConditionalJump(condition,label);
+  }
+
+  private void codeConditionalJump(Condition condition, String label)
+  {
     /*
      * Switch to SIGNED jumps only
      */
@@ -427,15 +446,20 @@ public class Intel32MacOSXCoder implements Coder
       case LT:
         writer.printf("\tjl\t%s\n",label);
         break;
+      case LE:
+        writer.printf("\tjle\t%s\n",label);
+        break;
       case GE:
         writer.printf("\tjge\t%s\n",label);
         break;
+      case NONNULL:
+        writer.printf("\tjne\t%s\n",label);
+        break;
       default:
         throw new RuntimeException("notyet '"+condition+"'");
-
     }
   }
-
+  
   public void codePush(Field field)
   {
     writer.printf("\tpushl\t%s\n",disambiguator.name(field));

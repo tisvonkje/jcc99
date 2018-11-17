@@ -35,6 +35,8 @@ public class DyadInstruction extends Instruction
   {
     if(type==TypeSuffix.INT && operator==Operator.ADD)
       coder.codeAddInt();
+    else if(type==TypeSuffix.INT && operator==Operator.SUB)
+      coder.codeSubInt();
     else if(type==TypeSuffix.INT && operator==Operator.AND)
       coder.codeAndInt();
     else if(type==TypeSuffix.INT && operator==Operator.OR)
