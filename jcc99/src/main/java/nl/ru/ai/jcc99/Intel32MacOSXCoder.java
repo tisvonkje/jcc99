@@ -2,9 +2,6 @@ package nl.ru.ai.jcc99;
 
 import java.io.PrintWriter;
 
-import javax.management.RuntimeErrorException;
-import javax.print.DocFlavor.CHAR_ARRAY;
-
 import nl.ru.ai.jcc99.constants.OutlineConstant;
 import nl.ru.ai.jcc99.instructions.Condition;
 
@@ -300,18 +297,21 @@ public class Intel32MacOSXCoder implements Coder
 
   /**
    * Allocate an array on the heap
-   * Arrays are stored in the heap starting with a word that indicates the size
-   * followed by the data (rounded up to full words)
+   * Arrays are stored in the heap starting with a word that is the array's classvector
+   * followed by a word that indicates the size
+   * These two words are followed by the data. After the allocation the heap is truncated up
+   * to word boundary
    * @param elementType type of element
    */
   public void codeAllocateArray(TypeSuffix elementType)
   {
+    //TODO: initialize object part
     writer.printf("\tpopl\t%%eax\n"); // the size of the array
     writer.printf("\tmovl\t_heapptr,%%ebx\n"); // get _heapptr in ebx
     writer.printf("\tpushl\t%%ebx\n"); // the address of the array as the result
-    writer.printf("\tmovl\t%%eax,(%%ebx)\n"); // store length
+    writer.printf("\tmovl\t%%eax,%d(%%ebx)\n",getWordSize()); // store length
     writer.printf("\tshll\t$%d,%%eax\n",bitShift(elementType)); // multiply number of elements by type length
-    writer.printf("\taddl\t$%d,%%eax\n",getWordSize()+getWordSize()-1); // one wordsize for the length, wordsize-1 for rounding
+    writer.printf("\taddl\t$%d,%%eax\n",3*getWordSize()-1); // one wordsize of the classvector, one wordsize for the length, wordsize-1 for rounding
     writer.printf("\tandl\t$0xfffffffc,%%eax\n"); // round it
     writer.printf("\taddl\t%%eax,_heapptr\n"); // adjust heap pointer
   }
@@ -337,14 +337,14 @@ public class Intel32MacOSXCoder implements Coder
     {
       case BYTE:
       case BOOLEAN:
-        writer.printf("\tmovb\t%%al,%d(%%ecx)\n",getWordSize()); // store value
+        writer.printf("\tmovb\t%%al,%d(%%ecx)\n",2*getWordSize()); // 2*wordSize for classVector and size
         break;
       case CHAR:
-        writer.printf("\tmovw\t%%ax,%d(%%ecx)\n",getWordSize()); // store value
+        writer.printf("\tmovw\t%%ax,%d(%%ecx)\n",2*getWordSize()); // 2*wordSize for classVector and size
         break;
       case INT:
       case FLOAT:
-        writer.printf("\tmovl\t%%eax,%d(%%ecx)\n",getWordSize()); // store value
+        writer.printf("\tmovl\t%%eax,%d(%%ecx)\n",2*getWordSize()); // 2*wordSize for classVector and size
         break;
       default:
         throw new RuntimeException("invalid type");
@@ -362,16 +362,16 @@ public class Intel32MacOSXCoder implements Coder
       case BYTE:
       case BOOLEAN:
         writer.printf("\tclrl\t%%eax\n"); //FIXME: needed? sign extend?
-        writer.printf("\tmovb\t%d(%%ecx),%%al\n",getWordSize()); // store value
+        writer.printf("\tmovb\t%d(%%ecx),%%al\n",2*getWordSize()); // 2*wordSize for classVector and size
         break;
       case CHAR:
         writer.printf("\tclrl\t%%eax\n"); //FIXME: needed? sign extend?
-        writer.printf("\tmovw\t%d(%%ecx),%%ax\n",getWordSize()); // store value
+        writer.printf("\tmovw\t%d(%%ecx),%%ax\n",2*getWordSize()); // 2*wordSize for classVector and size
         break;
       case INT:
       case FLOAT:
       case REF:
-        writer.printf("\tmovl\t%d(%%ecx),%%eax\n",getWordSize()); // store value
+        writer.printf("\tmovl\t%d(%%ecx),%%eax\n",2*getWordSize()); // 2*wordSize for classVector and size
         break;
       default:
         throw new RuntimeException("invalid type");
@@ -382,7 +382,7 @@ public class Intel32MacOSXCoder implements Coder
   public void codeAllocateObject(int size)
   {
     writer.printf("\tpushl\t_heapptr\n");
-    writer.printf("\taddl\t$%d,_heapptr\n",size*getWordSize());
+    writer.printf("\taddl\t$%d,_heapptr\n",(size+1)*getWordSize()); //+1 for classvector
   }
 
   public void codeDup()
@@ -395,19 +395,19 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tpopl\t%%eax\n"); //value to store
     writer.printf("\tpopl\t%%ebx\n"); //this
-    writer.printf("\tmovl\t%%eax,%d(%%ebx)\n",offset*getWordSize());
+    writer.printf("\tmovl\t%%eax,%d(%%ebx)\n",(offset+1)*getWordSize()); //+1 for classvector
   }
 
   public void codeArrayLength()
   {
     writer.printf("\tpopl\t%%eax\n"); // address of array
-    writer.printf("\tpushl\t(%%eax)\n"); // push length
+    writer.printf("\tpushl\t%d(%%eax)\n",getWordSize()); // push length
   }
 
   public void codeGetField(int offset)
   {
     writer.printf("\tpopl\t%%eax\n"); //this
-    writer.printf("\tpushl\t%d(%%eax)\n",offset*getWordSize());
+    writer.printf("\tpushl\t%d(%%eax)\n",(offset+1)*getWordSize()); //+1 for classvector
   }
 
   public void codeJump(String label)

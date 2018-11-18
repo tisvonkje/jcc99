@@ -18,8 +18,8 @@ l8147fc:
 	pushl	$1 // numver of characters
 	pushl	%edi // address
 	movl	12(%ebp),%eax // PrintStream
-	movl	(%eax),%eax // get FileDescriptor
-	pushl	(%eax) // get fd
+	movl	4(%eax),%eax // get FileDescriptor
+	pushl	4(%eax) // get fd
 	calll	_write$UNIX2003
 //	addl	$16, %esp
 	movl	%ebp,%esp

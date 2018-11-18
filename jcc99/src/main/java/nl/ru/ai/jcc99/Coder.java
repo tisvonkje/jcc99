@@ -52,6 +52,6 @@ public interface Coder
   void codeShiftRightInt();
   void codeAlignWord();
   void codeWord(String string);
-  void codeWord(int length);
+  void codeWord(int value);
   void codeChar(char charAt);
 }

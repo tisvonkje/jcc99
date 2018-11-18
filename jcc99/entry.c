@@ -88,21 +88,21 @@ void **entry(int argc, unsigned char **argv)
    * Allocate storage for array of Strings
    */
   void **result=(void **)heapptr;
-  heapptr+=WORDSIZE*argc+WORDSIZE;
-  *(int *)result=argc;
+  heapptr+=WORDSIZE*argc+WORDSIZE*2;
+  ((int *)result)[1]=argc;
   for(int i=0;i<argc;i++)
   {
     int size=utf8(argv[i],NULL);
     /*
      * Allocate storage for String
      */
-    result[i+1] = heapptr;
-    heapptr += WORDSIZE;
+    result[i+2] = heapptr;
+    heapptr += WORDSIZE*2;
     /*
      * Allocate storage for the char array
      */
     void *array = heapptr;
-    heapptr += WORDSIZE + size * 2;
+    heapptr += WORDSIZE*2 + size * 2;
     /*
      * Keep heap on WORD boundary
      */
@@ -110,12 +110,12 @@ void **entry(int argc, unsigned char **argv)
     /*
      * Write array
      */
-    *((int *)array)=size;
-    utf8(argv[i],(unsigned short *)(array+WORDSIZE));
+    ((int *)array)[1]=size;
+    utf8(argv[i],(unsigned short *)(array+WORDSIZE*2));
     /*
      * Store array in String
      */
-    *((void **) result[i+1]) = array;
+    ((void **) result[i+2])[1] = array;
   }
   return result;
 }

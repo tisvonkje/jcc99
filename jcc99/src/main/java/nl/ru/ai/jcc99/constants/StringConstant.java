@@ -26,6 +26,7 @@ public class StringConstant extends OutlineConstant
   public void code(Coder coder)
   {
     super.code(coder);
+    coder.codeWord(0); //FIXME: classvector
     coder.codeWord(".+4");
     String string=constants[stringIndex].toShortString();
     coder.codeWord(string.length());
