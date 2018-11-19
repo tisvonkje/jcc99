@@ -45,11 +45,11 @@ public class Method
     /*
      * Convert descriptor into type structure
      */
-    Type type=Util.convert(constants[descriptorIndex].toShortString());
+    Type descriptorType=Util.convert(constants[descriptorIndex].toShortString());
     /*
      * Determine how many units the parameters take in a stack frame
      */
-    parameterUnits=type.parameterUnitSize();
+    parameterUnits=descriptorType.parameterUnitSize();
     /*
      * Nonstatic methods have (hidden) first parameter this
      */
@@ -81,6 +81,11 @@ public class Method
   public String getFullName()
   {
     return classFile.getName()+"."+getName()+":"+getDescriptor();
+  }
+  
+  public ClassFile getClassFile()
+  {
+    return classFile;
   }
 
   public boolean isStatic()

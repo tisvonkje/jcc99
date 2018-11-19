@@ -77,4 +77,9 @@ public class Field
   {
     coder.codeBss(this);
   }
+
+  public ClassFile getClassFile()
+  {
+    return classFile;
+  }
 }
