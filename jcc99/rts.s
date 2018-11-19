@@ -5,8 +5,8 @@
 #
 # private native void print(byte b)
 #
-	.globl	l8147fc
-l8147fc:
+	.globl	Method_java_io_FileOutputStream_print__q_B_p_V
+Method_java_io_FileOutputStream_print__q_B_p_V:
 # link stack frame
 	pushl	%ebp
 	movl	%esp,%ebp
