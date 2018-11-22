@@ -30,4 +30,10 @@ public class LabelDisambiguator
     return "Field_"+mangle(namePart);
   }
 
+  public String name(ClassFile classFile)
+  {
+    String namePart=classFile.getName();
+    return "Vector_"+mangle(namePart);
+  }
+
 }

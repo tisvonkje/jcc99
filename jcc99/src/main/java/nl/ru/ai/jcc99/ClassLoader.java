@@ -60,7 +60,7 @@ public class ClassLoader
               ByteBuffer buffer=ByteBuffer.wrap(byteStream.toByteArray());
               try
               {
-                administrate(new ClassFile(buffer));
+                administrate(new ClassFile(this,buffer));
               }
               catch(ClassLoaderException e)
               {
@@ -113,7 +113,7 @@ public class ClassLoader
           ByteBuffer buffer=ByteBuffer.wrap(byteStream.toByteArray());
           try
           {
-            administrate(new ClassFile(buffer));
+            administrate(new ClassFile(this,buffer));
           }
           catch(ClassLoaderException e)
           {
@@ -268,6 +268,7 @@ public class ClassLoader
     /*
      * Generate all class vectors
      */
+    coder.codeAlignWord();
     for(String className:classByName.keySet())
     {
       ClassFile classFile=classByName.get(className);

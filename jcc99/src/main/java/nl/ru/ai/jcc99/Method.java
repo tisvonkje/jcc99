@@ -23,6 +23,7 @@ public class Method
   private int parameterUnits;
   
   private Map<Integer,String> labels;
+  private Integer offset;
 
   public Method(Constant[] constants, ClassFile classFile, ByteBuffer buffer)
   {
@@ -30,6 +31,7 @@ public class Method
     this.classFile=classFile;
     this.analysed=false;
     this.code=null;
+    this.offset=null;
     labels=new HashMap<Integer,String>();
     accessFlags=buffer.getShort();
     nameIndex=buffer.getShort();
@@ -77,6 +79,11 @@ public class Method
   {
     return constants[nameIndex].toShortString();
   }
+  
+  public String getNameAndDescriptor()
+  {
+    return getName()+":"+getDescriptor();
+  }
 
   public String getFullName()
   {
@@ -97,6 +104,11 @@ public class Method
   {
     return (accessFlags&ClassFile.ACC_NATIVE)!=0;
   }
+  
+  public boolean isSuper()
+  {
+    return (accessFlags&ClassFile.ACC_SUPER)!=0;
+  }
 
   public void analyze(ClassLoader classLoader)
   {
@@ -109,7 +121,7 @@ public class Method
     /*
      * Be sure our own class is analyzed which will marked class initialization methods
      */
-    classFile.analyze(classLoader);
+    classFile.analyze();
     /*
      * Analyze the code
      */
@@ -148,6 +160,11 @@ public class Method
     int position=instruction.getPosition();
     if(labels.containsKey(position))
       coder.codeLabel(labels.get(position));
+  }
+
+  public void setOffset(int offset)
+  {
+    this.offset=offset;
   }
 
 }

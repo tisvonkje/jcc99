@@ -37,7 +37,7 @@ public class GetstaticInstruction extends Instruction
     if(classFile==null)
       Util.error("Cannot analyze'%s'",className);
     else
-      classFile.analyze(classLoader);
+      classFile.analyze();
   }
   
   public String toString()

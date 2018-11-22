@@ -125,6 +125,11 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("%s:\n",constant.getLabel());
   }
+  
+  public void codeLabel(ClassFile classFile)
+  {
+    writer.printf("%s:\n",disambiguator.name(classFile));
+  }
 
   public String getVersion()
   {
@@ -504,5 +509,10 @@ public class Intel32MacOSXCoder implements Coder
   public void codeChar(char value)
   {
     writer.printf("\t.word\t%d\n",(int)value);
+  }
+
+  public void codeWord(Method method)
+  {
+    writer.printf("\t.long\t%s\n",disambiguator.name(method));
   }
 }

@@ -13,6 +13,7 @@ public interface Coder
   void codeExit();
   void codeLabel(Method method);
   void codeLabel(OutlineConstant constant);
+  void codeLabel(ClassFile classFile);
   void codeLabel(String string);
   void codeComment(String version);
   void codeLink(int number);
@@ -53,5 +54,6 @@ public interface Coder
   void codeAlignWord();
   void codeWord(String string);
   void codeWord(int value);
+  void codeWord(Method method);
   void codeChar(char charAt);
 }

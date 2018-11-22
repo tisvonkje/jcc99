@@ -2,6 +2,8 @@ package nl.ru.ai.jcc99;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.constants.Constant;
@@ -48,13 +50,17 @@ public class ClassFile
   private boolean analyzed;
 
   private Integer size;
+  private ClassLoader classLoader;
+  private List<Method> dynamicMethodOffsets;
   /*
    * Constructor
    */
-  public ClassFile(ByteBuffer buffer) throws IOException, ClassLoaderException
+  public ClassFile(ClassLoader classLoader, ByteBuffer buffer) throws IOException, ClassLoaderException
   {
+    this.classLoader=classLoader;
     this.analyzed=false;
     this.size=null;
+    this.dynamicMethodOffsets=null;
     magic=buffer.getInt();
     minor=buffer.getShort();
     major=buffer.getShort();
@@ -142,11 +148,11 @@ public class ClassFile
   {
     return methods;
   }
-  public  Field[] getFields()
+  public Field[] getFields()
   {
     return fields;
   }
-  public int getSizeAndCalculateFieldOffsets(int startOffset, ClassLoader classLoader)
+  public int getSizeAndCalculateFieldOffsets(int startOffset)
   {
     if(size==null)
     {
@@ -156,7 +162,7 @@ public class ClassFile
         ClassFile parentClass=classLoader.getClassFile(superClassConstant.toShortString());
         if(parentClass==null)
           throw new RuntimeException("Invalid parent class");
-        startOffset=parentClass.getSizeAndCalculateFieldOffsets(startOffset,classLoader);
+        startOffset=parentClass.getSizeAndCalculateFieldOffsets(startOffset);
       }
       for(Field field : fields)
         if(field.isNonStatic())
@@ -165,7 +171,7 @@ public class ClassFile
     }
     return size;
   }
-  public void analyze(ClassLoader classLoader)
+  public void analyze()
   {
     /*
      * Already marked? nothing to do
@@ -176,7 +182,11 @@ public class ClassFile
     /*
      * Calculate size and field offsets
      */
-    getSizeAndCalculateFieldOffsets(0,classLoader);
+    getSizeAndCalculateFieldOffsets(0);
+    /*
+     * Determine dynamic method offsets
+     */
+    getDynamicMethodOffsets();
     /*
      * Mark class initialization if it exists
      */
@@ -187,15 +197,57 @@ public class ClassFile
       clinit.analyze(classLoader);
     }
   }
-  
+
+  private List<Method> getDynamicMethodOffsets()
+  {
+    if(dynamicMethodOffsets==null)
+    {
+      Constant superClassConstant=constants[superClass];
+      if(superClassConstant!=null)
+      {
+        ClassFile parentClass=classLoader.getClassFile(superClassConstant.toShortString());
+        if(parentClass==null)
+          throw new RuntimeException("Invalid parent class");
+        dynamicMethodOffsets=new ArrayList<Method>(parentClass.getDynamicMethodOffsets());
+      } else
+        dynamicMethodOffsets=new ArrayList<Method>();
+      /*
+       * Override our methods
+       */
+      for(Method method:methods)
+      {
+        //FIXME: checking for constructor is a bit ugly this way
+        if(!method.isStatic() && !"<init>".equals(method.getName()))
+        {
+          /*
+           * Check if it is defined by one of our ancestors
+           */
+          int i;
+          for(i=0;i<dynamicMethodOffsets.size();i++)
+            if(dynamicMethodOffsets.get(i).getNameAndDescriptor().equals(method.getNameAndDescriptor()))
+              break;
+          if(i!=dynamicMethodOffsets.size())
+          {
+            method.setOffset(i);
+            dynamicMethodOffsets.set(i,method);
+          } else
+          {
+            method.setOffset(dynamicMethodOffsets.size());
+            dynamicMethodOffsets.add(method);
+          }
+        }
+      }
+    }
+    return dynamicMethodOffsets;
+  }
   public Integer getSize()
   {
     return size;
   }
-  
+
   public Field getField(String fieldName)
   {
-    for(Field field:fields)
+    for(Field field : fields)
       if(fieldName.equals(field.getName()))
         return field;
     return null;
@@ -204,7 +256,9 @@ public class ClassFile
   {
     if(analyzed)
     {
-      System.out.println(getName());
+      coder.codeLabel(this);
+      for(Method method : dynamicMethodOffsets)
+        coder.codeWord(method);
     }
   }
 }
