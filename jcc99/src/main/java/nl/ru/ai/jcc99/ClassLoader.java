@@ -265,6 +265,17 @@ public class ClassLoader
     coder.codeData();
     for(OutlineConstant constant:constantPool)
       constant.code(coder);
+    /*
+     * Generate all class vectors
+     */
+    for(String className:classByName.keySet())
+    {
+      ClassFile classFile=classByName.get(className);
+      classFile.codeVector(coder);
+    }
+    /*
+     * Generate heap
+     */
     coder.codeHeap();
   }
 

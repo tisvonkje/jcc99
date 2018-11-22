@@ -200,4 +200,11 @@ public class ClassFile
         return field;
     return null;
   }
+  public void codeVector(Coder coder)
+  {
+    if(analyzed)
+    {
+      System.out.println(getName());
+    }
+  }
 }
