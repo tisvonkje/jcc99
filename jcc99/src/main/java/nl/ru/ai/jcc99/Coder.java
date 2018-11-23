@@ -32,6 +32,7 @@ public interface Coder
   void codePush(Field field);
   void codePop(Field field);
   void codeCall(Method method);
+  void codeDynamicCall(Method method);
   void codePushAddress(OutlineConstant constant);
   void codeData();
   void codeAsciz(String string);
@@ -39,7 +40,7 @@ public interface Coder
   void codePushByte(int value);
   void codeArrayStore(TypeSuffix elementType);
   void codeArrayLoad(TypeSuffix elementType);
-  void codeAllocateObject(int size);
+  void codeAllocateObject(int size, ClassFile classFile);
   void codeDup();
   void codePutField(int offset);
   void codeHeap();

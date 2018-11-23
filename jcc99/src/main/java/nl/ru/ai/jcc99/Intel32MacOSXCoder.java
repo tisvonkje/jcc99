@@ -262,6 +262,14 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tcall\t%s\n",disambiguator.name(method));
   }
   
+  public void codeDynamicCall(Method method)
+  {
+    writer.printf("\tmovl\t%d(%%esp),%%eax\n",(method.getParameterUnits()-1)*getWordSize());
+    writer.printf("\tmovl\t(%%eax),%%eax\n");
+    writer.printf("\tmovl\t%d(%%eax),%%eax\n",method.getOffset()*getWordSize());
+    writer.printf("\tcalll\t*%%eax\n");
+  }
+  
   public void codePushAddress(OutlineConstant constant)
   {
     writer.printf("\tleal\t%s,%%eax\n",constant.getLabel());
@@ -384,9 +392,12 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\t%%eax\n");
   }
 
-  public void codeAllocateObject(int size)
+  public void codeAllocateObject(int size, ClassFile classFile)
   {
-    writer.printf("\tpushl\t_heapptr\n");
+    writer.printf("\tmovl\t_heapptr,%%eax\n");
+    writer.printf("\tpushl\t%%eax\n");
+    writer.printf("\tleal\t%s,%%ebx\n",disambiguator.name(classFile));
+    writer.printf("\tmovl\t%%ebx,(%%eax)\n");
     writer.printf("\taddl\t$%d,_heapptr\n",(size+1)*getWordSize()); //+1 for classvector
   }
 

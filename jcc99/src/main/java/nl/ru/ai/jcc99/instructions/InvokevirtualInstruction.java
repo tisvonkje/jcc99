@@ -36,6 +36,6 @@ public class InvokevirtualInstruction extends Instruction
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.codeCall(subMethod);
+    coder.codeDynamicCall(subMethod);
   }
 }

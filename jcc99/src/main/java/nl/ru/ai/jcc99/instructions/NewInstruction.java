@@ -27,7 +27,7 @@ public class NewInstruction extends Instruction
   {
     ClassFile classFile=classLoader.getClassFile(constants[classIndex].toShortString());
     int size=classFile.getSize();
-    coder.codeAllocateObject(size);
+    coder.codeAllocateObject(size,classFile);
   }
 
   @Override

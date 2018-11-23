@@ -167,4 +167,9 @@ public class Method
     this.offset=offset;
   }
 
+  public int getOffset()
+  {
+    return offset;
+  }
+
 }
