@@ -26,21 +26,25 @@ public class ClassLoader
   private List<OutlineConstant> constantPool;
   private int nextLabel;
   private List<Method> init;
+  private List<ClassFile> collected;
+  private List<ClassFile> needed;
 
-  public ClassLoader(String [] classPath)
+  public ClassLoader(String[] classPath)
   {
-    classByName=new HashMap<String,ClassFile>();
-    staticMethodByName=new HashMap<String,Method>();
-    dynamicMethodByName=new HashMap<String,Method>();
-    staticFieldByName=new HashMap<String,Field>();
+    classByName=new HashMap<String, ClassFile>();
+    staticMethodByName=new HashMap<String, Method>();
+    dynamicMethodByName=new HashMap<String, Method>();
+    staticFieldByName=new HashMap<String, Field>();
     constantPool=new ArrayList<OutlineConstant>();
+    collected=new ArrayList<ClassFile>();
+    needed=new ArrayList<ClassFile>();
     init=new ArrayList<Method>();
     nextLabel=0;
-    
-    for(String classPathEntry:classPath)
+
+    for(String classPathEntry : classPath)
     {
       File file=new File(classPathEntry);
-      if(file.isFile() && classPathEntry.toLowerCase().endsWith(".jar"))
+      if(file.isFile()&&classPathEntry.toLowerCase().endsWith(".jar"))
       {
         /*
          * A jar file, we have to look inside
@@ -94,11 +98,10 @@ public class ClassLoader
     }
   }
 
-  
   private void addClassFile(File file)
   {
     if(file.isDirectory())
-      for(File subFile:file.listFiles())
+      for(File subFile : file.listFiles())
         addClassFile(subFile);
     else
     {
@@ -134,11 +137,11 @@ public class ClassLoader
       }
     }
   }
-  
+
   private void administrate(ClassFile classFile)
   {
     classByName.put(classFile.getName(),classFile);
-    for(Method method:classFile.getMethods())
+    for(Method method : classFile.getMethods())
     {
       String methodName=method.getFullName();
       if(method.isStatic())
@@ -146,7 +149,7 @@ public class ClassLoader
       else
         dynamicMethodByName.put(methodName,method);
     }
-    for(Field field:classFile.getFields())
+    for(Field field : classFile.getFields())
       if(field.isStatic())
       {
         String fieldName=field.getFullName();
@@ -170,31 +173,31 @@ public class ClassLoader
   {
     return staticMethodByName.get(name);
   }
-  
+
   public Field getStaticField(String name)
   {
     return staticFieldByName.get(name);
   }
-  
+
   public Method getDynamicMethod(String name)
   {
     return dynamicMethodByName.get(name);
   }
-  
+
   /**
    * For debugging
    */
   public void dump()
   {
     System.out.println("Static methods marked for coding:");
-    for(String methodName:staticMethodByName.keySet())
+    for(String methodName : staticMethodByName.keySet())
     {
       Method method=staticMethodByName.get(methodName);
       if(method.isAnalyzed())
         System.out.println(methodName+":"+method);
     }
     System.out.println("Dynamic methods marked for coding:");
-    for(String methodName:dynamicMethodByName.keySet())
+    for(String methodName : dynamicMethodByName.keySet())
     {
       Method method=dynamicMethodByName.get(methodName);
       if(method.isAnalyzed())
@@ -202,12 +205,10 @@ public class ClassLoader
     }
   }
 
-
   public ClassFile getClassFile(String className)
   {
     return classByName.get(className);
   }
-
 
   public void code(Method mainMethod, Coder coder)
   {
@@ -239,13 +240,13 @@ public class ClassLoader
     /*
      * Code all methods
      */
-    for(String methodName:staticMethodByName.keySet())
+    for(String methodName : staticMethodByName.keySet())
     {
       Method method=staticMethodByName.get(methodName);
       if(method.isAnalyzed()&&!method.isNative())
         method.code(this,coder);
     }
-    for(String methodName:dynamicMethodByName.keySet())
+    for(String methodName : dynamicMethodByName.keySet())
     {
       Method method=dynamicMethodByName.get(methodName);
       if(method.isAnalyzed()&&!method.isNative())
@@ -254,7 +255,7 @@ public class ClassLoader
     /*
      * Generate all static fields
      */
-    for(String fieldName:staticFieldByName.keySet())
+    for(String fieldName : staticFieldByName.keySet())
     {
       Field field=staticFieldByName.get(fieldName);
       field.code(this,coder);
@@ -263,17 +264,14 @@ public class ClassLoader
      * Generate constant pool in data segment
      */
     coder.codeData();
-    for(OutlineConstant constant:constantPool)
+    for(OutlineConstant constant : constantPool)
       constant.code(coder);
     /*
      * Generate all class vectors
      */
     coder.codeAlignWord();
-    for(String className:classByName.keySet())
-    {
-      ClassFile classFile=classByName.get(className);
+    for(ClassFile classFile : needed)
       classFile.codeVector(coder);
-    }
     /*
      * Generate heap
      */
@@ -295,5 +293,25 @@ public class ClassLoader
   public void addInitialization(Method method)
   {
     init.add(method);
+  }
+
+  public void analyzeDynamicMethods()
+  {
+    do
+    {
+      List<ClassFile> toDo=collected;
+      collected=new ArrayList<ClassFile>();
+      /*
+       * Analyze the Dynamic Methods until no new classes are added
+       */
+      for(ClassFile classFile:toDo)
+        classFile.analyzeDynamicMethods();
+    } while(collected.size()!=0);
+  }
+
+  public void collect(ClassFile classFile)
+  {
+    collected.add(classFile);
+    needed.add(classFile);
   }
 }

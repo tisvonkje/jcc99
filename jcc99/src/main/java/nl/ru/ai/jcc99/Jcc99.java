@@ -109,7 +109,7 @@ public class Jcc99
       System.exit(1);
     }
     /*
-     * Mark methods for coding (recursively)
+     * Analyse material reachable from the main function (recursively)
      * and collect constants
      */
     mainMethod.analyze(classLoader);
@@ -118,6 +118,7 @@ public class Jcc99
     	System.err.println("Errors found, bailing out");
     	System.exit(1);
     }
+    classLoader.analyzeDynamicMethods();
     /*	
      * Dump for now
      */

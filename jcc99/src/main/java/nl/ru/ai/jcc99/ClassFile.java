@@ -179,6 +179,7 @@ public class ClassFile
     if(analyzed)
       return;
     analyzed=true;
+    classLoader.collect(this);
     /*
      * Calculate size and field offsets
      */
@@ -261,4 +262,10 @@ public class ClassFile
         coder.codeWord(method);
     }
   }
+  public void analyzeDynamicMethods()
+  {
+    for(Method method:methods)
+      if(!method.isStatic())
+        method.analyze(classLoader);
+  }      
 }
