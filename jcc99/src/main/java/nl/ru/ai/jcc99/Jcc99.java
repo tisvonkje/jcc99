@@ -22,7 +22,7 @@ import org.apache.commons.cli.ParseException;
  * Might introduce CStrings later
  * 
  * To test it, run it with the following arguments
- * -classpath ../../rts99/rts99/target/classes nl.ru.ai.rts99.App
+ * -classpath ../../rts99/rts99/target/classes nl.ru.ai.jcc.regression.HelloWorld
  * It will use companion project rts99
  * 
  * @author sparky
