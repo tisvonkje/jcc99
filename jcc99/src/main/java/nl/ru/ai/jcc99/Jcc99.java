@@ -91,6 +91,10 @@ public class Jcc99
   private void compile(String className) throws IOException, NoSuchAlgorithmException
   {
     /*
+     * Remove output file if exists
+     */
+    new File("output.s").delete();
+    /*
      * Get charpath
      */
     String [] charPath=commandLine.getOptionValue("classpath",".").split(";");
@@ -122,7 +126,7 @@ public class Jcc99
     /*	
      * Dump for now
      */
-    classLoader.dump();
+    //classLoader.dump();
     /*
      * Generate code
      */
