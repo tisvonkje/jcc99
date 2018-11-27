@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+
 import nl.ru.ai.jcc99.Jcc99;
 
 public class Regression
@@ -33,28 +36,37 @@ public class Regression
       if(name.endsWith(".java"))
       {
         name=name.substring(0,name.length()-5);
-        /*
-         * Set up commandline for jcc
-         */
-        String[] args=new String[3];
-        args[0]="-classpath";
-        args[1]=String.format("%s/%s",BASE,CLASS);
-        args[2]=String.format("%s.%s",PACKAGE,name);
-        /*
-         * Print commandline
-         */
-        System.out.printf("jcc99 ");
-        for(int i=0;i<args.length;i++)
-          System.out.print(args[i]+" ");
-        System.out.println();
-        /*
-         * Run compiler
-         */
         try
         {
+          /*
+           * Set up commandline for jcc
+           */
+          String[] args=new String[3];
+          args[0]="-classpath";
+          args[1]=String.format("%s/%s",BASE,CLASS);
+          args[2]=String.format("%s.%s",PACKAGE,name);
+          /*
+           * Print commandline
+           */
+          System.out.printf("jcc99 ");
+          for(int i=0;i<args.length;i++)
+            System.out.print(args[i]+" ");
+          System.out.println();
+          /*
+           * Run compiler
+           */
           Jcc99.main(args);
           if(!new File("output.s").exists())
             throw new RuntimeException("no output file");
+          /*
+           * Run assembler
+           */
+          String assemblerCommand="gcc -fno-pie -m32 output.s rts.s entry.c";
+          System.out.println(assemblerCommand);
+          CommandLine assemblerLine=CommandLine.parse(assemblerCommand);
+          DefaultExecutor executor=new DefaultExecutor();
+          int exitValue=executor.execute(assemblerLine);
+          System.out.println(exitValue);
         }
         catch(Exception e)
         {
