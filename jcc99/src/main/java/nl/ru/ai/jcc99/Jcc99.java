@@ -113,6 +113,11 @@ public class Jcc99
       System.exit(1);
     }
     /*
+     * Analyse String manually 
+     * FIXME: may trigger on use of String as resulttype of Object.toString?
+     */
+    classLoader.getClassFile("java/lang/String").analyze();
+    /*
      * Analyse material reachable from the main function (recursively)
      * and collect constants
      */

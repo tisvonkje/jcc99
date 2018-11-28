@@ -100,7 +100,7 @@ public class Regression
           /*
            * Create executor
            */
-          executor=new DefaultExecutor();
+          executor=new MyExecutor();
           ByteArrayOutputStream stdout=new ByteArrayOutputStream();
           ByteArrayOutputStream stderr=new ByteArrayOutputStream();
           PumpStreamHandler pumpStreamHandler=new PumpStreamHandler(stdout,stderr,stdin);
