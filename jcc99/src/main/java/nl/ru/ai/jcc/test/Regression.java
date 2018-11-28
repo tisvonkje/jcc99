@@ -1,14 +1,20 @@
 package nl.ru.ai.jcc.test;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteStreamHandler;
+import org.apache.commons.exec.PumpStreamHandler;
 
 import nl.ru.ai.jcc99.Jcc99;
 
@@ -75,7 +81,7 @@ public class Regression
             System.exit(1);
           }
           /*
-           * Run the executable
+           * Set up arguments if needed
            */
           String command="./a.out";
           File folder=new File(BASE,String.format("regression/%s",name));
@@ -84,17 +90,77 @@ public class Regression
             command=command+" "+readSingleLine(args);
           System.out.println(command);
           CommandLine commandLine=CommandLine.parse(command);
+          /*
+           * Set up stdin if needed
+           */
+          FileInputStream stdin=null;
+          File stdinFile=new File(folder,"stdin");
+          if(stdinFile.exists())
+            stdin=new FileInputStream(stdinFile);
+          /*
+           * Create executor
+           */
           executor=new DefaultExecutor();
+          ByteArrayOutputStream stdout=new ByteArrayOutputStream();
+          ByteArrayOutputStream stderr=new ByteArrayOutputStream();
+          PumpStreamHandler pumpStreamHandler=new PumpStreamHandler(stdout,stderr,stdin);
+          executor.setStreamHandler(pumpStreamHandler);
           exitValue=executor.execute(commandLine);
-          System.out.println(exitValue);
+          /*
+           * Get expected exit value
+           */
+          int expectedExitValue=0;
+          File rcFile=new File(folder,"rc");
+          if(rcFile.exists())
+            expectedExitValue=Integer.parseInt(readSingleLine(rcFile));
+          if(expectedExitValue!=exitValue)
+          {
+            System.out.printf("Error: test returned %d, expected %d\n",exitValue,expectedExitValue);
+            System.exit(1);
+          }
+          /*
+           * If stdout file is present, check content
+           */
+          File stdoutFile=new File(folder,"stdout");
+          if(stdoutFile.exists())
+            fileCheck(stdoutFile,stdout.toByteArray());
+          /*
+           * If stderr file is present, check content
+           */
+          File stderrFile=new File(folder,"stderr");
+          if(stderrFile.exists())
+            fileCheck(stderrFile,stderr.toByteArray());
         }
         catch(Exception e)
         {
+          e.printStackTrace();
           System.out.printf("Compilation failed because of Exception '%s'\n",e.getMessage());
           System.exit(1);
         }
       }
     }
+  }
+  
+  private void fileCheck(File file, byte [] content) throws IOException
+  {
+    File errorFile=new File(file.getParentFile(),file.getName()+".err");
+    errorFile.delete();
+    FileInputStream inputStream=new FileInputStream(file);
+    int c;
+    int i=0;
+    while((c=inputStream.read())>=0)
+    {
+      if(c!=content[i])
+      {
+        System.out.printf("Error: '%s' is not correct, writing unexpected output to '%s.err'\n",file.getName(),file.getName());
+        FileOutputStream output=new FileOutputStream(errorFile);
+        output.write(content);
+        output.close();
+        System.exit(1);
+      }
+      i++;
+    }
+    inputStream.close();
   }
 
   private String readSingleLine(File file) throws IOException
