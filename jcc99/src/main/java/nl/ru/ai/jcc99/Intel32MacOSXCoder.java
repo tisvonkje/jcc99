@@ -209,6 +209,22 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%eax\n");
     writer.printf("\tsubl\t%%eax,(%%esp)\n");
   }
+  
+  public void codeDivInt()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tcdq\n");
+    writer.printf("\tidivl\t(%%esp)\n");
+    writer.printf("\tmovl\t%%eax,(%%esp)\n");
+  }
+  
+  public void codeMulInt()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tpopl\t%%ebx\n");
+    writer.printf("\timull\t%%ebx,%%eax\n");
+    writer.printf("\tpushl\t%%eax\n");
+  }
 
   public void codeAndInt()
   {
@@ -473,6 +489,15 @@ public class Intel32MacOSXCoder implements Coder
       case GE:
         writer.printf("\tjge\t%s\n",label);
         break;
+      case NE:
+        writer.printf("\tjne\t%s\n",label);
+        break;
+      case EQ:
+        writer.printf("\tje\t%s\n",label);
+        break;
+      case GT:
+        writer.printf("\tjg\t%s\n",label);
+        break;
       case NONNULL:
         writer.printf("\tjne\t%s\n",label);
         break;
@@ -501,6 +526,18 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpopl\t%%ecx\n"); // shift count
     writer.printf("\tsarl\t%%cl,(%%esp)\n");
   }
+  
+  public void codeShiftUnsignedRightInt()
+  {
+    writer.printf("\tpopl\t%%ecx\n"); // shift count
+    writer.printf("\tshrl\t%%cl,(%%esp)\n");
+  }
+  
+  public void codeShiftLeftInt()
+  {
+    writer.printf("\tpopl\t%%ecx\n"); // shift count
+    writer.printf("\tsall\t%%cl,(%%esp)\n");
+  }
 
   public void codeAlignWord()
   {
@@ -526,4 +563,10 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\t.long\t%s\n",disambiguator.name(method));
   }
+
+  public void codeNegInt()
+  {
+    writer.printf("\tnegl\t(%%esp)\n");
+  }
+
 }

@@ -43,6 +43,14 @@ public class DyadInstruction extends Instruction
       coder.codeOrInt();
     else if(type==TypeSuffix.INT && operator==Operator.SHR)
       coder.codeShiftRightInt();
+    else if(type==TypeSuffix.INT && operator==Operator.USHR)
+      coder.codeShiftUnsignedRightInt();
+    else if(type==TypeSuffix.INT && operator==Operator.SHL)
+      coder.codeShiftLeftInt();
+    else if(type==TypeSuffix.INT && operator==Operator.DIV)
+      coder.codeDivInt();
+    else if(type==TypeSuffix.INT && operator==Operator.MUL)
+      coder.codeMulInt();
     else
       throw new RuntimeException("notyet '"+type+'-'+operator+"'");
   }

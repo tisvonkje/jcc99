@@ -22,6 +22,8 @@ public interface Coder
   void codeDload(int parameterUnits, int local);
   void codeAddInt();
   void codeSubInt();
+  void codeDivInt();
+  void codeMulInt();
   void codeAndInt();
   void codeOrInt();
   void codeStore(int parameterUnits, int local);
@@ -52,9 +54,12 @@ public interface Coder
   void codeZeroCompare(Condition condition, String label);
   void codeBss(Field field);
   void codeShiftRightInt();
+  void codeShiftUnsignedRightInt();
+  void codeShiftLeftInt();
   void codeAlignWord();
   void codeWord(String string);
   void codeWord(int value);
   void codeWord(Method method);
   void codeChar(char charAt);
+  void codeNegInt();
 }
