@@ -150,7 +150,7 @@ public class Regression
     int i=0;
     while((c=inputStream.read())>=0)
     {
-      if(c!=content[i])
+      if(c!=(content[i]&0xff))
       {
         System.out.printf("Error: '%s' is not correct, writing unexpected output to '%s.err'\n",file.getName(),file.getName());
         FileOutputStream output=new FileOutputStream(errorFile);

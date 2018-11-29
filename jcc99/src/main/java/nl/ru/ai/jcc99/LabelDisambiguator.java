@@ -33,7 +33,7 @@ public class LabelDisambiguator
   public String name(ClassFile classFile)
   {
     String namePart=classFile.getName();
-    return "Vector_"+mangle(namePart);
+    return "_Vector_"+mangle(namePart);
   }
 
 }

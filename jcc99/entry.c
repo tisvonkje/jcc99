@@ -6,6 +6,8 @@
 
 #define WORDSIZE 4
 #define WORDMASK 0xfffffffc
+
+extern void *Vector_java_lang_String;
 /*
  * Externals
  */
@@ -112,6 +114,10 @@ void **entry(int argc, unsigned char **argv)
      */
     ((int *)array)[1]=size;
     utf8(argv[i],(unsigned short *)(array+WORDSIZE*2));
+    /*
+     * Store class vector in String
+     */
+    ((void **) result[i+2])[0] = &Vector_java_lang_String;
     /*
      * Store array in String
      */

@@ -85,7 +85,7 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeEntry()
   {
-    writer.printf("\t.globl\t _main,_heapptr\n");
+    writer.printf("\t.globl\t _main,_heapptr,_Vector_java_lang_String\n");
     writer.printf("_main:\n");
     writer.printf("\tpushl\t%%ebp\n");
     writer.printf("\tmovl\t%%esp,%%ebp\n");
