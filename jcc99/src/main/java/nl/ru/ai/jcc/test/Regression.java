@@ -123,13 +123,13 @@ public class Regression
            */
           File stdoutFile=new File(folder,"stdout");
           if(stdoutFile.exists())
-            fileCheck(stdoutFile,stdout.toByteArray());
+            fileCheck(name,stdoutFile,stdout.toByteArray());
           /*
            * If stderr file is present, check content
            */
           File stderrFile=new File(folder,"stderr");
           if(stderrFile.exists())
-            fileCheck(stderrFile,stderr.toByteArray());
+            fileCheck(name,stderrFile,stderr.toByteArray());
         }
         catch(Exception e)
         {
@@ -141,7 +141,7 @@ public class Regression
     }
   }
   
-  private void fileCheck(File file, byte [] content) throws IOException
+  private void fileCheck(String name,File file, byte [] content) throws IOException
   {
     File errorFile=new File(file.getParentFile(),file.getName()+".err");
     errorFile.delete();
@@ -152,13 +152,21 @@ public class Regression
     {
       if(c!=(content[i]&0xff))
       {
-        System.out.printf("Error: '%s' is not correct, writing unexpected output to '%s.err'\n",file.getName(),file.getName());
+        System.out.printf("Error: '%s' created incorrect '%s', writing it '%s.err'\n",name,file.getName(),file.getName());
         FileOutputStream output=new FileOutputStream(errorFile);
         output.write(content);
         output.close();
         System.exit(1);
       }
       i++;
+    }
+    if(i!=content.length)
+    {
+      System.out.printf("Error: '%s' created incorrect '%s', writing it '%s.err'\\n",name,file.getName(),file.getName());
+      FileOutputStream output=new FileOutputStream(errorFile);
+      output.write(content);
+      output.close();
+      System.exit(1);
     }
     inputStream.close();
   }
