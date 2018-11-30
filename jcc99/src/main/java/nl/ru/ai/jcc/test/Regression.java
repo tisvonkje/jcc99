@@ -162,7 +162,7 @@ public class Regression
     }
     if(i!=content.length)
     {
-      System.out.printf("Error: '%s' created incorrect '%s', writing it '%s.err'\\n",name,file.getName(),file.getName());
+      System.out.printf("Error: '%s' created incorrect '%s', writing it '%s.err'\n",name,file.getName(),file.getName());
       FileOutputStream output=new FileOutputStream(errorFile);
       output.write(content);
       output.close();
