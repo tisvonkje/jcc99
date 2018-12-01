@@ -219,6 +219,15 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\t%%eax\n");
   }
   
+  public void codeModInt()
+  {
+    writer.printf("\tpopl\t%%ebx\n");
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tcdq\n");
+    writer.printf("\tidivl\t%%ebx\n");
+    writer.printf("\tpushl\t%%edx\n");
+  }
+  
   public void codeMulInt()
   {
     writer.printf("\tpopl\t%%eax\n");

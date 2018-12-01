@@ -23,6 +23,7 @@ public interface Coder
   void codeAddInt();
   void codeSubInt();
   void codeDivInt();
+  void codeModInt();
   void codeMulInt();
   void codeAndInt();
   void codeOrInt();

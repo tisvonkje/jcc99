@@ -49,6 +49,8 @@ public class DyadInstruction extends Instruction
       coder.codeShiftLeftInt();
     else if(type==TypeSuffix.INT && operator==Operator.DIV)
       coder.codeDivInt();
+    else if(type==TypeSuffix.INT && operator==Operator.REM)
+      coder.codeModInt();
     else if(type==TypeSuffix.INT && operator==Operator.MUL)
       coder.codeMulInt();
     else
