@@ -467,6 +467,12 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tmovsbl\t(%%esp),%%eax\n");
     writer.printf("\tmovl\t%%eax,(%%esp)\n");
   }
+  
+  public void codeIntToChar()
+  {
+    writer.printf("\tmovswl\t(%%esp),%%eax\n");
+    writer.printf("\tmovl\t%%eax,(%%esp)\n");
+  }
 
   public void codeIntCompare(Condition condition, String label)
   {

@@ -29,8 +29,11 @@ public class ConvertInstruction extends Instruction
       case I2B:
         coder.codeIntToByte();
         break;
+      case I2C:
+        coder.codeIntToChar();
+        break;
       default:
-        throw new RuntimeException("notyet");
+        throw new RuntimeException("unknown convert '"+conversion+"'");
     }
   }
 

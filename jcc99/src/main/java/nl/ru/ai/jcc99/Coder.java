@@ -51,6 +51,7 @@ public interface Coder
   void codeGetField(int offset);
   void codeJump(String label);
   void codeIntToByte();
+  void codeIntToChar();
   void codeIntCompare(Condition condition, String label);
   void codeZeroCompare(Condition condition, String label);
   void codeBss(Field field);
