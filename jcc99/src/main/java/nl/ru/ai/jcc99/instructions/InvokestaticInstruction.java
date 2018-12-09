@@ -24,7 +24,7 @@ public class InvokestaticInstruction extends Instruction
     String methodName=constants[methodIndex].toShortString();
     subMethod=classLoader.getStaticMethod(methodName);
     if(subMethod==null)
-      Util.error("Cannot mark '%s' for coding",methodName);
+      Util.error("Cannot analyze '%s' for invokestatic",methodName);
     else
       subMethod.analyze(classLoader);
   }

@@ -28,7 +28,7 @@ public class InvokedynamicInstruction extends Instruction
     String methodName=constants[methodIndex].toShortString();
     Method subMethod=classLoader.getDynamicMethod(methodName);
     if(subMethod==null)
-      Util.error("Cannot mark '%s' for coding",methodName);
+      Util.error("Cannot analyze '%s' for invokedynamic",methodName);
     else
       subMethod.analyze(classLoader);
   }

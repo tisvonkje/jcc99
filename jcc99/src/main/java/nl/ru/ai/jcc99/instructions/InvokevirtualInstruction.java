@@ -24,7 +24,7 @@ public class InvokevirtualInstruction extends Instruction
     String name = constants[methodIndex].toShortString();
 	subMethod=classLoader.getDynamicMethod(name);
     if(subMethod==null)
-      Util.error("Cannot mark '%s' for coding",name);
+      Util.error("Cannot analyze '%s' for invokevirtual",name);
     // Analyzing the method itself is done later (all non static methods of needed classes should be coded)
   }
   

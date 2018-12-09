@@ -24,7 +24,7 @@ public class InvokespecialInstruction extends Instruction
     String methodName=constants[methodIndex].toShortString();
     subMethod=classLoader.getDynamicMethod(methodName);
     if(subMethod==null)
-      Util.error("Cannot mark '%s' for coding",methodName);
+      Util.error("Cannot analyze '%s' for invokespecial",methodName);
     else
       subMethod.analyze(classLoader);
   }
