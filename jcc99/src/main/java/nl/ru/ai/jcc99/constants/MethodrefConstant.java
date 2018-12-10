@@ -23,4 +23,14 @@ public class MethodrefConstant extends InlineConstant
     return String.format("%s.%s",constants[classIndex].toShortString(),constants[nameAndTypeIndex].toShortString());
   }
   
+  public short getNameAndTypeIndex()
+  {
+    return nameAndTypeIndex;
+  }
+  
+  public short getClassIndex()
+  {
+    return classIndex;
+  }
+  
 }

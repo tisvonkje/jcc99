@@ -268,4 +268,8 @@ public class ClassFile
       if(!method.isStatic())
         method.analyze(classLoader);
   }      
+  public short getSuperClass()
+  {
+    return superClass;
+  }
 }
