@@ -25,17 +25,18 @@ public class InvokevirtualInstruction extends Instruction
   {
     String name = constants[methodIndex].toShortString();
     MethodrefConstant methodrefConstant=(MethodrefConstant)constants[methodIndex];
-    short classIndex=methodrefConstant.getClassIndex();
-    short nameAndTypeIndex=methodrefConstant.getNameAndTypeIndex();
-    System.out.println(">"+constants[classIndex].toShortString());
-	while((subMethod=classLoader.getDynamicMethod(constants[classIndex].toShortString()+"."+constants[nameAndTypeIndex].toShortString()))==null)
+    String className=constants[methodrefConstant.getClassIndex()].toShortString();
+    String nameAndTypeString=constants[methodrefConstant.getNameAndTypeIndex()].toShortString();
+	while((subMethod=classLoader.getDynamicMethod(className+"."+nameAndTypeString))==null)
 	{
-	  ClassFile classFile=classLoader.getClassFile(constants[classIndex].toShortString());
-	  classIndex=classFile.getSuperClass();
-	  System.out.println("+"+constants[classIndex].toShortString());
+	  ClassFile classFile=classLoader.getClassFile(className);
+	  className=classFile.getSuperClass();
+	  if(className==null)
+	  {
+	    Util.error("Cannot analyze '%s' for invokevirtual",name);
+	    return;
+	  }
 	}
-    if(subMethod==null)
-      Util.error("Cannot analyze '%s' for invokevirtual",name);
     // Analyzing the method itself is done later (all non static methods of needed classes should be coded)
   }
   
