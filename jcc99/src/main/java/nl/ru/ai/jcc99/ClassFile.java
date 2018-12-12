@@ -1,6 +1,7 @@
 package nl.ru.ai.jcc99;
 
 import java.io.IOException;
+import java.lang.reflect.GenericArrayType;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -251,7 +252,14 @@ public class ClassFile
     for(Field field : fields)
       if(fieldName.equals(field.getName()))
         return field;
-    return null;
+    /*
+     * Did not find field, check parent class
+     */
+    String superClass=getSuperClass();
+    if(superClass==null)
+      return null;
+    ClassFile classFile=classLoader.getClassFile(superClass);
+    return classFile.getField(fieldName);
   }
   public void codeVector(Coder coder)
   {
