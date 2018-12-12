@@ -585,4 +585,9 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tnegl\t(%%esp)\n");
   }
 
+  public void codeDupx1()
+  {
+    writer.printf("\tpushl\t(%%esp)\n");
+  }
+
 }
