@@ -27,6 +27,17 @@ Method_java_io_FileOutputStream_print__q_B_p_V:
 	popl	%ecx
 	addl	$8,%esp
 	jmpl	*%ecx
+#
+# private static native byte [] sysgetcwd();
+#
+	.globl	Method_java_lang_System_sysgetcwd__q__p__a_B
+Method_java_lang_System_sysgetcwd__q__p__a_B:
+# link stack frame
+	pushl	%ebp
+	movl	%esp,%ebp
+# align stack
+	andl	$0xfffffff0,%esp
+	call	_getcwd
 
 	.globl	 l6b8074
 l6b8074:
