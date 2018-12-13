@@ -38,7 +38,7 @@ import nl.ru.ai.jcc99.instructions.Condition;
  *          +-------------+
  *  In bytecode the parameters are numbered. a has number 0, b number 1 and c number 2.
  *  Let i be their number, n be the number of parameters (arity), and w the wordsize,
- *  The paramters are reachable through fp with the offset (n+1-i)*w
+ *  The parameters are reachable through fp with the offset (n+1-i)*w
  *  The locals are numbered as well, d has number 3 and e has number 4
  *  The locals are reachable through fp with the offset -(i-n+1)*w
  *  
@@ -46,6 +46,7 @@ import nl.ru.ai.jcc99.instructions.Condition;
  *  every object starts with a word called the classvector. The classvector points to a sequence
  *  of words that are common for all objects of that class. The classvector contains the addresses
  *  of the dynamic methods are stored.
+ *  An array starts with a classvector followed by the array size followed by the data
  *  
  */
 public class Intel32MacOSXCoder implements Coder
