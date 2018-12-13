@@ -42,7 +42,8 @@ Method_java_lang_System_sysgetcwd__q__p__a_B:
 	pushl	$0		// pad
 	pushl	$0		// pad
 	call	_getcwd
-	addl	$16,%esp
+	addl	$16,%esp	// remove params from stack
+	movl	%eax,%edi	// store for free later
 	movl	_heapptr,%edx	// value to return
 	movl	%edx,%ecx
 	addl	$8,%ecx		// skip class vector and array size
@@ -57,6 +58,12 @@ L1:	movb	(%eax),%bl	// get a byte
 L2:	addl	$3,%ecx		// align heap
 	andl	$0xfffffffc,%ecx
 	mov	%ecx,_heapptr	// store heap
+	pushl	%edi		// buf
+	pushl	$0		// pad
+	pushl	$0		// pad
+	pushl	$0		// pad
+	call	_free
+//	addl	$16,%esp	
 	movl	%ebp,%esp	// unlink stack frame
 	popl	%ebp
 	popl	%ecx		// get return address

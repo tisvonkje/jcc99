@@ -431,7 +431,15 @@ public class Intel32MacOSXCoder implements Coder
   public void codeDup()
   {
     writer.printf("\tpushl\t(%%esp)\n");
-
+  }
+  
+  public void codeDupx1()
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tpopl\t%%ebx\n");
+    writer.printf("\tpushl\t%%eax\n");
+    writer.printf("\tpushl\t%%ebx\n");
+    writer.printf("\tpushl\t%%eax\n");
   }
 
   public void codePutField(int offset)
@@ -585,10 +593,4 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tnegl\t(%%esp)\n");
   }
-
-  public void codeDupx1()
-  {
-    writer.printf("\tpushl\t(%%esp)\n");
-  }
-
 }
