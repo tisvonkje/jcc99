@@ -84,44 +84,83 @@ int utf8(unsigned char *str, unsigned short *buffer)
   }
   return n;
 }
-void **entry(int argc, unsigned char **argv)
+
+typedef struct CharArray {
+  void *classVector;
+  int size;
+  unsigned short data[0];
+} CharArray;
+
+typedef struct String {
+  void *classVector;
+  CharArray *charArray;
+} String;
+
+typedef struct StringArray {
+  void *classVector;
+  int size;
+  String *data[0];
+} StringArray;
+
+/*
+** Create heap space for a CharArray
+** num - numberf of array elements
+*/
+CharArray *newCharArray(int num)
+{
+  CharArray *result=heapptr;
+  heapptr+=num*2+sizeof(CharArray)+3;
+  heapptr=(void *)((int)heapptr&WORDMASK);
+  result->classVector=0; //FIXME
+  result->size=num;
+  return result;
+}
+/*
+** Create heap space for a StringArray
+** num - number of array elements
+*/
+StringArray *newStringArray(int num)
+{
+  StringArray *result=heapptr;
+  heapptr+=num*WORDSIZE+sizeof(StringArray);
+  result->classVector=0; //FIXME
+  result->size=num;
+  return result;
+}
+/*
+** Create heap space for a String
+*/
+String *newString()
+{
+  String *result=heapptr;
+  heapptr+=sizeof(String);
+  result->classVector=&Vector_java_lang_String;
+  return result;
+}
+/*
+** Entry
+*/
+StringArray *entry(int argc, unsigned char **argv)
 {
   /*
    * Allocate storage for array of Strings
    */
-  void **result=(void **)heapptr;
-  heapptr+=WORDSIZE*argc+WORDSIZE*2;
-  ((int *)result)[1]=argc;
+  StringArray *result=newStringArray(argc);
   for(int i=0;i<argc;i++)
   {
     int size=utf8(argv[i],NULL);
     /*
      * Allocate storage for String
      */
-    result[i+2] = heapptr;
-    heapptr += WORDSIZE*2;
+    result->data[i]=newString();
     /*
      * Allocate storage for the char array
      */
-    void *array = heapptr;
-    heapptr += WORDSIZE*2 + size * 2;
-    /*
-     * Keep heap on WORD boundary
-     */
-    heapptr = (void *)((int)(heapptr + WORDSIZE - 1) & WORDMASK);
+    result->data[i]->charArray=newCharArray(size);
     /*
      * Write array
      */
-    ((int *)array)[1]=size;
-    utf8(argv[i],(unsigned short *)(array+WORDSIZE*2));
-    /*
-     * Store class vector in String
-     */
-    ((void **) result[i+2])[0] = &Vector_java_lang_String;
-    /*
-     * Store array in String
-     */
-    ((void **) result[i+2])[1] = array;
+    utf8(argv[i],result->data[i]->charArray->data);
   }
   return result;
 }
