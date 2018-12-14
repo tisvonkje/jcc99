@@ -3,6 +3,8 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 #define WORDSIZE 4
 #define WORDMASK 0xfffffffc
@@ -91,6 +93,12 @@ typedef struct CharArray {
   unsigned short data[0];
 } CharArray;
 
+typedef struct ByteArray {
+  void *classVector;
+  int size;
+  unsigned char data[0];
+} ByteArray;
+
 typedef struct String {
   void *classVector;
   CharArray *charArray;
@@ -104,12 +112,25 @@ typedef struct StringArray {
 
 /*
 ** Create heap space for a CharArray
-** num - numberf of array elements
+** num - number of array elements
 */
 CharArray *newCharArray(int num)
 {
   CharArray *result=heapptr;
   heapptr+=num*2+sizeof(CharArray)+3;
+  heapptr=(void *)((int)heapptr&WORDMASK);
+  result->classVector=0; //FIXME
+  result->size=num;
+  return result;
+}
+/*
+** Create heap space for a ByteArray
+** num - number of array elements
+*/
+ByteArray *newByteArray(int num)
+{
+  ByteArray *result=heapptr;
+  heapptr+=num+sizeof(ByteArray)+3;
   heapptr=(void *)((int)heapptr&WORDMASK);
   result->classVector=0; //FIXME
   result->size=num;
@@ -162,5 +183,15 @@ StringArray *entry(int argc, unsigned char **argv)
      */
     utf8(argv[i],result->data[i]->charArray->data);
   }
+  return result;
+}
+
+ByteArray *sysgetcwd()
+{
+  char *buf=getcwd(NULL,0);
+  int size=strlen(buf);
+  ByteArray *result=newByteArray(size);
+  memcpy(result->data,buf,size);
+  free(buf);
   return result;
 }

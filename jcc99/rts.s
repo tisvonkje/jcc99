@@ -37,37 +37,11 @@ Method_java_lang_System_sysgetcwd__q__p__a_B:
 	movl	%esp,%ebp
 # align stack
 	andl	$0xfffffff0,%esp
-	pushl	$0		// buf
-	pushl	$0		// size
-	pushl	$0		// pad
-	pushl	$0		// pad
-	call	_getcwd
-	addl	$16,%esp	// remove params from stack
-	movl	%eax,%edi	// store for free later
-	movl	_heapptr,%edx	// value to return
-	movl	%edx,%ecx
-	addl	$8,%ecx		// skip class vector and array size
-L1:	movb	(%eax),%bl	// get a byte
-	cmpb	$0,%bl
-	je	L2		// nul byte? ready
-	movb	%bl,(%ecx)	// store byte
-	incl	4(%edx)		// increment array size
-	incl	%eax		// increment source pointer
-	incl	%ecx		// increment destination pointer
-	jmp	L1		// loop back
-L2:	addl	$3,%ecx		// align heap
-	andl	$0xfffffffc,%ecx
-	mov	%ecx,_heapptr	// store heap
-	pushl	%edi		// buf
-	pushl	$0		// pad
-	pushl	$0		// pad
-	pushl	$0		// pad
-	call	_free
-//	addl	$16,%esp	
+	call	_sysgetcwd
 	movl	%ebp,%esp	// unlink stack frame
 	popl	%ebp
 	popl	%ecx		// get return address
-	pushl	%edx		// push result
+	pushl	%eax		// push result
 	jmpl	*%ecx		// return
 
 	.globl	 l6b8074
