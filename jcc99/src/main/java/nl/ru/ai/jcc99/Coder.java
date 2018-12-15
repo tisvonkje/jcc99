@@ -65,4 +65,5 @@ public interface Coder
   void codeChar(char charAt);
   void codeNegInt();
   void codeDupx1();
+  void codePop();
 }

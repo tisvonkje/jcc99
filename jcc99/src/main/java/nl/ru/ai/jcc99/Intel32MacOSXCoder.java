@@ -384,6 +384,7 @@ public class Intel32MacOSXCoder implements Coder
         break;
       case INT:
       case FLOAT:
+      case REF:
         writer.printf("\tmovl\t%%eax,%d(%%ecx)\n",2*getWordSize()); // 2*wordSize for classVector and size
         break;
       default:
@@ -592,5 +593,10 @@ public class Intel32MacOSXCoder implements Coder
   public void codeNegInt()
   {
     writer.printf("\tnegl\t(%%esp)\n");
+  }
+
+  public void codePop()
+  {
+    writer.printf("\taddl\t$4,%%esp\n");
   }
 }
