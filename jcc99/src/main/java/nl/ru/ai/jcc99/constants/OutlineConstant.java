@@ -21,7 +21,8 @@ public abstract class OutlineConstant extends Constant
   @Override
   public void analyze(ClassLoader loader)
   {
-    labelNumber=loader.addConstant(this);
+    if(labelNumber==null)
+     labelNumber=loader.addConstant(this);
   }
 
   public void codeLoad(Coder coder)
