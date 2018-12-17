@@ -148,7 +148,7 @@ public class Regression
     FileInputStream inputStream=new FileInputStream(file);
     int c;
     int i=0;
-    while((c=inputStream.read())>=0)
+    while((c=inputStream.read())>=0 && i<content.length)
     {
       if(c!=(content[i]&0xff))
       {
