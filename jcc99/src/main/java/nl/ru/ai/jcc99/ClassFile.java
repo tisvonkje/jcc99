@@ -263,12 +263,29 @@ public class ClassFile
   }
   public void codeVector(Coder coder)
   {
+    /*
+     * A class vector starts with two words, a pointer to a String describing the class name
+     * and a bitmask that can be used to determine class hierarchy
+     */
     if(analyzed)
     {
-      coder.codeLabel(this);
+      coder.codeLabel("_Vector_",this);
+      coder.codeWord(this); // FIXME: change
+      coder.codeWord(0); // FIXME: change
       for(Method method : dynamicMethodOffsets)
         coder.codeWord(method);
     }
+  }
+  public void codeName(Coder coder)
+  {
+    coder.codeLabel("_Name_",this);
+    coder.codeWord("_Vector_java_lang_String");
+    coder.codeWord(".+4");
+    coder.codeWord(0); //FIXME: classvector for char []
+    String string=getName();
+    coder.codeWord(string.length());
+    for(int i=0;i<string.length();i++)
+      coder.codeChar(string.charAt(i));
   }
   public void analyzeDynamicMethods()
   {

@@ -13,7 +13,7 @@ public interface Coder
   void codeExit();
   void codeLabel(Method method);
   void codeLabel(OutlineConstant constant);
-  void codeLabel(ClassFile classFile);
+  void codeLabel(String prefix, ClassFile classFile);
   void codeLabel(String string);
   void codeComment(String version);
   void codeLink(int number);
@@ -66,4 +66,6 @@ public interface Coder
   void codeNegInt();
   void codeDupx1();
   void codePop();
+  void codeCall(String string);
+  void codeWord(ClassFile classFile);
 }

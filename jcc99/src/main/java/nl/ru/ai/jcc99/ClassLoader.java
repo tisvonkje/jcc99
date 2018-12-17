@@ -273,6 +273,11 @@ public class ClassLoader
     for(ClassFile classFile : needed)
       classFile.codeVector(coder);
     /*
+     * Generate all class names
+     */
+    for(ClassFile classFile : needed)
+      classFile.codeName(coder);
+    /*
      * Generate heap
      */
     coder.codeHeap();

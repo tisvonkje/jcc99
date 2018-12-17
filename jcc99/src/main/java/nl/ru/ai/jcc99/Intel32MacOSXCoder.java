@@ -127,9 +127,9 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("%s:\n",constant.getLabel());
   }
   
-  public void codeLabel(ClassFile classFile)
+  public void codeLabel(String prefix, ClassFile classFile)
   {
-    writer.printf("%s:\n",disambiguator.name(classFile));
+    writer.printf("%s:\n",disambiguator.name(prefix,classFile));
   }
 
   public String getVersion()
@@ -293,7 +293,7 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tmovl\t%d(%%esp),%%eax\n",(method.getParameterUnits()-1)*getWordSize());
     writer.printf("\tmovl\t(%%eax),%%eax\n");
-    writer.printf("\tmovl\t%d(%%eax),%%eax\n",method.getOffset()*getWordSize());
+    writer.printf("\tmovl\t%d(%%eax),%%eax\n",(method.getOffset()+2)*getWordSize()); // +2 to skip first two classVector fields
     writer.printf("\tcalll\t*%%eax\n");
   }
   
@@ -424,7 +424,7 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tmovl\t_heapptr,%%eax\n");
     writer.printf("\tpushl\t%%eax\n");
-    writer.printf("\tleal\t%s,%%ebx\n",disambiguator.name(classFile));
+    writer.printf("\tleal\t%s,%%ebx\n",disambiguator.name("_Vector_",classFile));
     writer.printf("\tmovl\t%%ebx,(%%eax)\n");
     writer.printf("\taddl\t$%d,_heapptr\n",(size+1)*getWordSize()); //+1 for classvector
   }
@@ -589,6 +589,11 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\t.long\t%s\n",disambiguator.name(method));
   }
+  
+  public void codeWord(ClassFile classFile)
+  {
+    writer.printf("\t.long\t%s\n",disambiguator.name("_Name_",classFile));
+  }
 
   public void codeNegInt()
   {
@@ -598,5 +603,10 @@ public class Intel32MacOSXCoder implements Coder
   public void codePop()
   {
     writer.printf("\taddl\t$4,%%esp\n");
+  }
+
+  public void codeCall(String string)
+  {
+    writer.printf("\tcall\t%s\n",string);
   }
 }
