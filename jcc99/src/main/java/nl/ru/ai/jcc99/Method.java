@@ -7,6 +7,7 @@ import java.util.Map;
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.attributes.CodeAttribute;
 import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.instructions.GetstaticInstruction;
 import nl.ru.ai.jcc99.instructions.Instruction;
 import nl.ru.ai.jcc99.types.Type;
 

@@ -14,12 +14,12 @@ Method_java_io_FileOutputStream_print__q_B_p_V:
 	andl	$0xfffffff0,%esp
 # get address of parameter (we need pointer for w write)
 	leal	8(%ebp),%edi
-	pushl	$0 // padding
-	pushl	$1 // numver of characters
-	pushl	%edi // address
-	movl	12(%ebp),%eax // PrintStream
-	movl	4(%eax),%eax // get FileDescriptor
-	pushl	4(%eax) // get fd
+	pushl	$0 			// padding
+	pushl	$1 			// number of characters
+	pushl	%edi 			// address
+	movl	12(%ebp),%eax 		// PrintStream
+	movl	4(%eax),%eax 		// get FileDescriptor (offset)
+	pushl	4(%eax) 		// get fd (offset)
 	calll	_write$UNIX2003
 //	addl	$16, %esp
 	movl	%ebp,%esp

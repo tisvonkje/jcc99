@@ -321,6 +321,7 @@ public class ClassLoader
 
   public void collect(ClassFile classFile)
   {
+    System.out.printf("collected: %s\n",classFile.getName());
     collected.add(classFile);
     needed.add(classFile);
   }

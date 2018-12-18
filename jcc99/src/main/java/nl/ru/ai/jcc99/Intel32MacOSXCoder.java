@@ -426,7 +426,7 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\tpushl\t%%eax\n");
     writer.printf("\tleal\t%s,%%ebx\n",disambiguator.name("_Vector_",classFile));
     writer.printf("\tmovl\t%%ebx,(%%eax)\n");
-    writer.printf("\taddl\t$%d,_heapptr\n",(size+1)*getWordSize()); //+1 for classvector
+    writer.printf("\taddl\t$%d,_heapptr\n",size*getWordSize());
   }
 
   public void codeDup()
@@ -447,7 +447,7 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tpopl\t%%eax\n"); //value to store
     writer.printf("\tpopl\t%%ebx\n"); //this
-    writer.printf("\tmovl\t%%eax,%d(%%ebx)\n",(offset+1)*getWordSize()); //+1 for classvector
+    writer.printf("\tmovl\t%%eax,%d(%%ebx)\n",offset*getWordSize());
   }
 
   public void codeArrayLength()
@@ -459,7 +459,7 @@ public class Intel32MacOSXCoder implements Coder
   public void codeGetField(int offset)
   {
     writer.printf("\tpopl\t%%eax\n"); //this
-    writer.printf("\tpushl\t%d(%%eax)\n",(offset+1)*getWordSize()); //+1 for classvector
+    writer.printf("\tpushl\t%d(%%eax)\n",offset*getWordSize()); 
   }
 
   public void codeJump(String label)
