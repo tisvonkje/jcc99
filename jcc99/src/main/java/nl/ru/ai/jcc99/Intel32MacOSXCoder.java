@@ -293,7 +293,7 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tmovl\t%d(%%esp),%%eax\n",(method.getParameterUnits()-1)*getWordSize());
     writer.printf("\tmovl\t(%%eax),%%eax\n");
-    writer.printf("\tmovl\t%d(%%eax),%%eax\n",(method.getOffset()+2)*getWordSize()); // +2 to skip first two classVector fields
+    writer.printf("\tmovl\t%d(%%eax),%%eax\n",(method.getOffset()+1)*getWordSize()); // +1 to skip classInfo field
     writer.printf("\tcalll\t*%%eax\n");
   }
   
@@ -590,9 +590,9 @@ public class Intel32MacOSXCoder implements Coder
     writer.printf("\t.long\t%s\n",disambiguator.name(method));
   }
   
-  public void codeWord(ClassFile classFile)
+  public void codeWord(String prefix, ClassFile classFile)
   {
-    writer.printf("\t.long\t%s\n",disambiguator.name("_Name_",classFile));
+    writer.printf("\t.long\t%s\n",disambiguator.name(prefix,classFile));
   }
 
   public void codeNegInt()

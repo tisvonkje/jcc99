@@ -273,6 +273,11 @@ public class ClassLoader
     for(ClassFile classFile : needed)
       classFile.codeVector(coder);
     /*
+     * Generate class info structure
+     */
+    for(ClassFile classFile : needed)
+      classFile.codeInfo(coder);
+    /*
      * Generate all class names
      */
     for(ClassFile classFile : needed)

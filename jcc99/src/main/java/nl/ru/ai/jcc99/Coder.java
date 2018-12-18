@@ -67,5 +67,5 @@ public interface Coder
   void codeDupx1();
   void codePop();
   void codeCall(String string);
-  void codeWord(ClassFile classFile);
+  void codeWord(String prefix,ClassFile classFile);
 }

@@ -264,17 +264,22 @@ public class ClassFile
   public void codeVector(Coder coder)
   {
     /*
-     * A class vector starts with two words, a pointer to a String describing the class name
-     * and a bitmask that can be used to determine class hierarchy
+     * THe first word of a class vector points to the classinfo, subsequent
+     * words contain the dynamic method addresses
      */
     if(analyzed)
     {
       coder.codeLabel("_Vector_",this);
-      coder.codeWord(this); // FIXME: change
-      coder.codeWord(0); // FIXME: change
+      coder.codeWord("_Info_",this);
       for(Method method : dynamicMethodOffsets)
         coder.codeWord(method);
     }
+  }
+  public void codeInfo(Coder coder)
+  {
+    coder.codeLabel("_Info_",this);
+    coder.codeWord("_Name_",this);
+    /* HERE */
   }
   public void codeName(Coder coder)
   {
