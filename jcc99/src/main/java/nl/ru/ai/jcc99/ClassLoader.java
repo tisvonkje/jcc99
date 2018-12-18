@@ -316,7 +316,10 @@ public class ClassLoader
        * Analyze the Dynamic Methods until no new classes are added
        */
       for(ClassFile classFile:toDo)
+      {
+        System.out.printf("Analyzing dynamic for class '%s'\n",classFile.getName());
         classFile.analyzeDynamicMethods();
+      }
     } while(collected.size()!=0);
   }
 

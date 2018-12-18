@@ -293,7 +293,7 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tmovl\t%d(%%esp),%%eax\n",(method.getParameterUnits()-1)*getWordSize());
     writer.printf("\tmovl\t(%%eax),%%eax\n");
-    writer.printf("\tmovl\t%d(%%eax),%%eax\n",(method.getOffset()+1)*getWordSize()); // +1 to skip classInfo field
+    writer.printf("\tmovl\t%d(%%eax),%%eax\n",(method.getOffset()+2)*getWordSize()); // +1 to skip classInfo field
     writer.printf("\tcalll\t*%%eax\n");
   }
   

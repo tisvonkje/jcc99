@@ -262,13 +262,10 @@ public class ClassFile
   }
   public void codeVector(Coder coder)
   {
-    /*
-     * THe first word of a class vector points to the classinfo, subsequent
-     * words contain the dynamic method addresses
-     */
     if(analyzed)
     {
       coder.codeLabel("_Vector_",this);
+      coder.codeWord("_Vector_java_lang_Class");
       coder.codeWord("_Info_",this);
       for(Method method : dynamicMethodOffsets)
         coder.codeWord(method);
@@ -295,7 +292,10 @@ public class ClassFile
   {
     for(Method method:methods)
       if(!method.isStatic())
+      {
+        System.out.printf("Analyzing '%s'\n",method.getName());
         method.analyze(classLoader);
+      }
   }      
   public String getSuperClass()
   {
