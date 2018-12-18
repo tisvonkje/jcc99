@@ -311,6 +311,7 @@ public class ClassLoader
     {
       List<ClassFile> toDo=collected;
       collected=new ArrayList<ClassFile>();
+      System.out.println("---------");
       /*
        * Analyze the Dynamic Methods until no new classes are added
        */
