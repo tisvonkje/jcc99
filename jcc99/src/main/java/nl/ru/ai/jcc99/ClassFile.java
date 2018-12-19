@@ -274,6 +274,7 @@ public class ClassFile
   public void codeInfo(Coder coder)
   {
     coder.codeLabel("_Info_",this);
+    coder.codeWord("_Vector_java_lang_ClassInfo");
     coder.codeWord("_Name_",this);
     /* HERE */
   }
@@ -283,7 +284,7 @@ public class ClassFile
     coder.codeWord("_Vector_java_lang_String");
     coder.codeWord(".+4");
     coder.codeWord(0); //FIXME: classvector for char []
-    String string=getName();
+    String string=getName().replace('/','.');
     coder.codeWord(string.length());
     for(int i=0;i<string.length();i++)
       coder.codeChar(string.charAt(i));
