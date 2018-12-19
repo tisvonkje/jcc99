@@ -311,13 +311,12 @@ public class ClassLoader
     {
       List<ClassFile> toDo=collected;
       collected=new ArrayList<ClassFile>();
-      System.out.println("---------");
       /*
        * Analyze the Dynamic Methods until no new classes are added
        */
       for(ClassFile classFile:toDo)
       {
-        System.out.printf("Analyzing dynamic for class '%s'\n",classFile.getName());
+        classFile.analyze();
         classFile.analyzeDynamicMethods();
       }
     } while(collected.size()!=0);
@@ -325,7 +324,6 @@ public class ClassLoader
 
   public void collect(ClassFile classFile)
   {
-    System.out.printf("collected: %s\n",classFile.getName());
     collected.add(classFile);
     needed.add(classFile);
   }

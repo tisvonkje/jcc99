@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.types.ClassType;
 import nl.ru.ai.jcc99.types.Type;
 
 public class Field
@@ -81,5 +82,16 @@ public class Field
   public ClassFile getClassFile()
   {
     return classFile;
+  }
+
+  public void analyze(ClassLoader classLoader)
+  {
+    Type type=Util.convert(constants[descriptorIndex].toShortString());
+    if(type instanceof ClassType)
+    {
+      ClassType classType=(ClassType)type;
+      ClassFile resultClassFile=classLoader.getClassFile(classType.getName());
+      resultClassFile.analyze();
+    }
   }
 }

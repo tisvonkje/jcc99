@@ -24,4 +24,9 @@ public class ClassType implements Type
     throw new RuntimeException("Illegal type");
   }
 
+  public String getName()
+  {
+    return name;
+  }
+
 }

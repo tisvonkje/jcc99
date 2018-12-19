@@ -197,6 +197,11 @@ public class ClassFile
       classLoader.addInitialization(clinit);
       clinit.analyze(classLoader);
     }
+    /*
+     * Analyze all field classes
+     */
+    for(Field field:fields)
+      field.analyze(classLoader);
   }
 
   private List<Method> getDynamicMethodOffsets()
@@ -293,10 +298,7 @@ public class ClassFile
   {
     for(Method method:methods)
       if(!method.isStatic())
-      {
-        System.out.printf("Analyzing '%s'\n",method.getName());
         method.analyze(classLoader);
-      }
   }      
   public String getSuperClass()
   {

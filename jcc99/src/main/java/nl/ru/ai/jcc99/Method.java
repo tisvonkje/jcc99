@@ -9,6 +9,8 @@ import nl.ru.ai.jcc99.attributes.CodeAttribute;
 import nl.ru.ai.jcc99.constants.Constant;
 import nl.ru.ai.jcc99.instructions.GetstaticInstruction;
 import nl.ru.ai.jcc99.instructions.Instruction;
+import nl.ru.ai.jcc99.types.ClassType;
+import nl.ru.ai.jcc99.types.MethodType;
 import nl.ru.ai.jcc99.types.Type;
 
 public class Method
@@ -25,6 +27,7 @@ public class Method
   
   private Map<Integer,String> labels;
   private Integer offset;
+  private MethodType descriptorType;
 
   public Method(Constant[] constants, ClassFile classFile, ByteBuffer buffer)
   {
@@ -48,7 +51,7 @@ public class Method
     /*
      * Convert descriptor into type structure
      */
-    Type descriptorType=Util.convert(constants[descriptorIndex].toShortString());
+    descriptorType=(MethodType)Util.convert(constants[descriptorIndex].toShortString());
     /*
      * Determine how many units the parameters take in a stack frame
      */
@@ -123,6 +126,16 @@ public class Method
      * Be sure our own class is analyzed which will marked class initialization methods
      */
     classFile.analyze();
+    /*
+     * If result type of method is a class type, analyze it
+     */
+    Type resultType=descriptorType.getResultType();
+    if(resultType instanceof ClassType)
+    {
+      ClassType classType=(ClassType)resultType;
+      ClassFile resultClassFile=classLoader.getClassFile(classType.getName());
+      resultClassFile.analyze();
+    }
     /*
      * Analyze the code
      */

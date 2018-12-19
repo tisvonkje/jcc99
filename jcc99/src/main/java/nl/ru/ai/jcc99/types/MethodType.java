@@ -41,4 +41,9 @@ public class MethodType implements Type
     return size;
   }
 
+  public Type getResultType()
+  {
+    return resultType;
+  }
+
 }
