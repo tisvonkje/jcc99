@@ -492,6 +492,14 @@ public class Intel32MacOSXCoder implements Coder
     codeConditionalJump(condition,label);
   }
   
+  public void codeRefCompare(Condition condition, String label)
+  {
+    writer.printf("\tpopl\t%%eax\n");
+    writer.printf("\tpopl\t%%ebx\n");
+    writer.printf("\tcmpl\t%%eax,%%ebx\n");
+    codeConditionalJump(condition,label);
+  }
+  
   public void codeZeroCompare(Condition condition, String label)
   {
     writer.printf("\tpopl\t%%eax\n");

@@ -1,7 +1,5 @@
 package nl.ru.ai.jcc99.instructions;
 
-import java.nio.ByteBuffer;
-
 import nl.ru.ai.jcc99.ClassLoader;
 import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
@@ -11,6 +9,7 @@ public class IfAcmpInstruction extends Instruction
 {
   private Condition condition;
   private short offset;
+  private String label;
 
   public IfAcmpInstruction(int position, Constant[] constants, Condition condition, short offset)
   {
@@ -26,14 +25,12 @@ public class IfAcmpInstruction extends Instruction
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
   {
-    coder.close();
-    throw new RuntimeException("don't know how to code "+getClass());
+    coder.codeRefCompare(condition,label);
   }
 
   @Override
   public void analyze(ClassLoader classLoader, Method method)
   {
-    // TODO Auto-generated method stub
-    
+    label=method.getLabel(classLoader,position+offset);
   }
 }
