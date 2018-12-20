@@ -281,7 +281,13 @@ public class ClassFile
     coder.codeLabel("_Info_",this);
     coder.codeWord("_Vector_java_lang_ClassInfo");
     coder.codeWord("_Name_",this);
-    /* HERE */
+    Constant parentClass=constants[superClass];
+    if(parentClass!=null)
+    {
+      ClassFile parent=classLoader.getClassFile(parentClass.toShortString());
+      coder.codeWord("_Vector_",parent);
+    } else
+      coder.codeWord(0);
   }
   public void codeName(Coder coder)
   {

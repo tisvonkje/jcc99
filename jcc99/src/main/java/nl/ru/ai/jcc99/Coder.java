@@ -69,4 +69,5 @@ public interface Coder
   void codeCall(String string);
   void codeWord(String prefix,ClassFile classFile);
   void codeRefCompare(Condition condition, String label);
+  void codeInstanceOf(ClassFile classFile);
 }

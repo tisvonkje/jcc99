@@ -617,4 +617,13 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tcall\t%s\n",string);
   }
+
+  public void codeInstanceOf(ClassFile classFile)
+  {
+    writer.printf("\tpopl\t%%eax\n");                                                                 // get object from stack
+    writer.printf("\tpushl\t(%%eax)\n");                                                            // convert to its class vector
+    writer.printf("\tleal\t%s,%%eax\n",disambiguator.name("_Vector_",classFile));                   // get classvector argument
+    writer.printf("\tpushl\t%%eax\n");
+    writer.printf("\tcall\t%s\n","Method_java_lang_Class_instanceOf__q_Ljava_lang_Class_s__p_Z");   // call method
+  }
 }
