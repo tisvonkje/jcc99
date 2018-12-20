@@ -114,7 +114,7 @@ public class Intel32MacOSXCoder implements Coder
   public void codeHeap()
   {
     writer.printf("\t.lcomm\t_heapptr,%d,%d\n",getWordSize(),getWordSize());
-    writer.printf("\t.lcomm\theapstart,%d,%d\n",getWordSize(),getWordSize()); //FIXME: maybe change size if segment does not grow
+    writer.printf("\t.lcomm\theapstart,%d,%d\n",getWordSize()*1024*1024,getWordSize()); //FIXME: maybe change size if segment does not grow
   }
 
   public void codeLabel(Method method)

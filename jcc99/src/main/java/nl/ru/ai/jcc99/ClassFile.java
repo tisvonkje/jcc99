@@ -202,6 +202,17 @@ public class ClassFile
      */
     for(Field field:fields)
       field.analyze(classLoader);
+    /*
+     * Analyze superclass if present
+     */
+    Constant superClassConstant=constants[superClass];
+    if(superClassConstant!=null)
+      classLoader.getClassFile(superClassConstant.toShortString()).analyze();
+    /*
+     * Analyze interfaces
+     */
+    for(short interfaceIndex:interfaces)
+      classLoader.getClassFile(constants[interfaceIndex].toShortString()).analyze();
   }
 
   private List<Method> getDynamicMethodOffsets()
