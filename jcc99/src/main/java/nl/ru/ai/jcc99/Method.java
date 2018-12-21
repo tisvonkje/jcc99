@@ -24,8 +24,8 @@ public class Method
   private CodeAttribute code;
   private boolean analysed;
   private int parameterUnits;
-  
-  private Map<Integer,String> labels;
+
+  private Map<Integer, String> labels;
   private Integer offset;
   private MethodType descriptorType;
 
@@ -36,7 +36,7 @@ public class Method
     this.analysed=false;
     this.code=null;
     this.offset=null;
-    labels=new HashMap<Integer,String>();
+    labels=new HashMap<Integer, String>();
     accessFlags=buffer.getShort();
     nameIndex=buffer.getShort();
     descriptorIndex=buffer.getShort();
@@ -83,7 +83,7 @@ public class Method
   {
     return constants[nameIndex].toShortString();
   }
-  
+
   public String getNameAndDescriptor()
   {
     return getName()+":"+getDescriptor();
@@ -93,7 +93,7 @@ public class Method
   {
     return classFile.getName()+"."+getName()+":"+getDescriptor();
   }
-  
+
   public ClassFile getClassFile()
   {
     return classFile;
@@ -108,7 +108,7 @@ public class Method
   {
     return (accessFlags&ClassFile.ACC_NATIVE)!=0;
   }
-  
+
   public boolean isSuper()
   {
     return (accessFlags&ClassFile.ACC_SUPER)!=0;
@@ -150,9 +150,15 @@ public class Method
 
   public void code(ClassLoader classLoader, Coder coder)
   {
-    coder.codeComment("Method "+getFullName());
-    coder.codeLabel(this);
-    code.code(classLoader,this,coder);
+    /*
+     * For interfaces there is no code
+     */
+    if(code!=null)
+    {
+      coder.codeComment("Method "+getFullName());
+      coder.codeLabel(this);
+      code.code(classLoader,this,coder);
+    }
   }
 
   public int getParameterUnits()

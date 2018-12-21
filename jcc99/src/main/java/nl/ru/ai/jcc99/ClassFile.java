@@ -284,7 +284,10 @@ public class ClassFile
       coder.codeWord("_Vector_java_lang_Class");
       coder.codeWord("_Info_",this);
       for(Method method : dynamicMethodOffsets)
-        coder.codeWord(method);
+        if(isInterface())
+          coder.codeWord(0);
+        else
+          coder.codeWord(method);
     }
   }
   public void codeInfo(Coder coder)
@@ -299,6 +302,15 @@ public class ClassFile
       coder.codeWord("_Vector_",parent);
     } else
       coder.codeWord(0);
+    coder.codeWord("_Interfaces_",this);
+  }
+  public void codeInterfaces(Coder coder)
+  {
+    coder.codeLabel("_Interfaces_",this);
+    coder.codeWord(0); //FIXME: should be classvector of Array of Class
+    coder.codeWord(interfaces.length);
+    for(short index:interfaces)
+      coder.codeWord("_Vector_",classLoader.getClassFile(constants[index].toShortString()));
   }
   public void codeName(Coder coder)
   {
@@ -320,5 +332,10 @@ public class ClassFile
   public String getSuperClass()
   {
     return constants[superClass].toShortString();
+  }
+  
+  public boolean isInterface()
+  {
+    return (accessFlags&ACC_INTERFACE)!=0;
   }
 }
