@@ -29,7 +29,7 @@ public class CodeAttribute extends Attribute
     short exceptionTableLength=buffer.getShort();
     exceptions=new ExceptionEntry[exceptionTableLength];
     for(int i=0;i<exceptionTableLength;i++)
-      exceptions[i]=new ExceptionEntry(buffer);
+      exceptions[i]=new ExceptionEntry(constants,buffer);
     short attributesCount=buffer.getShort();
     attributes=new Attribute[attributesCount];
     for(int i=0;i<attributesCount;i++)
@@ -40,6 +40,15 @@ public class CodeAttribute extends Attribute
   
   public String toString()
   {
+    StringBuffer exceptionsBuffer=new StringBuffer();
+    exceptionsBuffer.append('[');
+    for(int i=0;i<exceptions.length;i++)
+    {
+      exceptionsBuffer=exceptionsBuffer.append(exceptions[i]);
+      if(i!=exceptions.length-1)
+        exceptionsBuffer.append(',');
+    }
+    exceptionsBuffer.append(']');
     StringBuffer buffer=new StringBuffer();
     buffer.append('[');
     for(int i=0;i<attributes.length;i++)
@@ -49,13 +58,15 @@ public class CodeAttribute extends Attribute
         buffer.append(',');
     }
     buffer.append(']');
-    return String.format("Code(maxStack=%d, maxLocals=%d, code=%s, attributes=%s)",maxStack,maxLocals,instructions,new String(buffer));
+    return String.format("Code(maxStack=%d, maxLocals=%d, code=%s, exceptions=%s, attributes=%s)",maxStack,maxLocals,instructions,exceptionsBuffer,buffer);
   }
 
   public void analyze(ClassLoader classLoader, Method method)
   {
     for(Instruction instruction:instructions)
       instruction.analyze(classLoader, method);
+    for(ExceptionEntry entry:exceptions)
+      entry.analyze(classLoader,method);
   }
 
   public void code(ClassLoader classLoader, Method method, Coder coder)
