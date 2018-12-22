@@ -3,6 +3,7 @@ package nl.ru.ai.jcc99.attributes;
 import java.nio.ByteBuffer;
 
 import nl.ru.ai.jcc99.ClassLoader;
+import nl.ru.ai.jcc99.Coder;
 import nl.ru.ai.jcc99.Method;
 import nl.ru.ai.jcc99.constants.Constant;
 
@@ -10,12 +11,12 @@ public class ExceptionEntry
 {
   private Constant[] constants;
   private short startPC;
-  private String startLabel;
   private short endPC;
-  private String endLabel;
   private short handlerPC;
-  private String handlerLabel;
   private short catchType;
+  private String startLabel;
+  private String endLabel;
+  private String handlerLabel;
 
   public ExceptionEntry(Constant[] constants, ByteBuffer buffer)
   {
@@ -36,6 +37,14 @@ public class ExceptionEntry
     startLabel=method.getLabel(classLoader,startPC);
     endLabel=method.getLabel(classLoader,endPC);
     handlerLabel=method.getLabel(classLoader,handlerPC);
+    classLoader.addException(this);
+  }
+
+  public void code(Coder coder)
+  {
+    coder.codeWord(startLabel);
+    coder.codeWord(endLabel);
+    coder.codeWord(handlerLabel);
   }
 
 }

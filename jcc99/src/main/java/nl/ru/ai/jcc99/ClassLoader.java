@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import nl.ru.ai.jcc99.attributes.ExceptionEntry;
 import nl.ru.ai.jcc99.constants.OutlineConstant;
 
 public class ClassLoader
@@ -28,6 +29,7 @@ public class ClassLoader
   private List<Method> init;
   private List<ClassFile> collected;
   private List<ClassFile> needed;
+  private List<ExceptionEntry> exceptions;
 
   public ClassLoader(String[] classPath)
   {
@@ -39,6 +41,7 @@ public class ClassLoader
     collected=new ArrayList<ClassFile>();
     needed=new ArrayList<ClassFile>();
     init=new ArrayList<Method>();
+    exceptions=new ArrayList<ExceptionEntry>();
     nextLabel=0;
 
     for(String classPathEntry : classPath)
@@ -285,6 +288,11 @@ public class ClassLoader
     for(ClassFile classFile : needed)
       classFile.codeName(coder);
     /*
+     * Generate exception table
+     */
+    for(ExceptionEntry entry : exceptions)
+      entry.code(coder);
+    /*
      * Generate heap
      */
     coder.codeHeap();
@@ -328,5 +336,10 @@ public class ClassLoader
   {
     collected.add(classFile);
     needed.add(classFile);
+  }
+
+  public void addException(ExceptionEntry exceptionEntry)
+  {
+    exceptions.add(exceptionEntry);
   }
 }
