@@ -46,7 +46,28 @@ Method_java_lang_System_sysgetcwd__q__p__a_B:
 	
 #
 # Exception thrower
+# Called by code generator with exception as argument
+# Idea, handle this in machine language since we should be able to look up
+# in stack frames and unroll stack and jump
+# for the instance check call java
 #
 athrow:
-	ret
+# link stack frame
+	pushl	%ebp
+	movl	%esp,%ebp
+# align stack
+	andl	$0xfffffff0,%esp
+	pushl	$0 			// padding
+	pushl	$0 			// padding
+	pushl	$0 			// padding
+	pushl	8(%ebp)			// exception
+	calll	_athrow
+// this normal return should be changed to a jump to the exception handler returned by _athrow
+// and of course include stack unrolling
+//	addl	$16, %esp
+	movl	%ebp,%esp
+	popl	%ebp
+	popl	%ecx
+	addl	$8,%esp
+	jmpl	*%ecx
 
