@@ -6,7 +6,8 @@ import optparse
 import shlex
 
 def do(debugger, command, result, internal_dict):
-    print 'dump object'
+    print debugger.GetSelectedTarget().GetProcess().GetSelectedThread().GetSelectedFrame().FindRegister("eax")
+    print lldb.frame.FindRegister("eax")
 
 def ls(debugger, command, result, internal_dict):
     print 'hoi'
