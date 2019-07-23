@@ -6,8 +6,19 @@ import optparse
 import shlex
 
 def do(debugger, command, result, internal_dict):
-    print debugger.GetSelectedTarget().GetProcess().GetSelectedThread().GetSelectedFrame().FindRegister("eax")
-    print lldb.frame.FindRegister("eax")
+    target=debugger.GetSelectedTarget()
+    process=target.GetProcess()
+    thread=process.GetSelectedThread()
+    frame=thread.GetSelectedFrame()
+    print frame.FindRegister("esp")
+    pc=int(frame.FindRegister("pc").value,0)
+    error = lldb.SBError()
+    uint = process.ReadUnsignedFromMemory(pc, 1, error)
+    if error.Success():
+      print('integer: %u' % uint)
+    else:
+      print('error: ', error)
+    print frame.FindRegister("eax")
 
 def ls(debugger, command, result, internal_dict):
     print 'hoi'
