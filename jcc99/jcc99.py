@@ -10,6 +10,8 @@ def do(debugger, command, result, internal_dict):
     process=target.GetProcess()
     thread=process.GetSelectedThread()
     frame=thread.GetSelectedFrame()
+    for symbol in frame.GetModule():
+        print symbol.GetName()
     print frame.FindRegister("esp")
     pc=int(frame.FindRegister("pc").value,0)
     error = lldb.SBError()
