@@ -14,19 +14,27 @@ class Jcc99:
       process=target.GetProcess()
       thread=process.GetSelectedThread()
       frame=thread.GetSelectedFrame()
-
-      print frame.FindRegister("esp")
-      
+      module=frame.GetModule()
+#
+# Get pc and lookup where we are
+#     
       pc=int(frame.FindRegister("pc").value,0)
-      print self.lookup(pc,frame.GetModule())
+      fp=int(frame.FindRegister("ebp").value,0)
+      error=lldb.SBError()
       
-      error = lldb.SBError()
-      uint = process.ReadUnsignedFromMemory(pc, 1, error)
-      if error.Success():
-        print('integer: %u' % uint)
-      else:
-        print('error: ', error)
-      print frame.FindRegister("eax")
+      while True:
+        here=self.lookup(pc,module)
+        if here is None:
+          break
+        else:
+          offset=pc-here.GetStartAddress().__int__()
+          print here.GetName()+"+"+str(offset)
+          pc=process.ReadUnsignedFromMemory(fp+4,4,error)
+          if error.Fail():
+            break
+          fp=process.ReadUnsignedFromMemory(fp,4,error)
+          if error.Fail():
+            break
       
     def lookup(self, address, module):
         for symbol in module:
