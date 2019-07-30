@@ -2,14 +2,13 @@ package nl.ru.ai.jcc99;
 
 public class LabelDisambiguator
 {
-
   public String name(Method method)
   {
     String namePart=method.getClassFile().getName()+"/"+method.getName();
     String descriptorPart=method.getDescriptor();
-    return "Method_"+mangle(namePart+"/"+descriptorPart);
+    return mangle(namePart+"/"+descriptorPart);
   }
-
+  
   private String mangle(String string)
   {
     string=string.replace('_','!');

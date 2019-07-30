@@ -45,6 +45,7 @@ public class Jcc99
     Options options=new Options();
     options.addOption("classpath",true,"specify classpath (jars/dirs by ;)");
     options.addOption("h",false,"print this message");
+    options.addOption("d",false,"insert debugging info");
     /*
     * Parse commandline
     */
@@ -138,7 +139,7 @@ public class Jcc99
     PrintWriter writer=new PrintWriter(new File("output.s"));
     LabelDisambiguator disambiguator=new LabelDisambiguator();
     Coder coder=new Intel32MacOSXCoder(writer,disambiguator);
-    classLoader.code(mainMethod,coder);
+    classLoader.code(commandLine,mainMethod,coder);
     writer.close();
   }
 }

@@ -119,7 +119,12 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeLabel(Method method)
   {
-    writer.printf("%s:\n",disambiguator.name(method));
+    writer.printf("Method_%s:\n",disambiguator.name(method));
+  }
+  
+  public void codeDebugLabel(Method method)
+  {
+    writer.printf("Debug_%s:\n",disambiguator.name(method));
   }
 
   public void codeLabel(OutlineConstant constant)
@@ -286,7 +291,7 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeCall(Method method)
   {
-    writer.printf("\tcall\t%s\n",disambiguator.name(method));
+    writer.printf("\tcall\tMethod_%s\n",disambiguator.name(method));
   }
   
   public void codeDynamicCall(Method method)
@@ -595,7 +600,7 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeWord(Method method)
   {
-    writer.printf("\t.long\t%s\n",disambiguator.name(method));
+    writer.printf("\t.long\tMethod_%s\n",disambiguator.name(method));
   }
   
   public void codeWord(String prefix, ClassFile classFile)

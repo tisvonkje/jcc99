@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.commons.cli.CommandLine;
+
 import nl.ru.ai.jcc99.attributes.ExceptionEntry;
 import nl.ru.ai.jcc99.constants.OutlineConstant;
 
@@ -213,7 +215,7 @@ public class ClassLoader
     return classByName.get(className);
   }
 
-  public void code(Method mainMethod, Coder coder)
+  public void code(CommandLine commandLine, Method mainMethod, Coder coder)
   {
     /*
      * Preamble
@@ -292,6 +294,24 @@ public class ClassLoader
      */
     for(ExceptionEntry entry : exceptions)
       entry.code(coder);
+    /*
+     * Create info for debugging
+     */
+    if(commandLine.hasOption('d'))
+    {
+      for(String methodName : staticMethodByName.keySet())
+      {
+        Method method=staticMethodByName.get(methodName);
+        if(method.isAnalyzed()&&!method.isNative())
+          method.codeDebug(this,coder);
+      }
+      for(String methodName : dynamicMethodByName.keySet())
+      {
+        Method method=dynamicMethodByName.get(methodName);
+        if(method.isAnalyzed()&&!method.isNative())
+          method.codeDebug(this,coder);
+      }
+    }
     /*
      * Generate heap
      */

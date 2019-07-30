@@ -1,5 +1,6 @@
 package nl.ru.ai.jcc99;
 
+import nl.ru.ai.jcc99.attributes.CodeAttribute;
 import nl.ru.ai.jcc99.constants.OutlineConstant;
 import nl.ru.ai.jcc99.instructions.Condition;
 
@@ -12,6 +13,7 @@ public interface Coder
   void codePrepare();
   void codeExit();
   void codeLabel(Method method);
+  void codeDebugLabel(Method method);
   void codeLabel(OutlineConstant constant);
   void codeLabel(String prefix, ClassFile classFile);
   void codeLabel(String string);

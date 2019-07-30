@@ -160,6 +160,15 @@ public class Method
       code.code(classLoader,this,coder);
     }
   }
+  
+  public void codeDebug(ClassLoader classLoader, Coder coder)
+  {
+    /*
+     * For interfaces there is no debugging info
+     */
+    if(code!=null)
+      code.codeDebug(classLoader,this,coder);
+  }
 
   public int getParameterUnits()
   {

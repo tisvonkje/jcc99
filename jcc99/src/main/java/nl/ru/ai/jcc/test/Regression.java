@@ -50,10 +50,11 @@ public class Regression
           /*
            * Set up commandline for jcc
            */
-          String[] jccArgs=new String[3];
-          jccArgs[0]="-classpath";
-          jccArgs[1]=String.format("%s/%s",BASE,CLASS);
-          jccArgs[2]=String.format("%s.%s",PACKAGE,name);
+          String[] jccArgs=new String[4];
+          jccArgs[0]="-d";
+          jccArgs[1]="-classpath";
+          jccArgs[2]=String.format("%s/%s",BASE,CLASS);
+          jccArgs[3]=String.format("%s.%s",PACKAGE,name);
           /*
            * Print commandline
            */
