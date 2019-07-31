@@ -29,4 +29,9 @@ public class ClassType implements Type
     return name;
   }
 
+  public int codeDebugId()
+  {
+    return CLASS_ID;
+  }
+
 }

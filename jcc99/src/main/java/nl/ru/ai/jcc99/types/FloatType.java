@@ -17,4 +17,9 @@ public class FloatType implements Type
     throw new RuntimeException("Illegal type");
   }
 
+  public int codeDebugId()
+  {
+    return FLOAT_ID;
+  }
+
 }

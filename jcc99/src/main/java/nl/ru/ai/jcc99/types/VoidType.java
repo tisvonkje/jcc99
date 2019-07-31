@@ -16,4 +16,9 @@ public class VoidType implements Type
   {
     throw new RuntimeException("Illegal type");
   }
+
+  public int codeDebugId()
+  {
+    return VOID_ID;
+  }
 }

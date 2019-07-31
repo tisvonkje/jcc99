@@ -17,4 +17,9 @@ public class ShortType implements Type
     throw new RuntimeException("Illegal type");
   }
 
+  public int codeDebugId()
+  {
+    return SHORT_ID;
+  }
+
 }

@@ -79,10 +79,4 @@ public class CodeAttribute extends Attribute
       instruction.code(classLoader,method,coder);
     }
   }
-  
-  public void codeDebug(ClassLoader classLoader, Method method, Coder coder)
-  {
-     coder.codeDebugLabel(method);
-  }
-
 }

@@ -160,14 +160,25 @@ public class Method
       code.code(classLoader,this,coder);
     }
   }
-  
+
   public void codeDebug(ClassLoader classLoader, Coder coder)
   {
     /*
      * For interfaces there is no debugging info
      */
     if(code!=null)
-      code.codeDebug(classLoader,this,coder);
+    {
+      coder.codeDebugLabel(this);
+      int numberOfParameters=descriptorType.getNumberOfParameters();
+      if(isStatic())
+        coder.codeWord(numberOfParameters);
+      else
+      {
+        coder.codeWord(numberOfParameters+1);
+        coder.codeWord(Type.CLASS_ID);
+      }
+      descriptorType.codeDebug(coder);
+    }
   }
 
   public int getParameterUnits()

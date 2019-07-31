@@ -2,6 +2,8 @@ package nl.ru.ai.jcc99.types;
 
 import java.util.List;
 
+import nl.ru.ai.jcc99.Coder;
+
 public class MethodType implements Type
 {
   private List<Type> arguments;
@@ -40,10 +42,25 @@ public class MethodType implements Type
       size+=arguments.get(i).unitSize();
     return size;
   }
+  
+  public int getNumberOfParameters()
+  {
+    return arguments.size();
+  }
 
   public Type getResultType()
   {
     return resultType;
   }
 
+  public void codeDebug(Coder coder)
+  {
+    for(int i=0;i<arguments.size();i++)
+      coder.codeWord(arguments.get(i).codeDebugId());
+  }
+
+  public int codeDebugId()
+  {
+    return METHOD_ID;
+  }
 }

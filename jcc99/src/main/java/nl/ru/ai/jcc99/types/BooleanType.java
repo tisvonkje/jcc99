@@ -16,4 +16,9 @@ public class BooleanType implements Type
   {
     throw new RuntimeException("Illegal type");
   }
+
+  public int codeDebugId()
+  {
+    return BOOLEAN_ID;
+  }
 }

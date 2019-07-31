@@ -16,4 +16,9 @@ public class IntegerType implements Type
   {
     throw new RuntimeException("Illegal type");
   }
+
+  public int codeDebugId()
+  {
+    return INTEGER_ID;
+  }
 }

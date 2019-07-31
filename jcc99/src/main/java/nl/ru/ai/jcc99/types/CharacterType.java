@@ -17,4 +17,9 @@ public class CharacterType implements Type
     throw new RuntimeException("Illegal type");
   }
 
+  public int codeDebugId()
+  {
+    return CHARACTER_ID;
+  }
+
 }

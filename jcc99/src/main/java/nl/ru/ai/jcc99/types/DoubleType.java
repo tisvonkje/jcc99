@@ -17,4 +17,9 @@ public class DoubleType implements Type
     throw new RuntimeException("Illegal type");
   }
 
+  public int codeDebugId()
+  {
+    return DOUBLE_ID;
+  }
+
 }
