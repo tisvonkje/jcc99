@@ -4,6 +4,7 @@ import lldb
 import commands
 import optparse
 import shlex
+import struct
 
 
 class Jcc99:
@@ -44,30 +45,25 @@ class Jcc99:
               p=debug.GetStartAddress().__int__()
               n=process.ReadUnsignedFromMemory(p,4,error)
               p+=4
-              if error.Fail():
-                print here.GetName+"+"+str(offset)+"(?)"
-              else:
-                parameters=""
-                par=fp+4
-                for i in range(n):
-                  value=process.ReadUnsignedFromMemory(par,4,error)
-                  typeId=process.ReadUnsignedFromMemory(p,4,error)
-                  p+=4
-                  if typeId==7:
-                    parameters=parameters+str(value)
-                    par+=4
-                  elif typeId==2:
-                    if value!=0:
-                      parameters=parameters+"true"
-                    else:
-                      parameters=parameters+"false"
-                    par+=4
-                  else:
-                    parameters=parameters+hex(value)
-                    par+=4
-                  if i!=n-1:
-                    parameters=parameters+","
-                print "!" + here.GetName() + "+" + str(offset)+"("+parameters+")"
+              par=fp+4
+              parameters=""
+              for i in range(n):
+                typeId=process.ReadUnsignedFromMemory(p,4,error)
+                p+=4
+                if typeId==5 or typeId==8:
+                  size=8
+                else:
+                  size=4
+                content=process.ReadMemory(par,size,error)
+                buffer=bytearray(content)
+                par+=size
+                if typeId==7:
+                  parameters=parameters+str(struct.unpack('i',buffer)[0])
+                else:
+                  parameters=parameters+hex(struct.unpack('I',buffer)[0])
+                if i!=n-1:
+                  parameters=parameters+","
+              print "!" + here.GetName() + "+" + str(offset)+"("+parameters+")"
           else:
             print here.GetName() + "+" + str(offset)    
           pc = process.ReadUnsignedFromMemory(fp + 4, 4, error)
