@@ -30,11 +30,11 @@ import nl.ru.ai.jcc99.instructions.Condition;
  *          +-------------+
  *          | return      |
  *          +-------------+
- *          | parameter c |
+ *          | parameter a |
  *          +-------------+
  *          | parameter b |
  *          +-------------+
- *          | parameter a |
+ *          | parameter c |
  *          +-------------+
  *  In bytecode the parameters are numbered. a has number 0, b number 1 and c number 2.
  *  Let i be their number, n be the number of parameters (arity), and w the wordsize,
