@@ -6,6 +6,18 @@ import optparse
 import shlex
 import struct
 
+ARRAY_ID=1
+BOOLEAN_ID=2
+CHARACTER_ID=3
+CLASS_ID=4
+DOUBLE_ID=5
+FLOAT_ID=6
+INTEGER_ID=7
+LONG_ID=8
+METHOD_ID=9
+SHORT_ID=10
+VOID_ID=11
+
 
 class Jcc99:
 
@@ -45,20 +57,41 @@ class Jcc99:
               p=debug.GetStartAddress().__int__()
               n=process.ReadUnsignedFromMemory(p,4,error)
               p+=4
+              #
+              # Skip to end of frame, we have to loop here since we do not now the size of the parameters
+              #
               par=fp+4
+              q=p
+              for i in range(n):
+                typeId=process.ReadUnsignedFromMemory(q,4,error)
+                q+=4
+                if typeId==LONG_ID or typeId==DOUBLE_ID:
+                  par+=8
+                else:
+                  par+=4
+              #
+              # Now collect parameters
+              #
               parameters=""
               for i in range(n):
                 typeId=process.ReadUnsignedFromMemory(p,4,error)
                 p+=4
-                if typeId==5 or typeId==8:
+                if typeId==LONG_ID or typeId==DOUBLE_ID:
                   size=8
                 else:
                   size=4
                 content=process.ReadMemory(par,size,error)
                 buffer=bytearray(content)
-                par+=size
-                if typeId==7:
+                par-=size
+                if typeId==INTEGER_ID:
                   parameters=parameters+str(struct.unpack('i',buffer)[0])
+                elif typeId==BOOLEAN_ID:
+                  if struct.unpack('i',buffer)[0]!=0:
+                    parameters=parameters+"true"
+                  else:
+                    parameters=parameters+"false"
+                elif typeId==CHARACTER_ID:
+                  parameters=parameters+"'"+unichr(struct.unpack('Hxx',buffer)[0]).encode('utf-8')+"'"
                 else:
                   parameters=parameters+hex(struct.unpack('I',buffer)[0])
                 if i!=n-1:
@@ -78,8 +111,7 @@ class Jcc99:
           if symbol.GetStartAddress().__int__() <= address and symbol.GetEndAddress().__int__() > address:
               return symbol
         return None
-            
-
+  
 def cf(debugger, command, result, internal_dict):
     global instance
     instance.cf(debugger, command, result, internal_dict)
