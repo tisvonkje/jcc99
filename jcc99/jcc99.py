@@ -21,56 +21,56 @@ VOID_ID = 11
 
 class Jcc99:
 
-    def __init__(self):
-      pass
-    
-    def cf(self, debugger, command, result, internal_dict):
-      target = debugger.GetSelectedTarget()
-      process = target.GetProcess()
-      thread = process.GetSelectedThread()
-      frame = thread.GetSelectedFrame()
-      module = frame.GetModule()
-      error = lldb.SBError()
+  def __init__(self):
+    pass
+  
+  def cf(self, debugger, command, result, internal_dict):
+    target = debugger.GetSelectedTarget()
+    process = target.GetProcess()
+    thread = process.GetSelectedThread()
+    frame = thread.GetSelectedFrame()
+    module = frame.GetModule()
+    error = lldb.SBError()
 #
 # Get pc and lookup where we are
 #     
-      pc = int(frame.FindRegister("pc").value, 0)
-      fp = int(frame.FindRegister("ebp").value, 0)
-      
-      while True:
-        here = lookup(pc, module)
-        if here is None:
-          break
-        else:
-          offset = pc - here.GetStartAddress().__int__()
+    pc = int(frame.FindRegister("pc").value, 0)
+    fp = int(frame.FindRegister("ebp").value, 0)
+    
+    while True:
+      here = lookup(pc, module)
+      if here is None:
+        break
+      else:
+        offset = pc - here.GetStartAddress().__int__()
+        #
+        # Check if we are in a Method
+        #
+        if here.GetName().startswith("Method_"):
           #
-          # Check if we are in a Method
+          # Try to find the debug info for this symbol
           #
-          if here.GetName().startswith("Method_"):
-            #
-            # Try to find the debug info for this symbol
-            #
-            debug = module.FindSymbol("Debug_" + here.GetName()[7:])
-            if debug is None:
-              pack = "(?)"
-            else:
-              pack = "(" + getParameterPack(debug, fp, process) + ")"
+          debug = module.FindSymbol("Debug_" + here.GetName()[7:])
+          if debug is None:
+            pack = "(?)"
           else:
-            pack = ""
-          print here.GetName() + "+" + str(offset) + pack   
-          pc = process.ReadUnsignedFromMemory(fp + 4, 4, error)
-          if error.Fail():
-            break
-          fp = process.ReadUnsignedFromMemory(fp, 4, error)
-          if error.Fail():
-            break
+            pack = "(" + getParameterPack(debug, fp, process) + ")"
+        else:
+          pack = ""
+        print here.GetName() + "+" + str(offset) + pack   
+        pc = process.ReadUnsignedFromMemory(fp + 4, 4, error)
+        if error.Fail():
+          break
+        fp = process.ReadUnsignedFromMemory(fp, 4, error)
+        if error.Fail():
+          break
 
          
 def lookup(address, module):
-    for symbol in module:
-      if symbol.GetStartAddress().__int__() <= address and symbol.GetEndAddress().__int__() > address:
-          return symbol
-    return None
+  for symbol in module:
+    if symbol.GetStartAddress().__int__() <= address and symbol.GetEndAddress().__int__() > address:
+        return symbol
+  return None
 
 
 def getTypeIdAndSize(address, process):
@@ -122,13 +122,13 @@ def getParameterPack(debug, fp, process):
 
 
 def cf(debugger, command, result, internal_dict):
-    global instance
-    instance.cf(debugger, command, result, internal_dict)
+  global instance
+  instance.cf(debugger, command, result, internal_dict)
 
 
 # And the initialization code to add your commands
 def __lldb_init_module(debugger, internal_dict):
-    debugger.HandleCommand('command script add -f jcc99.cf cf')
+  debugger.HandleCommand('command script add -f jcc99.cf cf')
 
 
 instance = Jcc99()
