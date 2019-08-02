@@ -34,6 +34,7 @@ public interface Coder
   void codeReturnSingle(int parameterUnits);
   void codeReturn(int parameterUnits);
   void codePushInt(int value);
+  void codePushFloat(float value);
   void codePush(Field field);
   void codePop(Field field);
   void codeCall(Method method);

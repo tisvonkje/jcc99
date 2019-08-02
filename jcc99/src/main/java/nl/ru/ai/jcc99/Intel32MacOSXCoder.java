@@ -288,6 +288,11 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tpushl\t$%d\n",value);
   }
+  
+  public void codePushFloat(float value)
+  {
+    writer.printf("\tpushl\t$%d\n",Float.floatToRawIntBits(value));
+  }
 
   public void codeCall(Method method)
   {

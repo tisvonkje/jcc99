@@ -107,6 +107,8 @@ def getParameterPack(debug, fp, process):
     par -= size
     if typeId == INTEGER_ID:
       parameters = parameters + str(struct.unpack('i', buffer)[0])
+    elif typeId == FLOAT_ID:
+      parameters = parameters + str(struct.unpack('f', buffer)[0])
     elif typeId == BOOLEAN_ID:
       if struct.unpack('i', buffer)[0] != 0:
         parameters = parameters + "true"

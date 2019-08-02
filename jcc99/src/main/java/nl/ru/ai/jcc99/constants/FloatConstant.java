@@ -1,5 +1,7 @@
 package nl.ru.ai.jcc99.constants;
 
+import nl.ru.ai.jcc99.Coder;
+
 public class FloatConstant extends InlineConstant
 {
   private float value;
@@ -19,6 +21,11 @@ public class FloatConstant extends InlineConstant
   public String toShortString()
   {
     return String.format("%f",value);
+  }
+  
+  public void codeLoad(Coder coder)
+  {
+    coder.codePushFloat(value);
   }
 
 }
