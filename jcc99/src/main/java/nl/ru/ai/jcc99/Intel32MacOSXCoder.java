@@ -293,6 +293,17 @@ public class Intel32MacOSXCoder implements Coder
   {
     writer.printf("\tpushl\t$%d\n",Float.floatToRawIntBits(value));
   }
+  
+  public void codePushDouble(double value)
+  {
+    /*
+     * Doubles are stored in memory as two longs in the order low high
+     * Stacking we reverse the order, so we stack first high then low
+     */
+    long bits=Double.doubleToRawLongBits(value);
+    writer.printf("\tpushl\t$%d\n",bits>>32);
+    writer.printf("\tpushl\t$%d\n",bits&0xffffffffL);
+  }
 
   public void codeCall(Method method)
   {

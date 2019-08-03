@@ -89,7 +89,7 @@ def getParameterPack(debug, fp, process):
   #
   # Skip to end of frame, we have to loop here since we do not now the size of the parameters
   #
-  par = fp + 4
+  par = fp + 8
   q = p
   for i in range(n):
     (typeId, size) = getTypeIdAndSize(q, process)
@@ -102,13 +102,15 @@ def getParameterPack(debug, fp, process):
   for i in range(n):
     (typeId, size) = getTypeIdAndSize(p, process)
     p += 4
+    par -= size
     content = process.ReadMemory(par, size, error)
     buffer = bytearray(content)
-    par -= size
     if typeId == INTEGER_ID:
       parameters = parameters + str(struct.unpack('i', buffer)[0])
     elif typeId == FLOAT_ID:
       parameters = parameters + str(struct.unpack('f', buffer)[0])
+    elif typeId == DOUBLE_ID:
+      parameters = parameters + str(struct.unpack('d', buffer)[0])
     elif typeId == BOOLEAN_ID:
       if struct.unpack('i', buffer)[0] != 0:
         parameters = parameters + "true"
