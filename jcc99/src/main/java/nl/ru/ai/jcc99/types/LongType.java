@@ -17,7 +17,7 @@ public class LongType implements Type
     throw new RuntimeException("Illegal type");
   }
 
-  public int codeDebugId()
+  public int getDebugId()
   {
     return LONG_ID;
   }

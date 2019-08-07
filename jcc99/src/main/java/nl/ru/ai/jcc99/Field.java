@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 
 import nl.ru.ai.jcc99.attributes.Attribute;
 import nl.ru.ai.jcc99.constants.Constant;
+import nl.ru.ai.jcc99.constants.StringConstant;
 import nl.ru.ai.jcc99.types.ClassType;
 import nl.ru.ai.jcc99.types.Type;
 
@@ -93,5 +94,18 @@ public class Field
       ClassFile resultClassFile=classLoader.getClassFile(classType.getName());
       resultClassFile.analyze();
     }
+  }
+
+  public void codeDebug(Coder coder, ClassLoader loader)
+  {
+	if(isNonStatic())
+	{
+	  Type type=Util.convert(constants[descriptorIndex].toShortString());
+	  StringConstant constant=new StringConstant(constants, nameIndex);
+	  constant.analyze(loader); //FIXME this looks a bit ugly to 'activate' a constant
+	  coder.codeWord(constant.getLabel());
+	  coder.codeWord(type.getDebugId());
+	  coder.codeWord(offset);
+	}
   }
 }

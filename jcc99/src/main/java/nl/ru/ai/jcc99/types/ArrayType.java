@@ -24,7 +24,7 @@ public class ArrayType implements Type
     throw new RuntimeException("Illegal type");
   }
 
-  public int codeDebugId()
+  public int getDebugId()
   {
     return ARRAY_ID;
   }

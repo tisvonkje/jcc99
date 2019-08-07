@@ -56,10 +56,10 @@ public class MethodType implements Type
   public void codeDebug(Coder coder)
   {
     for(int i=0;i<arguments.size();i++)
-      coder.codeWord(arguments.get(i).codeDebugId());
+      coder.codeWord(arguments.get(i).getDebugId());
   }
 
-  public int codeDebugId()
+  public int getDebugId()
   {
     return METHOD_ID;
   }

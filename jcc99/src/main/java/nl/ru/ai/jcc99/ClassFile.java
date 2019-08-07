@@ -338,4 +338,15 @@ public class ClassFile
   {
     return (accessFlags&ACC_INTERFACE)!=0;
   }
+  public void codeDebug(Coder coder, ClassLoader loader)
+  {
+	coder.codeLabel("_Debug_",this);
+	int numberOfNonStaticFields=0;
+	for(Field field:fields)
+	  if(field.isNonStatic())
+		numberOfNonStaticFields++;
+	coder.codeWord(numberOfNonStaticFields);
+	for(Field field:fields)
+	  field.codeDebug(coder,loader);
+  }
 }

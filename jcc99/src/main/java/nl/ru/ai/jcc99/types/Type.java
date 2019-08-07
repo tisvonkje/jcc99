@@ -21,5 +21,5 @@ public interface Type
    */
   int unitSize();
   int parameterUnitSize();
-  int codeDebugId();
+  int getDebugId();
 }

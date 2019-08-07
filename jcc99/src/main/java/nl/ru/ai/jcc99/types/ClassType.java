@@ -29,7 +29,7 @@ public class ClassType implements Type
     return name;
   }
 
-  public int codeDebugId()
+  public int getDebugId()
   {
     return CLASS_ID;
   }

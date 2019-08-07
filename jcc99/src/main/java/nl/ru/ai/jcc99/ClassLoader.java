@@ -258,6 +258,10 @@ public class ClassLoader
         method.code(this,coder);
     }
     /*
+     * Switch to data segment
+     */
+    coder.codeData();
+    /*
      * Generate all static fields
      */
     for(String fieldName : staticFieldByName.keySet())
@@ -265,12 +269,6 @@ public class ClassLoader
       Field field=staticFieldByName.get(fieldName);
       field.code(this,coder);
     }
-    /*
-     * Generate constant pool in data segment
-     */
-    coder.codeData();
-    for(OutlineConstant constant : constantPool)
-      constant.code(coder);
     /*
      * Generate all class vectors
      */
@@ -299,6 +297,9 @@ public class ClassLoader
      */
     if(commandLine.hasOption('d'))
     {
+      /*
+       * Code method debugging info
+       */
       for(String methodName : staticMethodByName.keySet())
       {
         Method method=staticMethodByName.get(methodName);
@@ -311,7 +312,17 @@ public class ClassLoader
         if(method.isAnalyzed()&&!method.isNative())
           method.codeDebug(this,coder);
       }
+      /*
+       * Code class debugging info
+       */
+      for(ClassFile classFile : needed)
+          classFile.codeDebug(coder,this);
     }
+    /*
+     * Generate constant pool in data segment
+     */
+    for(OutlineConstant constant : constantPool)
+      constant.code(coder);
     /*
      * Generate heap
      */
