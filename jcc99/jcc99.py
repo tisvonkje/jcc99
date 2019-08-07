@@ -50,7 +50,7 @@ class Jcc99:
           #
           # Try to find the debug info for this symbol
           #
-          debug = module.FindSymbol("Debug_" + here.GetName()[7:])
+          debug = module.FindSymbol("Debug_" + here.GetName())
           if debug is None:
             pack = "(?)"
           else:
