@@ -124,7 +124,7 @@ public class Intel32MacOSXCoder implements Coder
   
   public void codeDebugLabel(Method method)
   {
-    writer.printf("_Debug_Method_%s:\n",disambiguator.name(method));
+    writer.printf("Debug_Method_%s:\n",disambiguator.name(method));
   }
 
   public void codeLabel(OutlineConstant constant)
