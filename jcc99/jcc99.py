@@ -24,6 +24,15 @@ class Jcc99:
   def __init__(self):
     pass
   
+  def do(self, debugger, command, result, internal_dict):
+    target = debugger.GetSelectedTarget()
+    process = target.GetProcess()
+    thread = process.GetSelectedThread()
+    frame = thread.GetSelectedFrame()
+    module = frame.GetModule()
+    error = lldb.SBError()
+    print "do working"+command
+  
   def cf(self, debugger, command, result, internal_dict):
     target = debugger.GetSelectedTarget()
     process = target.GetProcess()
@@ -128,11 +137,16 @@ def getParameterPack(debug, fp, process):
 def cf(debugger, command, result, internal_dict):
   global instance
   instance.cf(debugger, command, result, internal_dict)
+  
+def do(debugger, command, result, internal_dict):
+  global instance
+  instance.do(debugger, command, result, internal_dict)
 
 
 # And the initialization code to add your commands
 def __lldb_init_module(debugger, internal_dict):
   debugger.HandleCommand('command script add -f jcc99.cf cf')
+  debugger.HandleCommand('command script add -f jcc99.do do')
 
 
 instance = Jcc99()
