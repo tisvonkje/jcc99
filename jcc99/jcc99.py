@@ -51,7 +51,7 @@ class Jcc99:
           # Try to find the debug info for this symbol
           #
           debug = module.FindSymbol("Debug_" + here.GetName())
-          if debug is None:
+          if not debug.IsValid():
             pack = "(?)"
           else:
             pack = "(" + getParameterPack(debug, fp, process) + ")"
