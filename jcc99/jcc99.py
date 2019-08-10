@@ -120,6 +120,20 @@ def dumpFields(className,module,process):
   name=module.FindSymbol("Name_" + className)
   nameAddress=name.GetStartAddress().__int__()
   print getString(nameAddress,process)+":"
+  debug=module.FindSymbol("Debug_"+className)
+  address=debug.GetStartAddress().__int__()
+  n=process.ReadUnsignedFromMemory(address, 4, error)
+  address+=4
+  for i in range(n):
+   key=process.ReadUnsignedFromMemory(address, 4, error)
+   address+=4
+   type=process.ReadUnsignedFromMemory(address, 4, error)
+   address+=4
+   offset=process.ReadUnsignedFromMemory(address, 4, error)
+   address+=4
+   print("  "+getString(key,process)+"="+str(type)+" "+str(offset))
+       
+  
   
 def getString(address,process):
   error = lldb.SBError()
