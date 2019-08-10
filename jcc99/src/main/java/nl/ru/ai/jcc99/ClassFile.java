@@ -340,7 +340,7 @@ public class ClassFile
   }
   public void codeDebug(Coder coder, ClassLoader loader)
   {
-	coder.codeLabel("_Debug_",this);
+	coder.codeLabel("Debug_Class_",this);
 	int numberOfNonStaticFields=0;
 	for(Field field:fields)
 	  if(field.isNonStatic())

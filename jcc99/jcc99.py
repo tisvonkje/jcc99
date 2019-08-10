@@ -2,7 +2,7 @@
 
 import lldb
 import commands
-import optparse
+from optparse import OptionParser
 import shlex
 import struct
 
@@ -31,7 +31,23 @@ class Jcc99:
     frame = thread.GetSelectedFrame()
     module = frame.GetModule()
     error = lldb.SBError()
-    print "do working"+command
+    parser = OptionParser(usage="do [-f] address",prog="do")
+    parser.add_option("-f", action="store_true", dest="full", default=False, help="also display fields from superclasses")
+    (options, args) = parser.parse_args(command.split())
+    if len(args) != 1:
+      parser.error("incorrect number of arguments")
+    if args[0].startswith("0x"):
+      addr=int(args[0],base=16)
+    else:
+      addr=int(args[0])
+    p=process.ReadUnsignedFromMemory(addr, 4, error)
+    vector = lookup(p, module)
+    if vector.GetName().startswith("Vector_"):
+      className=vector.GetName()[7:]
+      if options.full:
+        pass
+      else:
+        dumpFields(className,module,process)
   
   def cf(self, debugger, command, result, internal_dict):
     target = debugger.GetSelectedTarget()
@@ -89,6 +105,30 @@ def getTypeIdAndSize(address, process):
     return (typeId, 8)
   return (typeId, 4)
 
+def dumpFields(className,module,process):
+  error = lldb.SBError()
+  name=module.FindSymbol("Name_" + className)
+  nameAddress=name.GetStartAddress().__int__()
+  print getString(nameAddress,process)+":"
+  
+def getString(address,process):
+  error = lldb.SBError()
+  array=process.ReadUnsignedFromMemory(address+4, 4, error)
+  return getCharArray(array,process)
+
+def getCharArray(address,process):
+  error = lldb.SBError()
+  size=process.ReadUnsignedFromMemory(address+4, 4, error)
+  content=process.ReadMemory(address+8, size*2, error)
+  buffer = bytearray(content)
+  template=""
+  for i in range(size):
+    template=template+"H"
+  list=struct.unpack(template,buffer)
+  result=u""
+  for i in range(size):
+    result=result+unichr(list[i])
+  return result.encode('utf-8')
 
 def getParameterPack(debug, fp, process):
   error = lldb.SBError()
