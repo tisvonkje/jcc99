@@ -45,7 +45,17 @@ class Jcc99:
     if vector.GetName().startswith("Vector_"):
       className=vector.GetName()[7:]
       if options.full:
-        pass
+        while True:
+          dumpFields(className,module,process)
+          info=module.FindSymbol("Info_" + className)
+          infoAddress=info.GetStartAddress().__int__()
+          parentAddress=process.ReadUnsignedFromMemory(infoAddress+8, 4, error)
+          if parentAddress==0:
+            break
+          parent=lookup(parentAddress,module)
+          if not parent.GetName().startswith("Vector_"):
+            break
+          className=parent.GetName()[7:]
       else:
         dumpFields(className,module,process)
   
