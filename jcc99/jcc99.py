@@ -46,7 +46,7 @@ class Jcc99:
       className=vector.GetName()[7:]
       if options.full:
         while True:
-          dumpFields(className,module,process)
+          dumpFields(p,className,module,process)
           info=module.FindSymbol("Info_" + className)
           infoAddress=info.GetStartAddress().__int__()
           parentAddress=process.ReadUnsignedFromMemory(infoAddress+8, 4, error)
@@ -57,7 +57,7 @@ class Jcc99:
             break
           className=parent.GetName()[7:]
       else:
-        dumpFields(className,module,process)
+        dumpFields(p,className,module,process)
   
   def cf(self, debugger, command, result, internal_dict):
     target = debugger.GetSelectedTarget()
@@ -115,12 +115,12 @@ def getTypeIdAndSize(address, process):
     return (typeId, 8)
   return (typeId, 4)
 
-def dumpFields(className,module,process):
+def dumpFields(p,className,module,process):
   error = lldb.SBError()
   name=module.FindSymbol("Name_" + className)
   nameAddress=name.GetStartAddress().__int__()
   print getString(nameAddress,process)+":"
-  debug=module.FindSymbol("Debug_"+className)
+  debug=module.FindSymbol("Debug_Class_"+className)
   address=debug.GetStartAddress().__int__()
   n=process.ReadUnsignedFromMemory(address, 4, error)
   address+=4
@@ -131,9 +131,41 @@ def dumpFields(className,module,process):
    address+=4
    offset=process.ReadUnsignedFromMemory(address, 4, error)
    address+=4
-   print("  "+getString(key,process)+"="+str(type)+" "+str(offset))
-       
-  
+   print("  "+getString(key,process)+"="+getValue(p,type,offset,process,module))
+
+def getValue(p,typeId,offset,process,module):
+  error = lldb.SBError()
+  if typeId == LONG_ID or typeId == DOUBLE_ID:
+    size=8
+  else:
+    size=4
+  content=process.ReadMemory(p+4+offset*4, size, error)
+  buffer=bytearray(content)
+  if typeId == INTEGER_ID:
+    return str(struct.unpack('i', buffer)[0])
+  elif typeId == FLOAT_ID:
+    return str(struct.unpack('f', buffer)[0])
+  elif typeId == DOUBLE_ID:
+    return str(struct.unpack('d', buffer)[0])
+  elif typeId == BOOLEAN_ID:
+    if struct.unpack('i', buffer)[0] != 0:
+      return "true"
+    else:
+      return "false"
+  elif typeId == CHARACTER_ID:
+    return "'"+unichr(struct.unpack('Hxx', buffer)[0]).encode('utf-8') + "'"
+  elif typeId == CLASS_ID:
+    value=struct.unpack('I', buffer)[0]
+    # Check for Strings, we know how to display them
+    #vectorAddress=process.ReadUnsignedFromMemory(value, 4, error)
+    vector=lookup(value,module)
+    print(vector)
+    if not vector is None and vector.GetName()=="Vector_java_lang_String":
+      return getString(value,process)
+    else:
+      return hex(value)
+  else:
+    return hex(struct.unpack('I', buffer)[0])
   
 def getString(address,process):
   error = lldb.SBError()
