@@ -307,7 +307,14 @@ public class Intel32MacOSXCoder implements Coder
 
   public void codeCall(Method method)
   {
-    writer.printf("\tcall\tMethod_%s\n",disambiguator.name(method));
+    String name=disambiguator.name(method);
+    /*
+     * Inline the call to the System.debug() function with a debugger interrupt
+     */
+    if(name.equals("java_lang_System_debug__q__p_V"))
+      writer.printf("\tint\t$3");
+    else
+      writer.printf("\tcall\tMethod_%s\n",name);
   }
   
   public void codeDynamicCall(Method method)
