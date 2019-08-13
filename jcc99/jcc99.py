@@ -46,7 +46,7 @@ class Jcc99:
       className=vector.GetName()[7:]
       if options.full:
         while True:
-          dumpFields(p,className,module,process)
+          dumpFields(addr,className,module,process)
           info=module.FindSymbol("Info_" + className)
           infoAddress=info.GetStartAddress().__int__()
           parentAddress=process.ReadUnsignedFromMemory(infoAddress+8, 4, error)
@@ -57,7 +57,7 @@ class Jcc99:
             break
           className=parent.GetName()[7:]
       else:
-        dumpFields(p,className,module,process)
+        dumpFields(addr,className,module,process)
   
   def cf(self, debugger, command, result, internal_dict):
     target = debugger.GetSelectedTarget()
@@ -139,7 +139,7 @@ def getValue(p,typeId,offset,process,module):
     size=8
   else:
     size=4
-  content=process.ReadMemory(p+4+offset*4, size, error)
+  content=process.ReadMemory(p+offset*4, size, error)
   buffer=bytearray(content)
   if typeId == INTEGER_ID:
     return str(struct.unpack('i', buffer)[0])
@@ -157,11 +157,10 @@ def getValue(p,typeId,offset,process,module):
   elif typeId == CLASS_ID:
     value=struct.unpack('I', buffer)[0]
     # Check for Strings, we know how to display them
-    #vectorAddress=process.ReadUnsignedFromMemory(value, 4, error)
-    vector=lookup(value,module)
-    print(vector)
+    vectorAddress=process.ReadUnsignedFromMemory(value, 4, error)
+    vector=lookup(vectorAddress,module)
     if not vector is None and vector.GetName()=="Vector_java_lang_String":
-      return getString(value,process)
+      return '"'+getString(value,process)+'"'
     else:
       return hex(value)
   else:
